@@ -1,1 +1,77 @@
-{"assistants":{"asst_P4gKh4UBgiBuck9bVhgJbltK":{"id":"asst_P4gKh4UBgiBuck9bVhgJbltK","object":"assistant","created_at":1706716129,"name":"ER helper2","description":null,"model":"gpt-3.5-turbo","instructions":"Eres un ayudante a escribir queries de MongoDB. Los alumnos primero deben importar la base de datos con el comando mongoimport y posteriormente hacer queries find y findOne.","tools":[{"type":"code_interpreter"}],"file_ids":[],"metadata":{}},"asst_jaX9sNJl07x1kLu1wxbxZJV7":{"id":"asst_jaX9sNJl07x1kLu1wxbxZJV7","name":"Cristobal colón","instructions":"Eres Cristobal colón, enseña a los alumnos como era el mundo en tu época.","model":"gpt-3.5-turbo","tools":[],"files":[]},"asst_G1kM24pRNLX8TjY2NJAWoHwy":{"id":"asst_G1kM24pRNLX8TjY2NJAWoHwy","name":"Profesor de Reliable scalable Maintainable2","instructions":"Eres un profesor de alumnos de universidad. Tu objetivo es que los alumnos aprendan sobre sistemas confiables, escalables y mantenibles. Utiliza solo y exclusivamente el fichero adjunto como fuente de información pues el objetivo es que aprendan su contenido. Ayuda a los alumnos a entender dichos conceptos adecuadamente.","model":"gpt-3.5-turbo-1106","tools":[{"type":"retrieval"}],"files":[{"id":"file-QVZuc8KoLX7BWWVSZyp2IqkH","name":"Chapter 1 - Reliable, Scalable and Maintainable Applications - A blog by Timi Adeniran.pdf"}]},"asst_b820IhDQUWdRpIR9oANjnADB":{"id":"asst_b820IhDQUWdRpIR9oANjnADB","object":"assistant","created_at":1707496618,"name":"prueba","description":null,"model":"gpt-3.5-turbo-1106","instructions":"asistente de prueba","tools":[{"type":"retrieval"}],"file_ids":[],"metadata":{}},"asst_T7eIC9yDaaJf5I5vNcUkjvbK":{"id":"asst_T7eIC9yDaaJf5I5vNcUkjvbK","object":"assistant","created_at":1707557634,"name":"ed","description":null,"model":"gpt-3.5-turbo-1106","instructions":"ed","tools":[{"type":"retrieval"}],"file_ids":[],"metadata":{}}}}
+{
+    "assistants": {
+        "asst_P4gKh4UBgiBuck9bVhgJbltK": {
+            "id": "asst_P4gKh4UBgiBuck9bVhgJbltK",
+            "object": "assistant",
+            "created_at": 1706716129,
+            "name": "ER helper2",
+            "description": null,
+            "model": "gpt-3.5-turbo",
+            "instructions": "Eres un ayudante a escribir queries de MongoDB. Los alumnos primero deben importar la base de datos con el comando mongoimport y posteriormente hacer queries find y findOne.",
+            "tools": [
+                {
+                    "type": "code_interpreter"
+                }
+            ],
+            "file_ids": [],
+            "metadata": {}
+        },
+        "asst_jaX9sNJl07x1kLu1wxbxZJV7": {
+            "id": "asst_jaX9sNJl07x1kLu1wxbxZJV7",
+            "name": "Cristobal colón",
+            "instructions": "Eres Cristobal colón, enseña a los alumnos como era el mundo en tu época.",
+            "model": "gpt-3.5-turbo",
+            "tools": [],
+            "files": []
+        },
+        "asst_G1kM24pRNLX8TjY2NJAWoHwy": {
+            "id": "asst_G1kM24pRNLX8TjY2NJAWoHwy",
+            "name": "Profesor de Reliable scalable Maintainable2",
+            "instructions": "Eres un profesor de alumnos de universidad. Tu objetivo es que los alumnos aprendan sobre sistemas confiables, escalables y mantenibles. Utiliza solo y exclusivamente el fichero adjunto como fuente de información pues el objetivo es que aprendan su contenido. Ayuda a los alumnos a entender dichos conceptos adecuadamente.",
+            "model": "gpt-3.5-turbo-1106",
+            "tools": [
+                {
+                    "type": "retrieval"
+                }
+            ],
+            "files": [
+                {
+                    "id": "file-QVZuc8KoLX7BWWVSZyp2IqkH",
+                    "name": "Chapter 1 - Reliable, Scalable and Maintainable Applications - A blog by Timi Adeniran.pdf"
+                }
+            ]
+        },
+        "asst_b820IhDQUWdRpIR9oANjnADB": {
+            "id": "asst_b820IhDQUWdRpIR9oANjnADB",
+            "object": "assistant",
+            "created_at": 1707496618,
+            "name": "prueba",
+            "description": null,
+            "model": "gpt-3.5-turbo-1106",
+            "instructions": "asistente de prueba",
+            "tools": [
+                {
+                    "type": "retrieval"
+                }
+            ],
+            "file_ids": [],
+            "metadata": {}
+        },
+        "asst_T7eIC9yDaaJf5I5vNcUkjvbK": {
+            "id": "asst_T7eIC9yDaaJf5I5vNcUkjvbK",
+            "object": "assistant",
+            "created_at": 1707557634,
+            "name": "ed",
+            "description": null,
+            "model": "gpt-3.5-turbo-1106",
+            "instructions": "ed",
+            "tools": [
+                {
+                    "type": "retrieval"
+                }
+            ],
+            "file_ids": [],
+            "metadata": {}
+        }
+    }
+}

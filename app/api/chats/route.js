@@ -1,10 +1,8 @@
 import openaiclient from '../../lib/openai.js';
-import path from 'path';
-import fsPromises from 'fs/promises';
 import { NextResponse } from 'next/server';
+import dbConnect from "../../lib/dbconnect.js";
 
-const dataFilePath = path.join(process.cwd(), 'db.json');
-
+await dbConnect();
 
 //POST /API/CHAT
 //api path to create a new chat "/api/chat" passing assistantId and userId

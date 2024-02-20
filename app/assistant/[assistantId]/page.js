@@ -52,8 +52,8 @@ export default function Create({params:{assistantId}}) {
           model = "gpt-3.5-turbo"
         }
         //call /api/create to save assistant
-        console.log("creating assistant, call /api/assistant");
-        const response = await fetch('/api/assistant',{
+        console.log("creating assistant, call /api/assistants");
+        const response = await fetch('/api/assistants',{
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -65,11 +65,11 @@ export default function Create({params:{assistantId}}) {
         if(data.error!=undefined){
           alert("Error creating assistant: "+data.error)
         } else {
-          setAssistant(data.id);
+          setAssistant(data.assistant.id);
           //setFiles(data.files)
           setShowShare(true);
           if(assistantId=="new"){
-            router.push('/create/'+data.id)
+            router.push('/assistant/'+data.assistant.id)
           }
         }
       }else{
@@ -121,24 +121,43 @@ export default function Create({params:{assistantId}}) {
     }
   }
 
+  const deleteAssistant = async() => {
+    if(assistant!=null && assistantId!="new"){
+      const response = await fetch('/api/assistants/'+assistantId,{
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      const data = await response.json();
+      console.log("assistant deleted: ",data);
+      if(data.error!=undefined){
+        alert("Error deleting assistant: "+data.error)
+      } else {
+        router.push('/')
+      }
+    }
+  }
+
+
   const fetchAssistant = async() => {
     if(assistantId!="new"){
-      const response = await fetch('/api/assistant/'+assistantId);
+      const response = await fetch('/api/assistants/'+assistantId);
       const data = await response.json();
       console.log("assistant data: ",data);
-      if(data.assistant!=null){
-        setAssistant(data.assistant.id)
+      if(data!=null){
+        setAssistant(data.id)
         setShowShare((prev)=>true)
-        setName(data.assistant.name)
-        setInstructions(data.assistant.instructions)
-        data.assistant.tools.forEach(tool => {
+        setName(data.name)
+        setInstructions(data.instructions)
+        data.tools.forEach(tool => {
           if(tool.type=="function"){
             setFunctions([...functions,tool.function])
           }else{
             setTypes([...types,tool.type])
           }
         });
-        setFiles(data.assistant.files)
+        setFiles(data.files)
       }
       /*
       let getOpenai = new OpenAI({apiKey:data.openAIKey, dangerouslyAllowBrowser: true})
@@ -174,7 +193,7 @@ export default function Create({params:{assistantId}}) {
         <div id="header" className="flex items-center justify-between flex-wrap gap-2 bg-slate-900 text-white px-2 md:px-8 py-4  ">
             <div className="flex items-center gap-2">
               <Image src="/assistant.svg" height={50} width={50} alt="logo"/>
-              <h6 className="  text-3xl font-semibold">Open Custom GPT</h6>
+              <a href="/"><h6 className="  text-3xl font-semibold">Open GPT</h6></a>
             </div>
             <Link href="/">
               <Image src="/home.svg" height={20} width={20} alt="home"/>
@@ -219,25 +238,21 @@ export default function Create({params:{assistantId}}) {
             <label className=" text-sm font-medium " htmlFor="user_avatar">Upload files</label>
             <input className=" text-sm border border-gray-300 rounded-lg p-2 cursor-pointer bg-gray-50 focus:outline-none" aria-describedby="user_avatar_help" id="user_avatar" type="file" onChange={(e)=>setFiles([...files,e.target.files[0]])}/>
             <div className="flex gap-2">
-              {files.map((file,index)=><div className="text-xs w-min whitespace-nowrap border border-gray-400 py-1 px-2 rounded-xl flex gap-1">{file.name}  <b className=" cursor-pointer" onClick={()=>removeFile(file)}>x</b></div>)}
+              {files.map((file,index)=><div key={file.name} className="text-xs w-min whitespace-nowrap border border-gray-400 py-1 px-2 rounded-xl flex gap-1">{file.name}  <b className=" cursor-pointer" onClick={()=>removeFile(file)}>x</b></div>)}
             </div>
           </div>
 
           <button onClick={createAssistant} className=" bg-mySecondary hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ">Submit</button>
-          {assistant!=null&&<button onClick={()=>setShowShare(true)} className=" bg-mySecondary hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ">Share created assistant</button>}
+          {assistant!=null&&<button onClick={()=>setShowShare(true)} className=" bg-mySecondary hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ">Cancel</button>}
         </div>:<div className="h-full grow px-2 md:px-8 py-6 flex flex-col gap-5 text-gray-800">
-          <div className="flex flex-wrap gap-2 justify-between w-full">
-            <div className="flex flex-col gap-1">
-              <div className="flex items-center gap-2 cursor-pointer" onClick={()=>setShowShare(false)}>
-                <Image src='/back.svg' width={10} height={10} alt="share"/>
-                <small className="">Back</small>
-              </div>
-              <div className="flex items-center gap-2">
-                <Image src='/link.svg' width={20} height={20} alt="share"/>
-                <h6 className="font-semibold text-xl">Share your assistant</h6>
-              </div>
-            </div>
+          <div className="flex flex-wrap gap-2 justify-between w-full">            
             <div className="flex gap-2">
+              <button onClick={()=>deleteAssistant()} className="bg-mySecondary hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-2.5 text-center whitespace-nowrap">                
+                Delete
+              </button>
+              <button onClick={()=>setShowShare(false)} className="bg-mySecondary hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-2.5 text-center whitespace-nowrap">                
+                Edit
+              </button>
               <button onClick={()=>shareEmbed(0)} className=" bg-mySecondary hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-2.5 text-center whitespace-nowrap">
                   Copy Embed
               </button>

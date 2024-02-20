@@ -8,12 +8,10 @@ function Home() {
     const [loading,setLoading] = useState(true);    
 
     const fetchData = async () => {
-        const response = await fetch('/api')
+        const response = await fetch('/api/assistants');
         const data = await response.json();        
-        if(data.assistants!=undefined && Object.keys(data.assistants).length>0){
-            let getAssistants = []
-            Object.keys(data.assistants).forEach((key)=>getAssistants.push(data.assistants[key]))
-            setAssistants(getAssistants);
+        if(data!=undefined){            
+            setAssistants(data);
             setLoading(false);
         }
       }
@@ -32,13 +30,13 @@ function Home() {
             <div id="header" className="flex items-center justify-between flex-wrap gap-2 bg-slate-900 text-white px-2 md:px-8 py-4  ">
                 <div className="flex items-center gap-2">
                 <Image src="/assistant.svg" height={50} width={50} alt="logo"/>
-                <h6 className="  text-3xl font-semibold">Open Custom GPT</h6>
+                <a href="/"><h6 className="  text-3xl font-semibold">Open GPT</h6></a>
                 </div>
             </div>
             <div className=" max-w-3xl px-2 md:px-8 py-6 flex flex-col gap-5 text-gray-800">                
                 <div className=" flex flex-wrap gap-4">
                     {assistants.map((assistant)=>
-                    <Link href={"/assistant/"+assistant.id}>
+                    <Link key={assistant.id} href={"/assistant/"+assistant.id}>
                         <div className=" border-2 px-4 py-2 flex gap-4 items-center rounded-xl h-16 min-w-[20rem] max-w-xl cursor-pointer">
                             <div className=" rounded-full bg-slate-500 h-2 w-2"/>
                             <div className=" flex flex-col">

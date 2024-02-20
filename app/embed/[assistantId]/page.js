@@ -27,12 +27,12 @@ function Embed({ params: { assistantId } }) {
         console.log("GETTING ANSWER", threadId, runId)
 
         // fetch /API/CHAT/THREADID with runId as query param
-        const getRun = await fetch(`/api/chat/${threadId}?runId=${runId}`)
+        const getRun = await fetch(`/api/chats/${threadId}?runId=${runId}`)
         const getRunData = await getRun.json();
         console.log("GET RUN RETURN: ", getRunData);        
         
         if(getRunData.run.status=="completed"){
-            const messages = await fetch(`/api/chat/${threadId}?messages=true`);
+            const messages = await fetch(`/api/chats/${threadId}?messages=true`);
             const messagesData = await messages.json();
             console.log("MESSAGES RETURN: ", messagesData);
             setLoading((prev)=>false)
@@ -58,7 +58,7 @@ function Embed({ params: { assistantId } }) {
             //post to /api/chat/threadId with body message
             //TODO - no debería ser necesario pasar el assistantId
             
-            const answer = await fetch(`/api/chat/${mythreadId}`, {
+            const answer = await fetch(`/api/chats/${mythreadId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -79,8 +79,8 @@ function Embed({ params: { assistantId } }) {
     },[])
 
     const createChat = async() => {
-        //Post to /api/chat with body assistantId
-        let mychat = await fetch(`/api/chat`, {
+        //Post to /api/chats with body assistantId
+        let mychat = await fetch(`/api/chats`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

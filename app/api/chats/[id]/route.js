@@ -1,12 +1,10 @@
 import openaiclient from '../../../lib/openai.js';
 import { NextResponse } from "next/server";
-import fsPromises from "fs/promises";
-import path from "path";
 
-//POST /API/CHAT/THREADID
-//api path to create a new message in the conversation /api/chat/threadId
+//POST /API/CHATS/THREADID
+//api path to create a new message in the conversation /api/chats/threadId
 export async function POST(request) { 
-    console.log("POST to /api/chat/threadId"); 
+    console.log("POST to /api/chats/threadId"); 
     var url = new URL(request.url)
     const threadId = url.pathname.slice(url.pathname.lastIndexOf('/') + 1);
     console.log("POST al threadId: ", threadId);
@@ -36,9 +34,9 @@ export async function POST(request) {
 }
 
 
-//GET /API/CHAT/THREADID with runId or messages as query param
+//GET /API/CHATS/THREADID with runId or messages as query param
 export async function GET(request) { 
-    console.log("GET to /api/chat/threadId with runId or messages as query param"); 
+    console.log("GET to /api/chats/threadId with runId or messages as query param"); 
     var url = new URL(request.url)
     const threadId = url.pathname.slice(url.pathname.lastIndexOf('/') + 1);
     const runId = url.searchParams.get("runId");
