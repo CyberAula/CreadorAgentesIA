@@ -4,39 +4,63 @@ import { useState, useEffect, useRef } from "react";
 import { useSearchParams } from 'next/navigation';
 
 function Embed({ params: { assistantId } }) {
-    const [question,setQuestion] = useState("")
-    const [chat,setChat] = useState([])
-    const [mythreadId,setMythreadId] = useState(null)
-    const [loading,setLoading] = useState(false)
-    const [runInterval,setRunInterval] = useState(null)
-    const intervalRef = useRef(null)
-    intervalRef.current = runInterval
-    const chatRef = useRef(null)
+    const [question,setQuestion] = useState("");
+    const [chat,setChat] = useState([]);
+    const [mythreadId,setMythreadId] = useState(null);
+    const [loading,setLoading] = useState(false);
+    const [runInterval,setRunInterval] = useState(null);
+    const [myUserEmail, setMyUserEmail] = useState(null);
+    const intervalRef = useRef(null);
+    intervalRef.current = runInterval;
+    const chatRef = useRef(null);
     chatRef.current = chat;
 
-    const searchParams = useSearchParams(); 
-    const userEmail = searchParams.get('escapp_email');
+    const searchParams = useSearchParams();   
+
+    const setEmailFromParamsOrLocalStorage = () => {
+        let searchParamsEmail = searchParams.get('escapp_email');
+        if(searchParamsEmail!=null && searchParamsEmail!=""){
+            console.log("EMAIL IN PARAMS", searchParamsEmail);
+            setMyUserEmail(searchParamsEmail);
+        } else {       
+            //if no email in params get it from localstorage or randomly set it        
+            console.log("searchParamsEmail was: ", searchParamsEmail);
+            let localStorageEmail = window.localStorage.getItem('escapp_email');
+            if(localStorageEmail!=null && localStorageEmail!="" && localStorageEmail!="undefined" && localStorageEmail!="null"){
+                console.log("GETTING EMAIL FROM LOCALSTORAGE", localStorageEmail);
+                setMyUserEmail(localStorageEmail);
+                console.log("setMyUserEmail was set  : ", myUserEmail);
+            } else {
+                let newEmail = "user"+Math.floor(Math.random() * 1000000);
+                console.log("NO EMAIL IN LOCALSTORAGE, SETTING RANDOM VALUE", newEmail);
+                setMyUserEmail(newEmail); 
+                console.log("userEmail salvado en el estado: ", myUserEmail);
+                window.localStorage.setItem('escapp_email', myUserEmail);
+            }
+        }
+    }
  
     const refreshChat = () => {
-        console.log("REFRESHING CHAT")
-        setChat((prev)=>[])
-        setThread((prev)=>null)
+        console.log("REFRESHING CHAT");
+        setChat((prev)=>[]);
+        setThread((prev)=>null);
     }
 
     const getAnswer = async(threadId,runId) => {
-        console.log("GETTING ANSWER", threadId, runId)
+        console.log("GETTING ANSWER", threadId, runId);
 
         // fetch /API/CHAT/THREADID with runId as query param
-        const getRun = await fetch(`/api/chats/${threadId}?runId=${runId}`)
+        const getRun = await fetch(`/api/chats/${threadId}?runId=${runId}&assistantId=${assistantId}&userEmail=${myUserEmail}`)
         const getRunData = await getRun.json();
         console.log("GET RUN RETURN: ", getRunData);        
         
         if(getRunData.run.status=="completed"){
-            const messages = await fetch(`/api/chats/${threadId}?messages=true`);
+            console.log("userEmail kikeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: ", myUserEmail);
+            const messages = await fetch(`/api/chats/${threadId}?messages=true&assistantId=${assistantId}&userEmail=${myUserEmail}`);
             const messagesData = await messages.json();
             console.log("MESSAGES RETURN: ", messagesData);
             setLoading((prev)=>false)
-            setChat([...chatRef.current,{isBot:true,msg:messagesData.messages.data[0].content[0].text.value}])
+            setChat([...chatRef.current,{isBot:true,msg:messagesData.messages}])
             // clearInterval(intervalRef.current);
         }else{
             console.log("WAITING FOR ANSWER, RETRY IN SOME MS...");
@@ -46,6 +70,7 @@ function Embed({ params: { assistantId } }) {
 
     const askAssistant = async() => {
         console.log("ASKING ASSISTANT", question);
+        console.log("userEmail: ", myUserEmail);
         if(mythreadId==null){
             console.log("WAIT FOR THREAD");
         } else {
@@ -56,14 +81,13 @@ function Embed({ params: { assistantId } }) {
             setChat(chatList)
         
             //post to /api/chat/threadId with body message
-            //TODO - no debería ser necesario pasar el assistantId
             
             const answer = await fetch(`/api/chats/${mythreadId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({message: getQuestion, assistantId: assistantId}),
+                body: JSON.stringify({message: getQuestion, assistantId: assistantId, userEmail: myUserEmail}),
             });
             const answerData = await answer.json();
             console.log("ANSWER POST RETURN: ", answerData);        
@@ -75,17 +99,21 @@ function Embed({ params: { assistantId } }) {
     } 
 
     useEffect(()=>{
-        createChat()
-    },[])
+        console.log("CALLING USEEFFECT");
+        setEmailFromParamsOrLocalStorage();
+
+        createChat();
+    },[myUserEmail])
 
     const createChat = async() => {
         //Post to /api/chats with body assistantId
+        console.log("CREATING CHAT", assistantId, myUserEmail);
         let mychat = await fetch(`/api/chats`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({assistantId: assistantId, userEmail: userEmail}),
+            body: JSON.stringify({assistantId: assistantId, userEmail: myUserEmail}),
         });
         let chatData = await mychat.json();
         console.log("CHAT DATA POST RETURN: ", chatData);

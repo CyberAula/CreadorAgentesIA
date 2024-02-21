@@ -1,15 +1,15 @@
 import mongoose from "mongoose";
 
 const conversationSchema = new mongoose.Schema({
-    escapp_user_id: {
+    userEmail: {
         type: String,
         required: true,
     },
-    assistant_id: {
+    assistantId: {
         type: String,
         required: true,
     },
-    thread: {
+    lastthreadrun: {
         type: Object,
         required: true,
     },
@@ -21,7 +21,11 @@ const conversationSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    conversation: {
+    usage: {
+        type: Array,
+        required: false,
+    },
+    messages: {
         type: Array,
         required: true,
     },
@@ -32,9 +36,9 @@ export default mongoose.models.Conversation || mongoose.model('Conversation', co
 /* data example:
 {
     "_id": ObjectId("5f3f8e3e3e3e3e3e3e3e3e3e"),
-    "escapp_user_id": "XXX",
-    "assistant_id": "asst_P4gKh4UBgiBuck9bVhgJbltK",
-    "thread": {
+    "userEmail": "XXX",
+    "assistantId": "asst_P4gKh4UBgiBuck9bVhgJbltK",
+    "lastthreadrun": {
         "id": "run_evhFCmqmrgLSgn3XHDuOIb57",
         "object": "thread.run",
         "created_at": 1706887567,
@@ -58,6 +62,7 @@ export default mongoose.models.Conversation || mongoose.model('Conversation', co
         "metadata": {},
         "usage": null
     },
+    "usage": [{ "prompt_tokens": 127, "completion_tokens": 240, "total_tokens": 367 }, { "prompt_tokens": 27, "completion_tokens": 40, "total_tokens": 67 }],
     "created_at": 1706887567,
     "updated_at": 1706887567,
     "conversation": [
@@ -65,7 +70,7 @@ export default mongoose.models.Conversation || mongoose.model('Conversation', co
             "question": "¿Cómo importo la base de datos?", 
             "answer": "bla bla bla mongoimport --db=escuela --collection=alumnos --file=alumnos.json",
             "question_created_at": 1706887567,
-            "answer_created_at": 1706887999
+            "answer_created_at": 1706887999            
         },
         { 
             "question": "¿Cómo hago un query find?", 

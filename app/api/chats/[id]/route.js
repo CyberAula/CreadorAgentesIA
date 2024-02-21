@@ -1,5 +1,9 @@
 import openaiclient from '../../../lib/openai.js';
 import { NextResponse } from "next/server";
+import dbConnect from "../../../lib/dbconnect.js";
+import Conversation from '@/app/models/Conversation.js';
+
+await dbConnect();
 
 //POST /API/CHATS/THREADID
 //api path to create a new message in the conversation /api/chats/threadId
@@ -13,7 +17,7 @@ export async function POST(request) {
         //get request body
         const req = await request.json()
         console.log("received params: ",req);
-        const { message, assistantId } = req;
+        const { message, assistantId, userEmail } = req;
 
         await openaiclient.beta.threads.messages.create(
             threadId,
@@ -24,6 +28,14 @@ export async function POST(request) {
             { assistant_id: assistantId }
         );
         console.log("RUN CREATED", getRun);
+        //save to mongodb, push to array messages in model Conversation
+        //place it in the first position, so we can easily add answers to the same message
+        const messagesItem = {question: message, question_created_at: Date.now()};
+        const conversationUpdate = await Conversation.updateOne({
+            assistantId: assistantId,
+            userEmail: userEmail},
+            {$push: {messages: {$each: [messagesItem], $position: 0}}});
+        console.log("conversation updated: ",conversationUpdate);
         //return run id
         return NextResponse.json({"msg":"message created","run":getRun});
     }
@@ -40,18 +52,29 @@ export async function GET(request) {
     var url = new URL(request.url)
     const threadId = url.pathname.slice(url.pathname.lastIndexOf('/') + 1);
     const runId = url.searchParams.get("runId");
+    const assistantId = url.searchParams.get("assistantId");
+    const userEmail = url.searchParams.get("userEmail");
     const messages = url.searchParams.get("messages");
     if(runId==null && messages==null){
         //response error
         return NextResponse.json({"msg":"Error: runId or messages query param is required"})
     } else if(runId!=null){
-        console.log("DATA threadId: ", threadId, " and runId: ", runId);
+        console.log("DATA threadId: ", threadId, " and runId: ", runId, " assistantId: ", assistantId, " userEmail: ", userEmail);
         try {
             const getRun = await openaiclient.beta.threads.runs.retrieve(
                 threadId,
                 runId
             );
             console.log("RUN RETRIEVED", getRun);
+            if(getRun.status=="completed"){
+                //save run as lastthreadrun in conversation, and push to array usage in model Conversation
+                const conversationUpdate = await Conversation.updateOne({
+                    assistantId: assistantId,
+                    userEmail: userEmail},
+                    {lastthreadrun: getRun, $push: {usage: {$each: [getRun.usage], $position: 0}}});
+                console.log("conversation updated: ",conversationUpdate);
+            }
+            
             //return run
             return NextResponse.json({"msg":"run retrieved","run":getRun});
         }
@@ -60,13 +83,35 @@ export async function GET(request) {
             return NextResponse.json({"msg":"Error retrieving run", "error": error, "errormsg": "Error retrieving run"})
         }
     } else if(messages!=null){
-        console.log("GET al threadId: ", threadId, " and messages: ", messages);
+        console.log("GET al threadId: ", threadId, " and messages: ", messages, " assistantId: ", assistantId, " userEmail: ", userEmail);
         const getmessages = await openaiclient.beta.threads.messages.list(
             threadId
             );
         console.log("MESSAGES RETRIEVED", getmessages);
+        const answer = getmessages.data[0].content[0].text.value;
+        console.log("ANSWER FROM IA: ", answer);
+        //retrieve conversation from mongodb
+        const conversation = await Conversation.find({assistantId: assistantId, userEmail: userEmail});
+        console.log("conversation retrieved: ",conversation);
+        //get last item from messages array
+        let lastMessage = {};
+        if(conversation[0].messages!=undefined && conversation[0].messages.length>0){            
+            lastMessage = conversation[0].messages.slice(-1)[0];
+            console.log("lastMessage: ",lastMessage);
+        }
+        lastMessage.answer = answer;
+        lastMessage.answer_created_at = Date.now();
+
+        //save to mongodb, update first item from messages array (because we pushed it in the first position)
+        const conversationUpdate = await Conversation.updateOne({
+            assistantId: assistantId,
+            userEmail: userEmail},
+            { $set: { 'messages.0': lastMessage } });
+        console.log("conversation updated: ",conversationUpdate);
+
+
         //return messages
-        return NextResponse.json({"msg":"messages retrieved","messages":getmessages});
+        return NextResponse.json({"msg":"messages retrieved","messages":answer});
     }
 }
         

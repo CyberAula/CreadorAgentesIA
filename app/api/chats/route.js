@@ -1,6 +1,7 @@
 import openaiclient from '../../lib/openai.js';
 import { NextResponse } from 'next/server';
 import dbConnect from "../../lib/dbconnect.js";
+import Conversation from '@/app/models/Conversation.js';
 
 await dbConnect();
 
@@ -14,12 +15,34 @@ export async function POST(request) {
         //get request body
         const req = await request.json()
         console.log("received params: ",req);
-        const { assistantId, userEmail } = req;
-        
-        //TODO: check if assistantId and userEmail already exist in database (maybe user did F5)
+        const { assistantId, userEmail } = req;  
 
         console.log("creating new chat for assistant: ",assistantId, " and user: ",userEmail);
         mythread = await openaiclient.beta.threads.create();
+
+        //check if assistantId and userEmail already exist in database (maybe user did F5)
+        const conversation = await Conversation.find({assistantId: assistantId, userEmail: userEmail});
+        if(conversation.length>0){
+            console.log("Chat already exists for assistant: ",assistantId, " and user: ",userEmail);
+            console.log("We update the thread object");
+            const conversationUpdate = await Conversation.updateOne({
+                assistantId: assistantId,
+                userEmail: userEmail},
+                {lastthreadrun: mythread});
+            console.log("conversation updated: ",conversationUpdate);
+        } else {
+            console.log("Chat does not exist for assistant: ",assistantId, " and user: ",userEmail);
+            console.log("We create a new conversation");
+            const conversationCreate = await Conversation.create({
+                assistantId: assistantId,
+                userEmail: userEmail,
+                lastthreadrun: mythread,
+                created_at: Date.now(),
+                updated_at: Date.now(),
+                conversation: []
+            });
+            console.log("conversation created: ",conversationCreate);
+        }
 
         //return thread id
         return NextResponse.json({"msg":"chat created","thread":mythread.id})
