@@ -55,7 +55,7 @@ function Embed({ params: { assistantId } }) {
         console.log("GET RUN RETURN: ", getRunData);        
         
         if(getRunData.run.status=="completed"){
-            console.log("userEmail kikeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: ", myUserEmail);
+            console.log("userEmail: ", myUserEmail);
             const messages = await fetch(`/api/chats/${threadId}?messages=true&assistantId=${assistantId}&userEmail=${myUserEmail}`);
             const messagesData = await messages.json();
             console.log("MESSAGES RETURN: ", messagesData);
