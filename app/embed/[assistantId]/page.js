@@ -16,12 +16,17 @@ function Embed({ params: { assistantId } }) {
     chatRef.current = chat;
 
     const searchParams = useSearchParams();   
+    const assistantName = searchParams.get('assistant_name');
+    console.log("assistantName: ", assistantName);
 
+    //sets email from params or localstorage
+    //returns email found or randomly set
     const setEmailFromParamsOrLocalStorage = () => {
         let searchParamsEmail = searchParams.get('escapp_email');
         if(searchParamsEmail!=null && searchParamsEmail!=""){
             console.log("EMAIL IN PARAMS", searchParamsEmail);
             setMyUserEmail(searchParamsEmail);
+            return searchParamsEmail;
         } else {       
             //if no email in params get it from localstorage or randomly set it        
             console.log("searchParamsEmail was: ", searchParamsEmail);
@@ -29,21 +34,25 @@ function Embed({ params: { assistantId } }) {
             if(localStorageEmail!=null && localStorageEmail!="" && localStorageEmail!="undefined" && localStorageEmail!="null"){
                 console.log("GETTING EMAIL FROM LOCALSTORAGE", localStorageEmail);
                 setMyUserEmail(localStorageEmail);
-                console.log("setMyUserEmail was set  : ", myUserEmail);
+                //si pongo esto imprime null porque el estado solo se actualiza en el siguiente render
+                //console.log("setMyUserEmail was set  : ", myUserEmail); 
+                console.log("setMyUserEmail was set  : ", localStorageEmail);
+                return localStorageEmail;
             } else {
                 let newEmail = "user"+Math.floor(Math.random() * 1000000);
                 console.log("NO EMAIL IN LOCALSTORAGE, SETTING RANDOM VALUE", newEmail);
                 setMyUserEmail(newEmail); 
-                console.log("userEmail salvado en el estado: ", myUserEmail);
-                window.localStorage.setItem('escapp_email', myUserEmail);
+                console.log("userEmail salvado en el estado: ", newEmail);
+                window.localStorage.setItem('escapp_email', newEmail);
+                return newEmail;
             }
         }
     }
  
     const refreshChat = () => {
         console.log("REFRESHING CHAT");
-        setChat((prev)=>[]);
-        setThread((prev)=>null);
+        //setChat((prev)=>[]);
+        //setThread((prev)=>null);
     }
 
     const getAnswer = async(threadId,runId) => {
@@ -100,24 +109,29 @@ function Embed({ params: { assistantId } }) {
 
     useEffect(()=>{
         console.log("CALLING USEEFFECT");
-        setEmailFromParamsOrLocalStorage();
+        let myLocalEmail = setEmailFromParamsOrLocalStorage();
 
-        createChat();
-    },[myUserEmail])
+        createChat(myLocalEmail);
+    },[])
 
-    const createChat = async() => {
+    const createChat = async(myLocalEmail) => {
         //Post to /api/chats with body assistantId
-        console.log("CREATING CHAT", assistantId, myUserEmail);
-        let mychat = await fetch(`/api/chats`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({assistantId: assistantId, userEmail: myUserEmail}),
-        });
-        let chatData = await mychat.json();
-        console.log("CHAT DATA POST RETURN: ", chatData);
-        setMythreadId(chatData.thread)
+        console.log("CREATING CHAT", assistantId, myLocalEmail);
+        if(myLocalEmail==null){
+            console.log("THERE IS NO EMAIL. ERROR, no podemos continuar....................");
+            alert("No se ha rellenado el email. Intente recargar la página o usar otro navegador. Si el problema persiste, contacte con el profesor.");
+        } else {
+            let mychat = await fetch(`/api/chats`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({assistantId: assistantId, userEmail: myLocalEmail}),
+            });
+            let chatData = await mychat.json();
+            console.log("CHAT DATA POST RETURN: ", chatData);
+            setMythreadId(chatData.thread);
+        }
     }
 
     return (
@@ -125,7 +139,7 @@ function Embed({ params: { assistantId } }) {
             <div className={`flex justify-between bg-myPrimary rounded-xl p-4`}>
                 <div className="flex items-center gap-2">
                     <Image height={25} width={25} src='/assistant.svg' alt="logo"/>
-                    <span className="font-semibold">myAssistant</span>
+                    <span className="font-semibold">{assistantName==null ? "Ayudante Top":assistantName}</span>
                 </div>
                 <div className="d-flex align-items-center gap-2 cursor-pointer">
                     <Image height={20} width={20} onClick={refreshChat} src='/refresh.svg'  alt="refresh"/>
