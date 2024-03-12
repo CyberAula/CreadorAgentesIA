@@ -5,9 +5,21 @@ export const config = {
 };
 
 export function middleware(req) {
+    const headers = new Headers(req.headers);
+
+    const currentEnv = process.env.NODE_ENV;
+    const isHttps = headers.get("x-forwarded-proto")?.split(",")[0] === "https";
+    const isLocalhost = req.headers.get("host")?.includes("localhost");
+
+    console.log("MIDDLEWARE INICIAL - currentEnv: ", currentEnv, "isHttps: ", isHttps, "isLocalhost: ", isLocalhost);
+    if (currentEnv === "production" && !isHttps && !isLocalhost) {
+      const newUrl = new URL(`http://${headers.get("host")}` || "");
+      newUrl.protocol = "https:";
+      return NextResponse.redirect(newUrl.href, 301);
+    }
+
     const basicAuth = req.headers.get("authorization");
     const url = req.nextUrl;
-
     if (basicAuth) {
         const authValue = basicAuth.split(" ")[1];
         const [user, pwd] = atob(authValue).split(":");
@@ -24,3 +36,4 @@ export function middleware(req) {
 
     return NextResponse.rewrite(url);
 }
+
