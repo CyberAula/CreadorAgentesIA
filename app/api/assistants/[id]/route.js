@@ -44,8 +44,12 @@ export async function DELETE(request) {
     const assistantId = url.pathname.slice(url.pathname.lastIndexOf('/') + 1);
     console.log("DELETE del assistantId: ", assistantId);
     //query to openai to delete assistant    
-    const deleteAssistant = await openaiclient.beta.assistants.del(assistantId);
-    console.log("Assistant deleted from OpenAI: ",deleteAssistant);
+    try{
+      const deleteAssistant = await openaiclient.beta.assistants.del(assistantId);
+      console.log("Assistant deleted from OpenAI: ",deleteAssistant);
+    } catch (error) {
+      console.error("Error deleting assistant from OpenAI: ",error);
+    }
 
     //delete from mongodb
     const objectData = await Assistant.deleteOne({id: assistantId});

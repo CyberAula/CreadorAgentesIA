@@ -104,6 +104,7 @@ function Embed({ params: { assistantId } }) {
             console.log("GETTING ANSWER", mythreadId, answerData.run.id)
             getAnswer(mythreadId,answerData.run.id)
             
+            
         }
     } 
 

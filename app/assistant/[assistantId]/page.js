@@ -261,7 +261,7 @@ export default function Create({params:{assistantId}}) {
               </button>
             </div>
           </div>  
-          <iframe src={"/embed/"+assistant} className="h-full grow rounded-xl border"/>
+          <iframe src={"/embed/"+assistant + "?assistant_name=" + name } className="h-full grow rounded-xl border"/>
         </div>}
     </main>
   )
