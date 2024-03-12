@@ -5,6 +5,7 @@ const fs = require("fs");
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
 const handle = app.getRequestHandler();
+require('dotenv').config({ path: '.env.local' })
 
 let httpsOptions = {};
 let port = 80;
