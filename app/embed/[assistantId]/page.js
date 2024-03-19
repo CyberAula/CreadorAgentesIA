@@ -143,16 +143,16 @@ function Embed({ params: { assistantId } }) {
                     <span className="font-semibold">{assistantName==null ? "Ayudante Top":assistantName}</span>
                 </div>
                 <div className="d-flex align-items-center gap-2 cursor-pointer">
-                    <Image height={20} width={20} onClick={refreshChat} src='/refresh.svg'  alt="refresh"/>
+                    {/*<Image height={20} width={20} onClick={refreshChat} src='/refresh.svg'  alt="refresh"/>*/}
                     {/* <Image height={20} width={20} onClick={closeFrame} src='/cancel.svg'/> */}
 
                 </div>
 
             </div>
-                <div className="flex flex-col gap-2 w-full h-full overflow-y-auto scroll">
+                <div className="flex flex-col gap-2 w-full h-full overflow-y-auto myscroll">
                     
                     {chat.map((msg, index)=>
-                    <div key={index} className={`${msg.isBot?'bg-gray-900 text-gray-100 self-start':'text-gray-900 bg-gray-100 self-end border-2'} rounded-lg  px-3 py-2 max-w-sm`}>
+                    <div key={index} className={`${msg.isBot?'bg-gray-900 text-gray-100 self-start':'text-gray-900 bg-gray-100 self-end border-2'} rounded-lg  px-3 py-2 max-w-5xl`}>
                         {msg.msg}
                     </div>)}
                     {loading&&<div  className={`bg-gray-900 text-gray-100 self-start rounded-lg  px-3 py-2 max-w-sm`}>

@@ -19,3 +19,8 @@
 .bounce1 { animation-delay: 0; }
 .bounce2 { animation-delay: .3s; }
 .bounce3 { animation-delay: .6s; }
+
+.myscroll {
+    scrollbar-color: rgb(120 153 197) rgb(236, 239, 243);
+    scrollbar-width: thin;
+}
