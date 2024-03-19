@@ -17,7 +17,12 @@ export async function POST(request) {
         //get request body
         const req = await request.json()
         console.log("received params: ",req);
-        const { message, assistantId, userEmail } = req;
+        let { message, assistantId, userEmail } = req;
+        //if userEmail contains spaces it is because escapp do not encode it, so we replace them with + sign
+        if(userEmail!=null && userEmail.includes(" ")){
+            userEmail = userEmail.replace(/ /g, "+");
+            console.log("Email with + sign: ", userEmail);
+        }        
 
         await openaiclient.beta.threads.messages.create(
             threadId,
@@ -53,7 +58,12 @@ export async function GET(request) {
     const threadId = url.pathname.slice(url.pathname.lastIndexOf('/') + 1);
     const runId = url.searchParams.get("runId");
     const assistantId = url.searchParams.get("assistantId");
-    const userEmail = url.searchParams.get("userEmail");
+    let userEmail = url.searchParams.get("userEmail");
+    //if userEmail contains spaces it is because escapp do not encode it, so we replace them with + sign
+    if(userEmail!=null && userEmail.includes(" ")){
+        userEmail = userEmail.replace(/ /g, "+");
+        console.log("Email with + sign: ", userEmail);
+    }
     const messages = url.searchParams.get("messages");
     if(runId==null && messages==null){
         //response error
@@ -91,23 +101,27 @@ export async function GET(request) {
         const answer = getmessages.data[0].content[0].text.value;
         console.log("ANSWER FROM IA: ", answer);
         //retrieve conversation from mongodb
+        console.log("assistantId: ", assistantId, " userEmail: ", userEmail)
         const conversation = await Conversation.find({assistantId: assistantId, userEmail: userEmail});
         console.log("conversation retrieved: ",conversation);
         //get last item from messages array
         let lastMessage = {};
-        if(conversation[0].messages!=undefined && conversation[0].messages.length>0){            
+        if(conversation.length>0 && conversation[0].messages!=undefined && conversation[0].messages.length>0){            
             lastMessage = conversation[0].messages.slice(-1)[0];
             console.log("lastMessage: ",lastMessage);
-        }
-        lastMessage.answer = answer;
-        lastMessage.answer_created_at = Date.now();
+            lastMessage.answer = answer;
+            lastMessage.answer_created_at = Date.now();
 
-        //save to mongodb, update first item from messages array (because we pushed it in the first position)
-        const conversationUpdate = await Conversation.updateOne({
-            assistantId: assistantId,
-            userEmail: userEmail},
-            { $set: { 'messages.0': lastMessage } });
-        console.log("conversation updated: ",conversationUpdate);
+            //save to mongodb, update first item from messages array (because we pushed it in the first position)
+            const conversationUpdate = await Conversation.updateOne({
+                assistantId: assistantId,
+                userEmail: userEmail},
+                { $set: { 'messages.0': lastMessage } });
+            console.log("conversation updated: ",conversationUpdate);
+        } else {
+            console.log("ERROR OPENGPT: No conversation found for assistant: ",assistantId, " and user: ",userEmail);
+        }
+        
 
 
         //return messages

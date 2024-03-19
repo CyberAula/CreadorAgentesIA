@@ -15,7 +15,12 @@ export async function POST(request) {
         //get request body
         const req = await request.json()
         console.log("received params: ",req);
-        const { assistantId, userEmail } = req;  
+        let { assistantId, userEmail } = req;  
+        //if userEmail contains spaces it is because escapp do not encode it, so we replace them with + sign
+        if(userEmail!=null && userEmail.includes(" ")){
+            userEmail = userEmail.replace(/ /g, "+");
+            console.log("Email with + sign: ", userEmail);
+        }
 
         console.log("creating new chat for assistant: ",assistantId, " and user: ",userEmail);
         mythread = await openaiclient.beta.threads.create();
