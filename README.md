@@ -1,12 +1,12 @@
 <h1 align="center" style="font-weight: bold">
-  IA Agent Creator
+  Creador Agentes IA
   <br>
     <h3 align="center">Plataforma para crear GPT personalizadas mediante la api Assistant y usarlos en experimentos educativos (sin necesidad de programar)</h3>
   <br>
   
 </h1>
 
-**IA Agent Creator** proporciona una solución fácil de usar para configurar rápidamente un GPT personalizado y realizar experimentos de educación.
+**Creador Agentes IA** proporciona una solución fácil de usar para configurar rápidamente un GPT personalizado y realizar experimentos de educación.
 
 
 
