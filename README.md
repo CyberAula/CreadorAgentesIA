@@ -1,45 +1,35 @@
 <h1 align="center" style="font-weight: bold">
-  Open Custom GPT
+  IA Agent Creator
   <br>
-    <h3 align="center">The no-code platform for building Custom GPT using Assistant api</h3>
+    <h3 align="center">Plataforma para crear GPT personalizadas mediante la api Assistant y usarlos en experimentos educativos (sin necesidad de programar)</h3>
   <br>
   
 </h1>
 
-**Open Custom GPT** provides a user-friendly solution to quickly setup a custom GPT and add to your site.
+**IA Agent Creator** proporciona una solución fácil de usar para configurar rápidamente un GPT personalizado y realizar experimentos de educación.
 
 
 
 https://github.com/SamurAIGPT/Open-Custom-GPT/assets/4326215/c41a7b62-f5c9-458c-be40-5ec6788b7726
 
 
-## Key Features 🎯
+## Características principales 🎯
 
-- **Fast and Efficient**: Designed with speed and efficiency at its core. Open Custom GPT ensures rapid speed of building a GPT.
-- **Secure**: Your data, your control. Always. Self-hosted and never shared with others
-- **Open Source**: Open source and free to use.
-- **Share/Embed**: Share/Embed your project with your users directly and give access to your information
-- **Monetization**: Gate your Custom GPT behind a paywall and earn money
+- **Rápido y eficaz**: Diseñado con la velocidad y la eficiencia en su núcleo. Open Custom GPT asegura una rápida velocidad de construcción de un GPT.
+- **Seguro**: Sus datos, su control. Siempre. Autoalojado y nunca compartido con otros.
+- **Código abierto**: Código abierto y de uso gratuito.
+- **Compartir**: Compartir/Embed su proyecto con sus usuarios directamente y dar acceso a su información.
 
-## Convert your existing Custom GPT to host on your site
-
-To convert your existing Custom GPT to host on your site, 
-
-- Copy the instructions from the Configure Tab
-- Paste them in the Open Custom GPT instructions section
-- Enable Code Interpreter, Dall E or File retrieval similar to your Custom GPT
-- Upload any files you added to Custom GPT
-- Setup any custom functions you added in your Custom GPT in Open Custom GPT
-
-### Stack
+### Stack tecnológico
 
 - Next.js
-- OpenAI
+- OpenAI (en el futuro Gemini, Mistral, Llama3, ...)
 - Tailwind
+- MongoDB
 
-### Run the project locally
+### Correr el proyecto localmente
 
-Minimum requirements to run the projects locally
+Requisitos mínimos para ejecutar los proyectos localmente
 
 - Node.js v18
 - OpenAI API Key
@@ -54,21 +44,12 @@ npm run dev
 # visit http://localhost:3000
 ```
 
-### Hosted version of Open Custom GPT
 
-If you don't want to setup locally and wish to use a hosted version, you can start from https://customgpt.thesamur.ai/
 
-## Contribute 🤝
+## Licencia 📄
 
-Did you get a pull request? Open it, and we'll review it as soon as possible.
+Este proyecto tiene licencia MIT - [LICENCIA](LICENSE)
 
-- [Open Issues](https://github.com/SamurAIGPT/Open-Custom-GPT/issues)
-- [Open Pull Requests](https://github.com/SamurAIGPT/Open-Custom-GPT/pulls)
+## Referencias
 
-## License 📄
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
-
-## Community
-
-Join the discord community https://discord.gg/3sbpBxVZyH to get support with setting up your Custom GPT
+<h4 align="center">Basado en el proyecto https://github.com/SamurAIGPT/Open-Custom-GPT</h4>
