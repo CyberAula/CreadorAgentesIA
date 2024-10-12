@@ -36,11 +36,12 @@ export async function POST(request) {
         //save to mongodb, push to array messages in model Conversation
         //place it in the first position, so we can easily add answers to the same message
         const messagesItem = {question: message, question_created_at: Date.now()};
+        console.log("message to save: ",message);
         const conversationUpdate = await Conversation.updateOne({
             assistantId: assistantId,
             userEmail: userEmail},
             {$push: {messages: {$each: [messagesItem], $position: 0}}});
-        console.log("conversation updated: ",conversationUpdate);
+        console.log("conversation updated2: ",conversationUpdate);
         //return run id
         return NextResponse.json({"msg":"message created","run":getRun});
     }
@@ -107,7 +108,7 @@ export async function GET(request) {
         //get last item from messages array
         let lastMessage = {};
         if(conversation.length>0 && conversation[0].messages!=undefined && conversation[0].messages.length>0){            
-            lastMessage = conversation[0].messages.slice(-1)[0];
+            lastMessage = conversation[0].messages[0];
             console.log("lastMessage: ",lastMessage);
             lastMessage.answer = answer;
             lastMessage.answer_created_at = Date.now();

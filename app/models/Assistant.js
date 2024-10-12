@@ -52,7 +52,7 @@ export default mongoose.models.Assistant || mongoose.model('Assistant', assistan
             "model": "gpt-3.5-turbo-1106",
             "tools": [
                 {
-                    "type": "retrieval"
+                    "type": "file_search"
                 }
             ],
             "files": [

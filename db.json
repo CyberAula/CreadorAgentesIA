@@ -31,7 +31,7 @@
             "model": "gpt-3.5-turbo-1106",
             "tools": [
                 {
-                    "type": "retrieval"
+                    "type": "file_search"
                 }
             ],
             "files": [
@@ -51,7 +51,7 @@
             "instructions": "asistente de prueba",
             "tools": [
                 {
-                    "type": "retrieval"
+                    "type": "file_search"
                 }
             ],
             "file_ids": [],
@@ -67,7 +67,7 @@
             "instructions": "ed",
             "tools": [
                 {
-                    "type": "retrieval"
+                    "type": "file_search"
                 }
             ],
             "file_ids": [],

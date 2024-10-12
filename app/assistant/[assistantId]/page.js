@@ -45,12 +45,15 @@ export default function Create({params:{assistantId}}) {
         functions.forEach((fn)=>
           tools.push({"type":"function","function":JSON.parse(fn)})
         )
-        let model
+        let model = "gpt-4o"
+        /*
         if(types.includes('retrieval')){
           model = "gpt-3.5-turbo-1106"
         }else{
           model = "gpt-3.5-turbo"
         }
+        */
+
         //call /api/create to save assistant
         console.log("creating assistant, call /api/assistants");
         const response = await fetch('/api/assistants',{
@@ -217,9 +220,9 @@ export default function Create({params:{assistantId}}) {
                 <span className="ms-3 font-medium ">Code Interpreter</span>
               </label>
               <label className="relative inline-flex items-center cursor-pointer">
-                <input type="checkbox" value="" className="sr-only peer"  onClick={()=>addType('retrieval')}/>
-                <div className={`w-9 h-5  rounded-full peer     after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-mySecondary  after:rounded-full after:w-4 after:h-4 after:transition-all ${types.includes('retrieval')?'after:translate-x-full rtl:after:-translate-x-full after:border-white bg-myPrimary':'bg-myBg'}`}></div>
-                <span className="ms-3 font-medium ">Retrieval</span>
+                <input type="checkbox" value="" className="sr-only peer"  onClick={()=>addType('file_search')}/>
+                <div className={`w-9 h-5  rounded-full peer     after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-mySecondary  after:rounded-full after:w-4 after:h-4 after:transition-all ${types.includes('file_search')?'after:translate-x-full rtl:after:-translate-x-full after:border-white bg-myPrimary':'bg-myBg'}`}></div>
+                <span className="ms-3 font-medium ">file_search</span>
               </label>
               <div className="flex items-center gap-5 cursor-pointer">
                 <div className=" rounded-full bg-myBg text-mySecondary text-xl font-bold px-2 w-min" onClick={()=>{setFunctions([...functions,''])}}>+</div>

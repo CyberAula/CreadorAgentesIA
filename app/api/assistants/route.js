@@ -17,6 +17,8 @@ export async function POST(request) {
         console.log("received params: ",req);
 
         let getAssistant;
+        //XXX TODO importante quito file_ids porque en v2 no va ahí https://platform.openai.com/docs/assistants/migration/what-has-changed
+        //todo el tema de ficheros habria que afinarlo
         if(id=="new"){
             console.log("creating new assistant");
             getAssistant = await openaiclient.beta.assistants.create({
@@ -24,13 +26,10 @@ export async function POST(request) {
             instructions: instructions,
             model:model,
             tools: tools,
-            file_ids: []
             })
             //add created_at field
             getAssistant.created_at = Date.now();
             getAssistant.updated_at = Date.now();
-            //add field "files" but empty for now
-            getAssistant.files = [];
             console.log("assistant created: ",getAssistant);
 
             //save to mongodb
@@ -44,11 +43,8 @@ export async function POST(request) {
             instructions: instructions,
             model:model,
             tools: tools,
-            file_ids: []
             })
-            getAssistant.updated_at = Date.now();
-            //add field "files" but empty for now
-            getAssistant.files = [];
+            getAssistant.updated_at = Date.now();            
             console.log("assistant upated: ",getAssistant);
 
             //update to mongodb
