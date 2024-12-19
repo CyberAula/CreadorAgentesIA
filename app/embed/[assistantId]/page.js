@@ -1,9 +1,11 @@
 'use client'
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useParams } from 'next/navigation';
 
-function Embed({ params: { assistantId } }) {
+
+function Embed() {
+    const assistantId = useParams().assistantId;
     const [question,setQuestion] = useState("");
     const [chat,setChat] = useState([]);
     const [mythreadId,setMythreadId] = useState(null);

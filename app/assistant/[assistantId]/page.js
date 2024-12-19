@@ -3,8 +3,12 @@ import Image from 'next/image'
 import { useState,useEffect } from "react"
 import Link from "next/link";
 import {useRouter} from "next/navigation";
+import { useParams } from 'next/navigation';
 
-export default function Create({params:{assistantId}}) {
+
+export default function Create() {
+  const assistantId = useParams().assistantId;
+
   const router = useRouter()
   const [name,setName] = useState("")
   const [instructions,setInstructions] = useState("")
