@@ -5,14 +5,14 @@ services:
     build:
         context: .
     ports: 
-      - 3003:3000
+      - 3003:3003
     depends_on:
       - agentes-mongo
     networks:
       - martell
     restart: unless-stopped
   agentes-mongo:
-    image: mongo:5.0.25
+    image: mongo:5.0.30
     container_name: agentes-mongo
     volumes:
       - data:/data/db
