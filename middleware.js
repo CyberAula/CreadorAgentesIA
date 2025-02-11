@@ -33,6 +33,7 @@ export function middleware(req) {
     }
 
     url.pathname = "/api/auth";
+    url.protocol = "http"; //because of the reverse proxy
 
     return NextResponse.rewrite(url);
 }
