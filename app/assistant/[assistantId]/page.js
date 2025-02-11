@@ -4,6 +4,10 @@ import { useState,useEffect } from "react"
 import Link from "next/link";
 import {useRouter} from "next/navigation";
 import { useParams } from 'next/navigation';
+import nextConfig from '../../../next.config';
+import urljoin from 'url-join';
+
+const basePath = nextConfig.basePath || '';
 
 
 export default function Create() {
@@ -60,7 +64,8 @@ export default function Create() {
 
         //call /api/create to save assistant
         console.log("creating assistant, call /api/assistants");
-        const response = await fetch('/api/assistants',{
+        const url = urljoin(basePath,'/api/assistants');
+        const response = await fetch(url ,{
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -122,15 +127,16 @@ export default function Create() {
 
   const shareEmbed = (type) => {
     if(type==0){
-      navigator.clipboard.writeText('<iframe src="'+window.location.host+'/embed/'+assistant+'" />')
+      navigator.clipboard.writeText('<iframe src="'+window.location.host + urljoin(basePath,'embed',assistant)+'" />')
     }else{
-      navigator.clipboard.writeText(window.location.host+'/embed/'+assistant)
+      navigator.clipboard.writeText(window.location.host + urljoin(basePath, 'embed', assistant))
     }
   }
 
   const deleteAssistant = async() => {
     if(assistant!=null && assistantId!="new"){
-      const response = await fetch('/api/assistants/'+assistantId,{
+      const url = urljoin(basePath,'/api/assistants/'+assistantId);
+      const response = await fetch(url ,{
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'
@@ -149,7 +155,8 @@ export default function Create() {
 
   const fetchAssistant = async() => {
     if(assistantId!="new"){
-      const response = await fetch('/api/assistants/'+assistantId);
+      const url = urljoin(basePath,'/api/assistants/'+assistantId);
+      const response = await fetch(url);
       const data = await response.json();
       console.log("assistant data: ",data);
       if(data!=null){
@@ -199,11 +206,11 @@ export default function Create() {
     <main className="flex min-h-screen flex-col  bg-myBg ">
         <div id="header" className="flex items-center justify-between flex-wrap gap-2 bg-slate-900 text-white px-2 md:px-8 py-4  ">
             <div className="flex items-center gap-2">
-              <Image src="/assistant.svg" height={50} width={50} alt="logo"/>
-              <a href="/"><h6 className="  text-3xl font-semibold">Open GPT</h6></a>
+              <Image src={urljoin(basePath, "/assistant.svg")} height={50} width={50} alt="logo"/>
+              <Link href={"/"}><h6 className="  text-3xl font-semibold">Open GPT</h6></Link>
             </div>
-            <Link href="/">
-              <Image src="/home.svg" height={20} width={20} alt="home"/>
+            <Link href={"/"}>
+              <Image src={urljoin(basePath, "/home.svg")} height={20} width={20} alt="home"/>
             </Link>
         </div>
         {showShare==false?<div className=" max-w-3xl px-2 md:px-8 py-6 flex flex-col gap-5 text-gray-800">
@@ -268,7 +275,7 @@ export default function Create() {
               </button>
             </div>
           </div>  
-          <iframe src={"/embed/"+assistant + "?assistant_name=" + name } className="h-full grow rounded-xl border"/>
+          <iframe src={urljoin(basePath, "/embed/"+assistant + "?assistant_name=" + name)} className="h-full grow rounded-xl border"/>
         </div>}
     </main>
   )

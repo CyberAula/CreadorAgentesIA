@@ -2,13 +2,18 @@
 import { useState,useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import nextConfig from '../next.config';
+import urljoin from 'url-join';
+
+const basePath = nextConfig.basePath || '';
 
 function Home() {
     const [assistants,setAssistants] = useState([])
     const [loading,setLoading] = useState(true);    
 
     const fetchData = async () => {
-        const response = await fetch('/api/assistants');
+        const url = urljoin(basePath,'/api/assistants');
+        const response = await fetch(url);
         const data = await response.json();        
         if(data!=undefined){            
             setAssistants(data);
@@ -29,8 +34,8 @@ function Home() {
             <main className="flex min-h-screen flex-col  bg-myBg ">
             <div id="header" className="flex items-center justify-between flex-wrap gap-2 bg-slate-900 text-white px-2 md:px-8 py-4  ">
                 <div className="flex items-center gap-2">
-                <Image src="/assistant.svg" height={50} width={50} alt="logo"/>
-                <a href="/"><h6 className="  text-3xl font-semibold">Open GPT</h6></a>
+                <Image src={urljoin(basePath, "/assistant.svg")} height={50} width={50} alt="logo"/>
+                <Link href={"/"}><h6 className="  text-3xl font-semibold">Open GPT</h6></Link>
                 </div>
             </div>
             <div className=" max-w-3xl px-2 md:px-8 py-6 flex flex-col gap-5 text-gray-800">                

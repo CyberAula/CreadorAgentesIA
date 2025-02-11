@@ -41,7 +41,7 @@ npm run build
 
 npm run dev
 
-# visit http://localhost:3000
+# visit http://localhost/{basePath}:3000
 ```
 
 

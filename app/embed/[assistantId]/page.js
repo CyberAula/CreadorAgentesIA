@@ -2,6 +2,11 @@
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import { useSearchParams, useParams } from 'next/navigation';
+import nextConfig from '../../../next.config';
+import urljoin from 'url-join';
+
+const basePath = nextConfig.basePath || '';
+
 
 
 function Embed() {
@@ -61,13 +66,15 @@ function Embed() {
         console.log("GETTING ANSWER", threadId, runId);
 
         // fetch /API/CHAT/THREADID with runId as query param
-        const getRun = await fetch(`/api/chats/${threadId}?runId=${runId}&assistantId=${assistantId}&userEmail=${myUserEmail}`)
+        const url = urljoin(basePath, `/api/chats/${threadId}?runId=${runId}&assistantId=${assistantId}&userEmail=${myUserEmail}`);
+        const getRun = await fetch(url);
         const getRunData = await getRun.json();
         console.log("GET RUN RETURN: ", getRunData);        
         
         if(getRunData.run.status=="completed"){
             console.log("userEmail: ", myUserEmail);
-            const messages = await fetch(`/api/chats/${threadId}?messages=true&assistantId=${assistantId}&userEmail=${myUserEmail}`);
+            const url = urljoin(basePath, `/api/chats/${threadId}?messages=true&assistantId=${assistantId}&userEmail=${myUserEmail}`);
+            const messages = await fetch(url);
             const messagesData = await messages.json();
             console.log("MESSAGES RETURN: ", messagesData);
             setLoading((prev)=>false)
@@ -92,8 +99,9 @@ function Embed() {
             setChat(chatList)
         
             //post to /api/chat/threadId with body message
-            
-            const answer = await fetch(`/api/chats/${mythreadId}`, {
+            const url = urljoin(basePath, `/api/chats/${mythreadId}`);
+
+            const answer = await fetch(url, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -124,7 +132,8 @@ function Embed() {
             console.log("THERE IS NO EMAIL. ERROR, no podemos continuar....................");
             alert("No se ha rellenado el email. Intente recargar la página o usar otro navegador. Si el problema persiste, contacte con el profesor.");
         } else {
-            let mychat = await fetch(`/api/chats`, {
+            const url = urljoin(basePath, `/api/chats`);
+            let mychat = await fetch(url, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -141,12 +150,12 @@ function Embed() {
         <div className="h-screen w-screen md:p-4 flex flex-col bg-myBg gap-4">
             <div className={`flex justify-between bg-myPrimary rounded-xl p-4`}>
                 <div className="flex items-center gap-2">
-                    <Image height={25} width={25} src='/assistant.svg' alt="logo"/>
+                    <Image height={25} width={25} src={urljoin(basePath, '/assistant.svg')} alt="logo"/>
                     <span className="font-semibold">{assistantName==null ? "Ayudante Top":assistantName}</span>
                 </div>
                 <div className="d-flex align-items-center gap-2 cursor-pointer">
-                    {/*<Image height={20} width={20} onClick={refreshChat} src='/refresh.svg'  alt="refresh"/>*/}
-                    {/* <Image height={20} width={20} onClick={closeFrame} src='/cancel.svg'/> */}
+                    {/*<Image height={20} width={20} onClick={refreshChat} src={urljoin(basePath, '/refresh.svg')}  alt="refresh"/>*/}
+                    {/* <Image height={20} width={20} onClick={closeFrame} src={urljoin(basePath, '/cancel.svg')} alt="cancel"/> */}
 
                 </div>
 
@@ -169,7 +178,7 @@ function Embed() {
                 <div className="flex gap-2 mt-auto">
                 <input  id="question" className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Ask a question" required value={question} onKeyDown={(e) => {e.code == "Enter" && !e.shiftKey && askAssistant();}} onChange={(e)=>setQuestion(e.target.value)}/>
                 <button onClick={askAssistant} className=" bg-mySecondary hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-2.5 text-center ">
-                    <Image height={20} width={20} src='/send.svg' alt="send"/>
+                    <Image height={20} width={20} src={urljoin(basePath, '/send.svg')} alt="send"/>
                 </button>
             </div>         
         </div>
