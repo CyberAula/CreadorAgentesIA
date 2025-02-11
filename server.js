@@ -1,33 +1,40 @@
-const { createServer } = require("https");
+const { createServer } = require("http");
 const { parse } = require("url");
 const next = require("next");
 const fs = require("fs");
-const dev = process.env.NODE_ENV !== "production";
-const app = next({ dev });
-const handle = app.getRequestHandler();
+
 require('dotenv').config({ path: '.env.local' })
+const dev = process.env.NODE_ENV !== "production";
 
-let httpsOptions = {};
-let port = 80;
-if(!dev){  
-    console.log("USING HTTPS,lets load the certificates and set the port to 443");
-    let privateKey  = fs.readFileSync(process.env.HTTPS_PRIVATE_KEY, 'utf8');
-    let certificate = fs.readFileSync(process.env.HTTPS_CERTIFICATE, 'utf8');
-    let ca = fs.readFileSync(process.env.HTTPS_CA_CERT, 'utf8');
+const hostname = process.env.HOST_SERVER || 'localhost'
+const port = process.env.PORT_SERVER || 3000
+const app = next({ dev, hostname, port })
+const handle = app.getRequestHandler();
 
-    httpsOptions = {key: privateKey, cert: certificate, ca};
-    port = 443;
-}
+const nextConfig = require('./next.config')
+const basePath = nextConfig.basePath || '';
+
 
 app.prepare().then(() => {
- createServer(httpsOptions, (req, res) => {
-   const parsedUrl = parse(req.url, true);
-   handle(req, res, parsedUrl);
- }).listen(port, (err) => {
-   if (err) {
-    console.log("Error en server.js: ",err);
-    throw err;
-   }
-   console.log(`> Server started on port ${port}`);
- });
-});
+  createServer(async (req, res) => {
+    try {
+      // Be sure to pass `true` as the second argument to `url.parse`.
+      // This tells it to parse the query portion of the URL.
+      const parsedUrl = parse(req.url, true)
+       await handle(req, res, parsedUrl)
+      
+    } catch (err) {
+      console.error('Error occurred handling', req.url, err)
+      res.statusCode = 500
+      res.end('internal server error')
+    }
+  })
+    .once('error', (err) => {
+      console.error(err)
+      process.exit(1)
+    })
+    .listen(port, () => {
+      const url = `http://${hostname}:${port}${basePath}`
+      console.log(`> Ready on ${url}`)
+    })
+})
