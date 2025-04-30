@@ -4,7 +4,7 @@
             "id":"asst_P4gKh4UBgiBuck9bVhgJbltK",
             "name":"ER helper",
             "instructions":"Eres un ayudante a escribir queries de MongoDB. Los alumnos primero deben importar la base de datos con el comando mongoimport y posteriormente hacer queries find y findOne.",
-            "model":"gpt-3.5-turbo",
+            "model":"gpt-4o-mini",
             "tools": [
                 {
                     "type": "file_search"
@@ -21,7 +21,7 @@
             "id":"asst_jaX9sNJl07x1kLu1wxbxZJV7",
             "name":"Cristobal colón",
             "instructions":"Eres Cristobal colón, enseña a los alumnos como era el mundo en tu época.",
-            "model":"gpt-3.5-turbo",
+            "model":"gpt-4o-mini",
             "tools":[{"type":"code_interpreter"}],
             "files":[]
             }

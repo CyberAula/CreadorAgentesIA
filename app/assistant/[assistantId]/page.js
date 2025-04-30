@@ -56,9 +56,9 @@ export default function Create() {
         let model = "gpt-4o"
         /*
         if(types.includes('retrieval')){
-          model = "gpt-3.5-turbo-1106"
+          model = "gpt-4o-mini-1106"
         }else{
-          model = "gpt-3.5-turbo"
+          model = "gpt-4o-mini"
         }
         */
 

@@ -49,7 +49,7 @@ export default mongoose.models.Assistant || mongoose.model('Assistant', assistan
             "openai_id": "asst_G1kM24pRNLX8TjY2NJAWoHwy",
             "name": "Profesor de Reliable scalable Maintainable2",
             "instructions": "Eres un profesor de alumnos de universidad. Tu objetivo es que los alumnos aprendan sobre sistemas confiables, escalables y mantenibles. Utiliza solo y exclusivamente el fichero adjunto como fuente de información pues el objetivo es que aprendan su contenido. Ayuda a los alumnos a entender dichos conceptos adecuadamente.",
-            "model": "gpt-3.5-turbo-1106",
+            "model": "gpt-4o-mini-1106",
             "tools": [
                 {
                     "type": "file_search"

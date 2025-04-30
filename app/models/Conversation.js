@@ -51,7 +51,7 @@ export default mongoose.models.Conversation || mongoose.model('Conversation', co
         "failed_at": null,
         "completed_at": null,
         "last_error": null,
-        "model": "gpt-3.5-turbo",
+        "model": "gpt-4o-mini",
         "instructions": "Eres un ayudante a escribir queries de MongoDB. Los alumnos primero deben importar la base de datos con el comando mongoimport y posteriormente hacer queries find y findOne.",
         "tools": [
             {
