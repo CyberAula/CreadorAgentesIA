@@ -208,59 +208,61 @@ export default function Create() {
         <Header/>
         {showShare==false?<div className=" max-w-3xl px-2 md:px-8 py-6 flex flex-col gap-5 text-gray-800">
           <div>
-            <label htmlFor="name" className="block mb-2 text-sm font-medium ">Enter assistant name</label>
-            <input  id="name" className="bg-inputs border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="UX Designer" required value={name} onChange={(e)=>setName(e.target.value)}/>
+            <label htmlFor="name" className="label">Enter assistant name</label>
+            <input  id="name" className="input " placeholder="UX Designer" required value={name} onChange={(e)=>setName(e.target.value)}/>
           </div>
           <div>
-            <label htmlFor="instructions" className="block mb-2 text-sm font-medium ">Enter instructions</label>
-            <textarea id="instructions" className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " required placeholder="Act as a UX Designer to help with my project." value={instructions} onChange={(e)=>setInstructions(e.target.value)}/>
+            <label htmlFor="instructions" className="label">Enter instructions</label>
+            <textarea id="instructions" className="input" required placeholder="Act as a UX Designer to help with my project." value={instructions} onChange={(e)=>setInstructions(e.target.value)}/>
           </div>
           <div>
-            <label htmlFor="type" className="block mb-2 text-sm font-medium ">Select type of assistant</label>
+            <label htmlFor="type" className="label">Select type of assistant</label>
             <div className="flex flex-col gap-3 text-sm">
-              <label className="relative inline-flex items-center cursor-pointer">
+              <label className="label relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" value="" className="sr-only peer"  onClick={()=>addType('code_interpreter')}/>
-                <div className={`w-9 h-5  rounded-full peer     after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-mySecondary  after:rounded-full after:w-4 after:h-4 after:transition-all ${types.includes('code_interpreter')?'after:translate-x-full rtl:after:-translate-x-full after:border-white bg-myPrimary':'bg-myBg'}`}></div>
+                <div className={`w-9 h-5  rounded-full peer     after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white  after:rounded-full after:w-4 after:h-4 after:transition-all 
+                  ${types.includes('code_interpreter')?'after:translate-x-full rtl:after:-translate-x-full after:bg-primary-400 bg-primary-0':'bg-neutral-700'}`}></div>
                 <span className="ms-3 font-medium ">Code Interpreter</span>
               </label>
-              <label className="relative inline-flex items-center cursor-pointer">
+              <label className="label relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" value="" className="sr-only peer"  onClick={()=>addType('file_search')}/>
-                <div className={`w-9 h-5  rounded-full peer     after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-mySecondary  after:rounded-full after:w-4 after:h-4 after:transition-all ${types.includes('file_search')?'after:translate-x-full rtl:after:-translate-x-full after:border-white bg-myPrimary':'bg-myBg'}`}></div>
+                <div className={`w-9 h-5  rounded-full peer     after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white  after:rounded-full after:w-4 after:h-4 after:transition-all 
+                  ${types.includes('file_search')?'after:translate-x-full rtl:after:-translate-x-full after:bg-primary-400 bg-primary-0':'bg-neutral-700'}`}></div>
                 <span className="ms-3 font-medium ">file_search</span>
               </label>
-              <div className="flex items-center gap-5 cursor-pointer">
+              <div className="label flex items-center gap-5 cursor-pointer">
                 <div className=" rounded-full bg-myBg text-text text-xl font-bold px-2 w-min" onClick={()=>{setFunctions([...functions,''])}}>+</div>
                 <span className="font-medium ">Functions</span>
 
               </div>
             </div>
             {functions.map((fn,index)=><div key={index} className="relative">
-              <textarea id="functions" className="bg-gray-50 mt-3 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 h-60" required placeholder='{"name": "get_weather", "description": "Determine weather in my location"}'  value={fn} onChange={(e)=>addFunction(index,e.target.value)}/>
-              <div className="absolute z-10 top-1 right-4 font-bold cursor-pointer" onClick={()=>removeFunction(index)}>x</div>
+              <textarea id="functions" className="input h-60" required placeholder='{"name": "get_weather", "description": "Determine weather in my location"}'  value={fn} onChange={(e)=>addFunction(index,e.target.value)}/>
+              <div className="text-text absolute z-10 top-1 right-4 font-bold cursor-pointer" onClick={()=>removeFunction(index)}>x</div>
               </div>)}
 
 
           </div>
           <div className="flex flex-col gap-2">
-            <label className=" text-sm font-medium " htmlFor="user_avatar">Upload files</label>
-            <input className=" text-sm border border-gray-300 rounded-lg p-2 cursor-pointer bg-gray-50 focus:outline-none" aria-describedby="user_avatar_help" id="user_avatar" type="file" onChange={(e)=>setFiles([...files,e.target.files[0]])}/>
-            <div className="flex gap-2">
+            <label className=" label" htmlFor="user_avatar">Upload files</label>
+            <input className=" input cursor-pointer " aria-describedby="user_avatar_help" id="user_avatar" type="file" onChange={(e)=>setFiles([...files,e.target.files[0]])}/>
+            <div className="label flex gap-2">
               {files.map((file,index)=><div key={file.name} className="text-xs w-min whitespace-nowrap border border-gray-400 py-1 px-2 rounded-xl flex gap-1">{file.name}  <b className=" cursor-pointer" onClick={()=>removeFile(file)}>x</b></div>)}
             </div>
           </div>
 
-          <button onClick={createAssistant} className="buttonprimary">Submit</button>
-          {assistant!=null&&<button onClick={()=>setShowShare(true)} className=" bg-mySecondary hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ">Cancel</button>}
+          <button onClick={createAssistant} className=" buttonprimary ">Submit</button>
+          {assistant!=null&&<button onClick={()=>setShowShare(true)} className=" buttonprimary">Cancel</button>}
         </div>:<div className="h-full grow px-2 md:px-8 py-6 flex flex-col gap-5 text-text">
           <div className="flex flex-wrap gap-2 justify-between w-full">            
             <div className="flex gap-2">
-              <button onClick={()=>deleteAssistant()} className="buttonsecondary">                
+              <button onClick={()=>deleteAssistant()} className="buttonprimary">                
                 Delete
               </button>
               <button onClick={()=>setShowShare(false)} className="buttonprimary">                
                 Edit
               </button>
-              <button onClick={()=>shareEmbed(0)} className="buttonprimary">
+              <button onClick={()=>shareEmbed(0)} className=" buttonprimary">
                   Copy Embed
               </button>
               <button onClick={()=>shareEmbed(1)} className="buttonprimary">

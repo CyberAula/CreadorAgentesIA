@@ -38,22 +38,22 @@ export default function ThemeToggle() {
   return (
     <div
       onClick={toggleTheme}
-      className="flex items-center bg-[var(--switch-bg)] rounded-xl p-1 cursor-pointer w-24 justify-between transition-colors"
+      className="flex items-center bg-myBg rounded-xl p-1 cursor-pointer w-24 justify-between transition-colors"
       style={{ minWidth: "80px" }}
     >
       <div
         className={`flex items-center justify-center rounded-xl p-2 transition-colors ${
-          !isDark ? "bg-[var(--switch-active-color)] text-[var(--switch-bg)]" : ""
+          !isDark ? "bg-primary " : ""
         }`}
       >
-        <FontAwesomeIcon icon={faSun} className="text-[var(--switch-icon-color)] h-5 w-5" />
+        <FontAwesomeIcon icon={faSun} className="text-text h-5 w-5" />
       </div>
       <div
         className={`flex items-center justify-center rounded-xl p-2 transition-colors ${
-          isDark ? "bg-[var(--switch-active-color)] text-[var(--switch-bg)]" : ""
+          isDark ? "bg-primary " : ""
         }`}
       >
-        <FontAwesomeIcon icon={faMoon} className="text-[var(--switch-icon-color)] h-5 w-5" />
+        <FontAwesomeIcon icon={faMoon} className="text-text h-5 w-5" />
       </div>
     </div>
   );
