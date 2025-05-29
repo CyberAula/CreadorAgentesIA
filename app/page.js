@@ -41,7 +41,7 @@ function Home() {
                     {assistants.map((assistant)=>
                     <Link key={assistant.id} href={"/assistant/"+assistant.id}>
                         <div className=" border-2 px-4 py-2 flex gap-4 items-center rounded-xl h-16 min-w-[20rem] max-w-xl cursor-pointer">
-                            <div className=" rounded-full bg-slate-500 h-2 w-2"/>
+                            <div className=" rounded-full bg-primary h-2 w-2"/>
                             <div className=" flex flex-col">
                                 <div className=" text-text font-medium">{assistant.name}</div>
                             </div>

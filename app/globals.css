@@ -4,13 +4,20 @@
 
 /* Clases variables modo dark y light */
 :root{
-    --color-bg: #theme(.colors.white);
-    --color-text: theme(.colors.black);
-}
 
+    --bg-color: theme(.colors.background);
+    --header-color: theme(.colors.primary.DEFAULT);
+    --text-color: theme(.colors.black);
+    --primary-color: #2BC5AE;
+  
+}
 .darkmode {
-    --color-bg: #1D201F;
-    --color-text: theme(.colors.white);
+
+    --bg-color: theme(.colors.backgrounddark);
+    --header-color: theme(.colors.black);
+    --text-color: theme(.colors.white);
+    --primary-color: #3CD4BE;
+  
 }
 
 

@@ -1,3 +1,5 @@
+const { text } = require('@fortawesome/fontawesome-svg-core');
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -9,29 +11,41 @@ module.exports = {
   theme: {
     extend: {
       colors:{
+        primary:{
+          0: '#2bc5ae2c',
+          100: '#DFF8F4',
+          200: '#7DE2D4',
+          DEFAULT: 'var(--primary-color)',
+          400: '#26AC99',
+          500: '#1B7A6C',
+        },
+        white: '#F5F5F5',
+        black: '#2C2C2C',
+        background: '#DFE2E1',
+        backgrounddark: '#1D201F',
+        neutral:{
+          0: '#2c2c2c2a',
+          200: '#DFDFDF',
+          300: '#C8C8C8',
+          400: '#B2B2B2',
+          500: '#9C9C9C',
+          600: '#858585',
+          700: '#6F6F6F',
+          800: '#595959',
+          900: '#424242',
+        },
+        error:{
+          0: '#E04E4E2c',
+          100: '#E04E4E',
+          200: '#B31F1F',
+          300: '#A21919',
+        },
 
-        'white': '#F5F5F5',
-        'black': '#2C2C2C',
 
-        'primary': '3CD4BE',
-        'primary100': '#DFF8F4',
-        'primary200': '#7DE2D4',
-        'primary400': '#26AC99',
-        'primary500': '#1B7A6C',
-        
-        'primarygamma': '3CD4BE1A',
+        header: 'var(--header-color)',
+        'myBg':'var(--bg-color)',
+        text: 'var(--text-color)',
 
-
-        'textcolor': 'var(--color-text)',
-        
-        'myBg':'var(--color-bg)',
-        
-        
-        'myPrimary':'#7899C5',
-        'mySecondary':'#A7C7E7',
-
-        // Prueba de variable modo dark
-        background: 'var(--color-bg)',
         
       },
     },

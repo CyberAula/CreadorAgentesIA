@@ -6,11 +6,11 @@
 /* Clase bottón */
 .buttonprimary {
    @apply
-   bg-primary400 
-   hover:bg-primary500
+   bg-primary-400 
+   hover:bg-primary-500
    focus:ring-4
    focus:outline-none
-   focus:ring-primary500
+   focus:ring-primary-100
    font-medium
    rounded-md
    text-white
@@ -29,6 +29,22 @@
     @apply 
     block 
     mb-2 
-    text-textcolor 
+    text-sm
+    text-text
     font-medium
+}
+.input{
+    @apply
+    bg-primary-0
+    border
+    border-primary-200
+    text-sm
+    text-text
+    rounded-lg 
+    focus:ring-primary-100 
+    focus:border-primary-500 
+    block 
+    w-full 
+    p-2.5
+
 }
