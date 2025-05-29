@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* Clase bottón */
+.buttonprimary {
+   @apply
+   bg-primary400 
+   hover:bg-primary500
+   focus:ring-4
+   focus:outline-none
+   focus:ring-primary500
+   font-medium
+   rounded-md
+   text-white
+   w-full
+   sm:w-auto
+   px-4
+   py-2.5
+   text-center
+   whitespace-nowrap
+}
+
+
+/* Clase label */
+
+.label{
+    @apply 
+    block 
+    mb-2 
+    text-textcolor 
+    font-medium
+}

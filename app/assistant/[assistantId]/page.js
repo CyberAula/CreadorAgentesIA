@@ -6,6 +6,7 @@ import {useRouter} from "next/navigation";
 import { useParams } from 'next/navigation';
 import nextConfig from '../../../next.config';
 import urljoin from 'url-join';
+import ThemeToggle from '@/Components/ThemeToggle';
 
 const basePath = nextConfig.basePath || '';
 
@@ -215,7 +216,7 @@ export default function Create() {
         </div>
         {showShare==false?<div className=" max-w-3xl px-2 md:px-8 py-6 flex flex-col gap-5 text-gray-800">
           <div>
-            <label htmlFor="name" className="block mb-2 text-sm font-medium ">Enter assistant name</label>
+            <label htmlFor="name" className="label">Enter assistant name </label>
             <input  id="name" className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="UX Designer" required value={name} onChange={(e)=>setName(e.target.value)}/>
           </div>
           <div>
@@ -270,7 +271,7 @@ export default function Create() {
               <button onClick={()=>shareEmbed(0)} className=" bg-mySecondary hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-2.5 text-center whitespace-nowrap">
                   Copy Embed
               </button>
-              <button onClick={()=>shareEmbed(1)} className=" bg-mySecondary hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-2.5 text-center whitespace-nowrap">
+              <button onClick={()=>shareEmbed(1)} className="buttonprimary">
                   Copy Link
               </button>
             </div>
