@@ -5,12 +5,17 @@ module.exports = {
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  darkmode: 'class', // Enable dark mode support
   theme: {
     extend: {
       colors:{
         'myBg':'#F5F5F5',
         'myPrimary':'#7899C5',
         'mySecondary':'#A7C7E7',
+        
+        // Prueba de variable modo dark
+        background: 'var(--color-bg)',
+        
 
       },
     },

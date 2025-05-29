@@ -1,6 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Clases variables modo dark y light */
+:root{
+    --color-bg: #000;
+}
+
+.darkmode {
+    --color-bg: #fff;
+}
+
+
+
+
+
 .scroll{
     scrollbar-width: none;
 }
