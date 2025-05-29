@@ -6,9 +6,8 @@ const AssistantCard = ({ assistant }) => {
 
   return (
     <Link key={assistant.id} href={"/assistant/" + assistant.id}>
-      <div className=" p-6 flex flex-col gap-6 items-center rounded-lg h-fit min-w-[20rem] max-w-xl cursor-pointer">
-        <div className=" rounded-full bg-slate-500 h-2 w-2" />
-        <div className=" flex flex-col">
+      <div className=" p-6 bg-primary-0 flex flex-col gap-6 items-center rounded-lg h-fit min-w-[20rem] max-w-xl cursor-pointer">
+        <div className=" flex flex-col gap-2">
             <img className="w-16 h-16 rounded-full" src="https://www.diariodepontevedra.es/asset/thumbnail,1280,720,center,center/media/diariodepontevedra/images/2017/07/17/cristobal_colon.jpg"/> 
             <div className=" text-text font-medium">{assistant.name}</div>
         </div>
@@ -17,7 +16,7 @@ const AssistantCard = ({ assistant }) => {
           <button className="buttonprimary">Edit</button>
           <button className="buttonprimary">Share</button>
           <button className="buttonsecondary">Delete</button>
-        </div>              
+        </div>
     </div>
 
     </Link>
