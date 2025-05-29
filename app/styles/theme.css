@@ -1,0 +1,29 @@
+/* styles/theme.css */
+:root {
+    --bg-color: #DFE2E1;
+    --header-color: #2BC5AE;
+    --text-color: #0A0A0A;
+    --primary-color: #2BC5AE;
+    --switch-bg: #ffffff;
+    --switch-icon-color: #000000;
+    --switch-active-color: #26a69a;
+    /* Otros colores... */
+  }
+  
+  html.dark {
+    --bg-color: #1D201F;
+    --header-color: #2C2C2C;
+    --text-color: #F5F5F5;
+    --primary-color: #3CD4BE;
+    --switch-bg: #121212;
+    --switch-icon-color: #ffffff;
+    --switch-active-color: #26a69a;
+    /* Otros colores en oscuro... */
+  }
+  
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
