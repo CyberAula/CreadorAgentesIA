@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+<<<<<<< HEAD
 :root {
     --bg-color: #ffffff;
     --text-color: #000000;
@@ -17,6 +18,22 @@
     transition: background-color 0.3s, color 0.3s;
   }
   
+=======
+
+/* Clases variables modo dark y light */
+:root{
+    --color-bg: #000;
+}
+
+.darkmode {
+    --color-bg: #fff;
+}
+
+
+
+
+
+>>>>>>> new-ui
 .scroll{
     scrollbar-width: none;
 }

@@ -168,6 +168,7 @@ function Embed() {
             <div className="flex flex-col gap-2 w-full h-full overflow-y-auto myscroll">
 
                 {chat.map((msg, index) =>
+                //IA BUBBLE
                     <div key={index} className={`${msg.isBot ? 'bg-gray-900 text-gray-100 self-start' : 'text-gray-900 bg-gray-100 self-end border-2'} rounded-lg  px-3 py-2 max-w-5xl`}>
                         <ReactMarkdown
                             remarkPlugins={[remarkGfm]}
@@ -175,6 +176,7 @@ function Embed() {
                             components={{
                                 code({ node, inline, className, children, ...props }) {
                                     return inline ? (
+                                        //markdown inline code
                                         <code style={{ background: "#FFFFFF", padding: "2px 4px", color: "#000000" }} {...props}>
                                             {children}
                                         </code>
@@ -189,6 +191,7 @@ function Embed() {
                             {msg.msg}
                         </ReactMarkdown>
                     </div>)}
+                    {/* Puntos loading */}
                 {loading && <div className={`bg-gray-900 text-gray-100 self-start rounded-lg  px-3 py-2 max-w-sm`}>
                     <div className="flex h-4 items-center gap-2">
                         <div className="bounce bounce1 rounded-full bg-slate-500 h-2 w-2" />
@@ -198,6 +201,7 @@ function Embed() {
                 </div>}
 
             </div>
+            {/* input message */}
             <div className="flex gap-2 mt-auto">
                 <input id="question" className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Ask a question" required value={question} onKeyDown={(e) => { e.code == "Enter" && !e.shiftKey && askAssistant(); }} onChange={(e) => setQuestion(e.target.value)} />
                 <button onClick={askAssistant} className=" bg-mySecondary hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-2.5 text-center ">
