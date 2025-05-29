@@ -4,25 +4,15 @@
 
 /* Clases variables modo dark y light */
 :root{
-    --color-bg: #DFE2E1;
-    --header-color: #2BC5AE;
-    --text-color: #0A0A0A;
-    --primary-color: #2BC5AE;
-    --switch-bg: #ffffff;
-    --switch-icon-color: #000000;
-    --switch-active-color: #26a69a;
-    --input-bg: #3cd4bd34;
+    --color-bg: #theme(.colors.white);
+    --color-text: theme(.colors.black);
 }
 
 .darkmode {
     --color-bg: #1D201F;
-    --header-color: #2C2C2C;
-    --text-color: #F5F5F5;
-    --primary-color: #3CD4BE;
-    --switch-bg: #121212;
-    --switch-icon-color: #ffffff;
-    --switch-active-color: #26a69a;
+    --color-text: theme(.colors.white);
 }
+
 
 
 
