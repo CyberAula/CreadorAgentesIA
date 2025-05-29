@@ -22,6 +22,34 @@
    whitespace-nowrap
 }
 
+.buttonsecondary {
+   @apply
+   bg-transparent
+   hover:bg-white
+   hover:text-black
+   focus:ring-4
+   focus:outline-none
+   focus:ring-primary
+   font-medium
+   rounded-md
+   text-black
+   border-black
+   border
+   w-full
+   sm:w-auto
+   px-4
+   py-2.5
+   text-center
+   whitespace-nowrap
+}
+
+.darkmode .buttonsecondary {
+    @apply
+   text-white
+   border-white
+   
+}
+
 
 /* Clase label */
 

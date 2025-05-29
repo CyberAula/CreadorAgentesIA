@@ -5,6 +5,7 @@ import Link from "next/link";
 import nextConfig from '../next.config';
 import urljoin from 'url-join';
 import Header from "/components/Header";
+import AssistantCard from '/components/AssistantCard';
 
 
 const basePath = nextConfig.basePath || '';
@@ -39,14 +40,7 @@ function Home() {
            
                 <div className=" flex flex-wrap gap-4">
                     {assistants.map((assistant)=>
-                    <Link key={assistant.id} href={"/assistant/"+assistant.id}>
-                        <div className=" border-2 px-4 py-2 flex gap-4 items-center rounded-xl h-16 min-w-[20rem] max-w-xl cursor-pointer">
-                            <div className=" rounded-full bg-slate-500 h-2 w-2"/>
-                            <div className=" flex flex-col">
-                                <div className=" text-text font-medium">{assistant.name}</div>
-                            </div>
-                        </div>
-                    </Link>
+                    <AssistantCard key={assistant.id} assistant={assistant} />  
                     )}
                     
                     <Link href="/assistant/new">    

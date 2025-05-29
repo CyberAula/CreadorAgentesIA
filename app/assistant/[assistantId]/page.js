@@ -249,18 +249,18 @@ export default function Create() {
             </div>
           </div>
 
-          <button onClick={createAssistant} className=" bg-mySecondary hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ">Submit</button>
+          <button onClick={createAssistant} className="buttonprimary">Submit</button>
           {assistant!=null&&<button onClick={()=>setShowShare(true)} className=" bg-mySecondary hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ">Cancel</button>}
         </div>:<div className="h-full grow px-2 md:px-8 py-6 flex flex-col gap-5 text-text">
           <div className="flex flex-wrap gap-2 justify-between w-full">            
             <div className="flex gap-2">
-              <button onClick={()=>deleteAssistant()} className="bg-mySecondary hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-2.5 text-center whitespace-nowrap">                
+              <button onClick={()=>deleteAssistant()} className="buttonsecondary">                
                 Delete
               </button>
-              <button onClick={()=>setShowShare(false)} className="bg-mySecondary hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-2.5 text-center whitespace-nowrap">                
+              <button onClick={()=>setShowShare(false)} className="buttonprimary">                
                 Edit
               </button>
-              <button onClick={()=>shareEmbed(0)} className=" bg-mySecondary hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-2.5 text-center whitespace-nowrap">
+              <button onClick={()=>shareEmbed(0)} className="buttonprimary">
                   Copy Embed
               </button>
               <button onClick={()=>shareEmbed(1)} className="buttonprimary">
