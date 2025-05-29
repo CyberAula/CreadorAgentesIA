@@ -2,6 +2,8 @@
 import Image from 'next/image'
 import { useState,useEffect } from "react"
 import Link from "next/link";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLink, faTrashCan, faCode, faPen } from '@fortawesome/free-solid-svg-icons';
 import {useRouter} from "next/navigation";
 import { useParams } from 'next/navigation';
 import nextConfig from '../../../next.config';
@@ -256,19 +258,24 @@ export default function Create() {
         </div>:<div className="h-full grow px-2 md:px-8 py-6 flex flex-col gap-5 text-text">
           <div className="flex flex-wrap gap-2 justify-between w-full">            
             <div className="flex gap-2">
-              <button onClick={()=>deleteAssistant()} className="buttonprimary">                
-                Delete
-              </button>
               <button onClick={()=>setShowShare(false)} className="buttonprimary">                
+              <FontAwesomeIcon icon={faPen} className=" h-4 w-4 pr-2" />
                 Edit
               </button>
               <button onClick={()=>shareEmbed(0)} className=" buttonprimary">
+              <FontAwesomeIcon icon={faCode} className=" h-4 w-4 pr-2" />
                   Copy Embed
               </button>
               <button onClick={()=>shareEmbed(1)} className="buttonprimary">
+              <FontAwesomeIcon icon={faLink} className=" h-4 w-4 pr-2" />
+
                   Copy Link
               </button>
             </div>
+              <button onClick={()=>deleteAssistant()} className="buttonsecondary">   
+              <FontAwesomeIcon icon={faTrashCan} className="text-text h-4 w-4 pr-2" />
+                Delete
+              </button>
           </div>  
           <iframe src={urljoin(basePath, "/embed/"+assistant + "?assistant_name=" + name)} className="h-full grow rounded-xl border"/>
         </div>}
