@@ -9,16 +9,18 @@ module.exports = {
   theme: {
     extend: {
       colors:{
-        'myBg':'#F5F5F5',
+        'myBg':'var(--color-bg)',
         'myPrimary':'#7899C5',
         'mySecondary':'#A7C7E7',
         
         // Prueba de variable modo dark
-        background: 'var(--color-bg)',
-        
-
+        // background: 'var(--color-bg)',
+        // primary: 'var(--primary-color)',
+        // text: 'var(--text-color)',
+        // inputs: 'var(--input-bg)',
       },
     },
   },
   plugins: [],
 }
+

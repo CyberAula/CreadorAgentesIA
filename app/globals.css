@@ -1,39 +1,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-<<<<<<< HEAD
-:root {
-    --bg-color: #ffffff;
-    --text-color: #000000;
-  }
-  
-  [data-theme="dark"] {
-    --bg-color: #121212;
-    --text-color: #ffffff;
-  }
-  
-  body {
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    transition: background-color 0.3s, color 0.3s;
-  }
-  
-=======
 
 /* Clases variables modo dark y light */
 :root{
-    --color-bg: #000;
+    --color-bg: #DFE2E1;
+    --header-color: #2BC5AE;
+    --text-color: #0A0A0A;
+    --primary-color: #2BC5AE;
+    --switch-bg: #ffffff;
+    --switch-icon-color: #000000;
+    --switch-active-color: #26a69a;
+    --input-bg: #3cd4bd34;
 }
 
 .darkmode {
-    --color-bg: #fff;
+    --color-bg: #1D201F;
+    --header-color: #2C2C2C;
+    --text-color: #F5F5F5;
+    --primary-color: #3CD4BE;
+    --switch-bg: #121212;
+    --switch-icon-color: #ffffff;
+    --switch-active-color: #26a69a;
 }
 
 
 
 
 
->>>>>>> new-ui
 .scroll{
     scrollbar-width: none;
 }
@@ -57,3 +51,4 @@
     scrollbar-color: rgb(120 153 197) rgb(236, 239, 243);
     scrollbar-width: thin;
 }
+

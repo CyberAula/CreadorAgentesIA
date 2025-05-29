@@ -6,6 +6,7 @@ import {useRouter} from "next/navigation";
 import { useParams } from 'next/navigation';
 import nextConfig from '../../../next.config';
 import urljoin from 'url-join';
+import Header from "/components/Header";
 
 const basePath = nextConfig.basePath || '';
 
@@ -204,19 +205,11 @@ export default function Create() {
   
   return (
     <main className="flex min-h-screen flex-col  bg-myBg ">
-        <div id="header" className="flex items-center justify-between flex-wrap gap-2 bg-slate-900 text-white px-2 md:px-8 py-4  ">
-            <div className="flex items-center gap-2">
-              <Image src={urljoin(basePath, "/assistant.svg")} height={50} width={50} alt="logo"/>
-              <Link href={"/"}><h6 className="  text-3xl font-semibold">Open GPT</h6></Link>
-            </div>
-            <Link href={"/"}>
-              <Image src={urljoin(basePath, "/home.svg")} height={20} width={20} alt="home"/>
-            </Link>
-        </div>
+        <Header/>
         {showShare==false?<div className=" max-w-3xl px-2 md:px-8 py-6 flex flex-col gap-5 text-gray-800">
           <div>
             <label htmlFor="name" className="block mb-2 text-sm font-medium ">Enter assistant name</label>
-            <input  id="name" className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="UX Designer" required value={name} onChange={(e)=>setName(e.target.value)}/>
+            <input  id="name" className="bg-inputs border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="UX Designer" required value={name} onChange={(e)=>setName(e.target.value)}/>
           </div>
           <div>
             <label htmlFor="instructions" className="block mb-2 text-sm font-medium ">Enter instructions</label>
@@ -236,7 +229,7 @@ export default function Create() {
                 <span className="ms-3 font-medium ">file_search</span>
               </label>
               <div className="flex items-center gap-5 cursor-pointer">
-                <div className=" rounded-full bg-myBg text-mySecondary text-xl font-bold px-2 w-min" onClick={()=>{setFunctions([...functions,''])}}>+</div>
+                <div className=" rounded-full bg-myBg text-text text-xl font-bold px-2 w-min" onClick={()=>{setFunctions([...functions,''])}}>+</div>
                 <span className="font-medium ">Functions</span>
 
               </div>
@@ -258,7 +251,7 @@ export default function Create() {
 
           <button onClick={createAssistant} className=" bg-mySecondary hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ">Submit</button>
           {assistant!=null&&<button onClick={()=>setShowShare(true)} className=" bg-mySecondary hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ">Cancel</button>}
-        </div>:<div className="h-full grow px-2 md:px-8 py-6 flex flex-col gap-5 text-gray-800">
+        </div>:<div className="h-full grow px-2 md:px-8 py-6 flex flex-col gap-5 text-text">
           <div className="flex flex-wrap gap-2 justify-between w-full">            
             <div className="flex gap-2">
               <button onClick={()=>deleteAssistant()} className="bg-mySecondary hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-2.5 text-center whitespace-nowrap">                

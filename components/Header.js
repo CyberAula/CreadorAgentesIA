@@ -3,8 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import urljoin from "url-join";
-import ModeSwitch from "./ModeSwitch";
+import ThemeToggle from "./ThemeToggle";
 import nextConfig from "../next.config";
+import '../app/globals.css'
 
 const basePath = nextConfig.basePath || "";
 
@@ -29,7 +30,7 @@ export default function Header() {
           <h6 className="text-3xl font-semibold">Open GPT</h6>
         </Link>
       </div>
-      <ModeSwitch />
+      <ThemeToggle />
     </div>
   );
 }
