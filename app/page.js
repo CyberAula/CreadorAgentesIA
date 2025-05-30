@@ -37,7 +37,8 @@ function Home() {
             <main className="flex min-h-screen flex-col  bg-myBg ">
            <Header/>
             <div className=" max-w-3xl px-2 md:px-8 py-6 flex flex-col gap-5 text-text">     
-           
+                <h2 className="text-2xl text-text font-semibold">Your active assistants</h2>
+
                 <div className=" flex flex-wrap gap-4">
                     {assistants.map((assistant)=>
                     <Link key={assistant.id} href={"/assistant/"+assistant.id}>

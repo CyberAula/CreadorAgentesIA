@@ -3,12 +3,13 @@ import Image from 'next/image'
 import { useState,useEffect } from "react"
 import Link from "next/link";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLink, faTrashCan, faCode, faPen } from '@fortawesome/free-solid-svg-icons';
+import { faLink, faTrashCan, faCode, faPen, faArrowLeft} from '@fortawesome/free-solid-svg-icons';
 import {useRouter} from "next/navigation";
 import { useParams } from 'next/navigation';
 import nextConfig from '../../../next.config';
 import urljoin from 'url-join';
 import Header from "/components/Header";
+
 
 const basePath = nextConfig.basePath || '';
 
@@ -209,6 +210,10 @@ export default function Create() {
     <main className="flex min-h-screen flex-col  bg-myBg ">
         <Header/>
         {showShare==false?<div className=" max-w-3xl px-2 md:px-8 py-6 flex flex-col gap-5 text-gray-800">
+          <div className="flex gap-4">
+            <button className='backButton' onClick={()=>router.back()}><FontAwesomeIcon icon={faArrowLeft} className="text-text h-6 w-6"/></button>
+            <h2 className="text-2xl text-text font-semibold">Create your assistant</h2>
+          </div>
           <div>
             <label htmlFor="name" className="label">Enter assistant name</label>
             <input  id="name" className="input " placeholder="UX Designer" required value={name} onChange={(e)=>setName(e.target.value)}/>
