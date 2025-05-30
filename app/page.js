@@ -41,8 +41,8 @@ function Home() {
                 <div className=" flex flex-wrap gap-4">
                     {assistants.map((assistant)=>
                     <Link key={assistant.id} href={"/assistant/"+assistant.id}>
-                        <div className=" border-2 px-4 py-2 flex gap-4 items-center rounded-xl h-16 min-w-[20rem] max-w-xl cursor-pointer">
-                            <div className=" rounded-full bg-slate-500 h-2 w-2"/>
+                        <div className=" border-2 hover:bg-primary-0 border-primary-400 px-4 py-2 flex gap-4 items-center rounded-xl h-16 min-w-[20rem] max-w-xl cursor-pointer">
+                            <div className=" rounded-full bg-primary-500 h-2 w-2"/>
                             <div className=" flex flex-col">
                                 <div className=" text-text font-medium">{assistant.name}</div>
                             </div>
@@ -51,7 +51,7 @@ function Home() {
                     )}
                     
                     <Link href="/assistant/new">    
-                        <div className=" border-2 px-4 py-2 flex gap-4 items-center rounded-xl h-16 min-w-[20rem] max-w-xl cursor-pointer" >
+                        <div className=" border-2 hover:bg-primary-0 border-primary-400 px-4 py-2 flex gap-4 items-center rounded-xl h-16 min-w-[20rem] max-w-xl cursor-pointer" >
                             <div className=" text-lg">+</div>
                             <div className=" flex flex-col">
                                 <div className=" text-text font-medium">Create a new assistant</div>
