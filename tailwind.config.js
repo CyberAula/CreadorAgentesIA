@@ -13,6 +13,7 @@ module.exports = {
       colors:{
         primary:{
           0: '#2bc5ae2c',
+          50: '#F0FFFD',
           100: '#DFF8F4',
           200: '#7DE2D4',
           DEFAULT: 'var(--primary-color)',
@@ -49,7 +50,6 @@ module.exports = {
           inverse: 'var(--text-inverse-color)',
         },
         chatbot: 'var(--chat-bot)',
-        
       },
     },
   },

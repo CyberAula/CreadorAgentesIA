@@ -11,6 +11,7 @@ import rehypeHighlight from "rehype-highlight";
 import "highlight.js/styles/github.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import CopyButton from "@/components/CopyButton";
 
 const basePath = nextConfig.basePath || '';
 
@@ -169,30 +170,40 @@ function Embed() {
             </div>
             <div className="flex flex-col gap-2 w-full h-full overflow-y-auto myscroll">
 
-                {chat.map((msg, index) =>
-                //IA BUBBLE
-                    <div key={index} className={`${msg.isBot ? 'bg-chatbot text-text self-start' : 'text-text-inverse bg-primary-400 self-end'} rounded-lg  px-3 py-2 max-w-5xl`}>
-                        <ReactMarkdown
-                            remarkPlugins={[remarkGfm]}
-                            rehypePlugins={[rehypeHighlight]}
-                            components={{
-                                code({ node, inline, className, children, ...props }) {
-                                    return inline ? (
-                                        //markdown inline code
-                                        <code style={{ background: "#FFFFFF", padding: "2px 4px", color: "#000000" }} {...props}>
-                                            {children}
-                                        </code>
-                                    ) : (
-                                        <pre style={{ background: "#f6f8fa", padding: 12 }}>
-                                            <code style={{ background: "#FFFFFFF", padding: "2px 4px" , color: "#000000" }} >{children}</code>
-                                        </pre>
-                                    );
-                                },
-                            }}
-                        >
-                            {msg.msg}
-                        </ReactMarkdown>
-                    </div>)}
+            {chat.map((msg, index) => (
+  <div
+    key={index}
+    className={`${msg.isBot ? 'bg-chatbot text-text self-start' : 'text-text-inverse bg-primary-400 self-end'} rounded-lg px-5 py-4 max-w-5xl relative`}
+  >
+    {/* Solo añade el botón cuando es mensaje del asistente (IA) */}
+    {msg.isBot && (
+      <div className="copybutton">
+        <CopyButton textToCopy={msg.msg} />
+      </div>
+    )}
+
+    <ReactMarkdown
+      remarkPlugins={[remarkGfm]}
+      rehypePlugins={[rehypeHighlight]}
+      components={{
+        code({ node, inline, className, children, ...props }) {
+          return inline ? (
+            <code className="code" {...props}>
+              {children}
+            </code>
+          ) : (
+            <pre className="pre">
+              <code className="code">{children}</code>
+            </pre>
+          );
+        },
+      }}
+    >
+      {msg.msg}
+    </ReactMarkdown>
+  </div>
+))}
+
                     {/* Puntos loading */}
                 {loading && <div className="loading">
                     <div className="flex h-4 items-center gap-2">

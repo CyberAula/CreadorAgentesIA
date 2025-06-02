@@ -77,3 +77,35 @@
     py-2 
     max-w-sm
 }
+.code{
+    @apply
+    bg-primary-50
+    text-black
+    self-start 
+    px-2
+    py-1 
+    max-w-sm
+}
+.pre{
+    @apply
+    bg-primary-50
+    text-text
+    self-start 
+    p-12
+    mt-3
+    mb-3
+    overflow-x-auto
+    rounded-lg
+}
+.copybutton{
+    @apply
+    bg-none
+    hover:bg-primary-0
+    border-none
+    py-2
+    px-3
+    rounded-full
+    absolute 
+    top-2 
+    -right-10
+}
