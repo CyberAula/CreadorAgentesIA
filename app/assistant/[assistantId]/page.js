@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { useState,useEffect } from "react"
 import Link from "next/link";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLink, faTrashCan, faCode, faPen } from '@fortawesome/free-solid-svg-icons';
+import { faLink, faTrashCan, faCode, faPen, faFloppyDisk  } from '@fortawesome/free-solid-svg-icons';
 import {useRouter} from "next/navigation";
 import { useParams } from 'next/navigation';
 import nextConfig from '../../../next.config';
@@ -208,7 +208,7 @@ export default function Create() {
   return (
     <main className="flex min-h-screen flex-col  bg-myBg ">
         <Header/>
-        {showShare==false?<div className=" max-w-3xl px-2 md:px-8 py-6 flex flex-col gap-5 text-gray-800">
+        {showShare==false?<div className=" w-3/5 px-2 md:px-8 py-6 flex flex-col gap-5 text-text place-self-center">
           <div>
             <label htmlFor="name" className="label">Enter assistant name</label>
             <input  id="name" className="input " placeholder="UX Designer" required value={name} onChange={(e)=>setName(e.target.value)}/>
@@ -223,13 +223,13 @@ export default function Create() {
               <label className="label relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" value="" className="sr-only peer"  onClick={()=>addType('code_interpreter')}/>
                 <div className={`w-9 h-5  rounded-full peer     after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white  after:rounded-full after:w-4 after:h-4 after:transition-all 
-                  ${types.includes('code_interpreter')?'after:translate-x-full rtl:after:-translate-x-full after:bg-primary-400 bg-primary-0':'bg-neutral-700'}`}></div>
+                  ${types.includes('code_interpreter')?'after:translate-x-full rtl:after:-translate-x-full after:bg-primary bg-primary-0':'bg-neutral-700'}`}></div>
                 <span className="ms-3 font-medium ">Code Interpreter</span>
               </label>
               <label className="label relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" value="" className="sr-only peer"  onClick={()=>addType('file_search')}/>
                 <div className={`w-9 h-5  rounded-full peer     after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white  after:rounded-full after:w-4 after:h-4 after:transition-all 
-                  ${types.includes('file_search')?'after:translate-x-full rtl:after:-translate-x-full after:bg-primary-400 bg-primary-0':'bg-neutral-700'}`}></div>
+                  ${types.includes('file_search')?'after:translate-x-full rtl:after:-translate-x-full after:bg-primary bg-primary-0':'bg-neutral-700'}`}></div>
                 <span className="ms-3 font-medium ">file_search</span>
               </label>
               <div className="label flex items-center gap-5 cursor-pointer">
@@ -249,12 +249,16 @@ export default function Create() {
             <label className=" label" htmlFor="user_avatar">Upload files</label>
             <input className=" input cursor-pointer " aria-describedby="user_avatar_help" id="user_avatar" type="file" onChange={(e)=>setFiles([...files,e.target.files[0]])}/>
             <div className="label flex gap-2">
-              {files.map((file,index)=><div key={file.name} className="text-xs w-min whitespace-nowrap border border-gray-400 py-1 px-2 rounded-xl flex gap-1">{file.name}  <b className=" cursor-pointer" onClick={()=>removeFile(file)}>x</b></div>)}
+              {files.map((file,index)=><div key={file.name} className="text-xs w-min whitespace-nowrap border border-neutral py-1 px-2 rounded-xl flex gap-1">{file.name}  <b className=" cursor-pointer" onClick={()=>removeFile(file)}>x</b></div>)}
             </div>
           </div>
+                  <div className='flex flex-column'> 
 
-          <button onClick={createAssistant} className=" buttonprimary ">Submit</button>
-          {assistant!=null&&<button onClick={()=>setShowShare(true)} className=" buttonprimary">Cancel</button>}
+          <button onClick={createAssistant} className=" buttonprimary mr-4">
+          <FontAwesomeIcon className='pr-2' icon={faFloppyDisk} />
+          Submit</button>
+          {assistant!=null&&<button onClick={()=>setShowShare(true)} className=" buttonsecondary">Cancel</button>}
+                  </div>
         </div>:<div className="h-full grow px-2 md:px-8 py-6 flex flex-col gap-5 text-text">
           <div className="flex flex-wrap gap-2 justify-between w-full">            
             <div className="flex gap-2">
@@ -277,7 +281,7 @@ export default function Create() {
                 Delete
               </button>
           </div>  
-          <iframe src={urljoin(basePath, "/embed/"+assistant + "?assistant_name=" + name)} className="h-full grow rounded-xl border"/>
+          <iframe src={urljoin(basePath, "/embed/"+assistant + "?assistant_name=" + name)} className="h-full grow rounded-xl border-2 border-primary-0"/>
         </div>}
     </main>
   )
