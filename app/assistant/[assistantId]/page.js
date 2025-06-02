@@ -10,6 +10,7 @@ import nextConfig from '../../../next.config';
 import urljoin from 'url-join';
 import Header from "/components/Header";
 
+
 const basePath = nextConfig.basePath || '';
 
 
@@ -206,7 +207,7 @@ export default function Create() {
   },[])
   
   return (
-    <main className="flex min-h-screen flex-col  bg-myBg ">
+    <main className="flex align min-h-screen flex-col  bg-myBg ">
         <Header/>
         {showShare==false?<div className=" w-3/5 px-2 md:px-8 py-6 flex flex-col gap-5 text-text place-self-center">
           <div>
