@@ -9,6 +9,7 @@ import { useParams } from 'next/navigation';
 import nextConfig from '../../../next.config';
 import urljoin from 'url-join';
 import Header from "/components/Header";
+import BackButton from '@/Components/BackButton';
 
 
 const basePath = nextConfig.basePath || '';
@@ -211,7 +212,7 @@ export default function Create() {
         <Header/>
         {showShare==false?<div className="max-w-3xl px-8 py-6 md:p-8 flex flex-col gap-5 text-gray-800">
           <div className="flex gap-4">
-            <button className='backButton' onClick={()=>router.back()}><FontAwesomeIcon icon={faArrowLeft} className="text-text h-6 w-6"/></button>
+            <BackButton/>
             <h2 className="text-2xl text-text font-semibold">Create your assistant</h2>
           </div>
           <div>
