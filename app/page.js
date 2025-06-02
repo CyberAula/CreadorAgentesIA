@@ -36,10 +36,10 @@ function Home() {
             <div className="flex items-center justify-center h-screen w-screen bg-myBg"><Image src="/spinner.gif" height={250} width={250} alt="loading"/></div>:
             <main className="flex min-h-screen flex-col  bg-myBg ">
            <Header/>
-            <div className=" max-w-3xl px-2 md:px-8 py-6 flex flex-col gap-5 text-text">     
+            <div className=" max-w-3xl px-8 py-6 flex flex-col gap-5 text-text">     
                 <h2 className="text-2xl text-text font-semibold">Your active assistants</h2>
 
-                <div className=" flex flex-wrap gap-4">
+                <div className=" flex flex-wrap gap-4 max-w-w">
                     {assistants.map((assistant)=>
                     <Link key={assistant.id} href={"/assistant/"+assistant.id}>
                         <div className=" border-2 hover:bg-primary-0 border-primary-400 px-4 py-2 flex gap-4 items-center rounded-xl h-16 min-w-[20rem] max-w-xl cursor-pointer">

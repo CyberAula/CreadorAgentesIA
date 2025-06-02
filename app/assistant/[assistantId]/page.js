@@ -207,9 +207,9 @@ export default function Create() {
   },[])
   
   return (
-    <main className="flex min-h-screen flex-col  bg-myBg ">
+    <main className="flex align min-h-screen flex-col  bg-myBg ">
         <Header/>
-        {showShare==false?<div className=" max-w-3xl px-2 md:px-8 py-6 flex flex-col gap-5 text-gray-800">
+        {showShare==false?<div className="max-w-3xl px-8 py-6 md:p-8 flex flex-col gap-5 text-gray-800">
           <div className="flex gap-4">
             <button className='backButton' onClick={()=>router.back()}><FontAwesomeIcon icon={faArrowLeft} className="text-text h-6 w-6"/></button>
             <h2 className="text-2xl text-text font-semibold">Create your assistant</h2>
