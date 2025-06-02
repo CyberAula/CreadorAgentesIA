@@ -13,7 +13,12 @@ const basePath = nextConfig.basePath || '';
 function Home() {
     const [assistants,setAssistants] = useState([])
     const [loading,setLoading] = useState(true);    
-
+    const breadcrumbItems = [
+        { label: "Home", href: "/" },
+        { label: "Proyectos", href: "/projects" },
+        { label: "Mi Proyecto", href: null }, // Página actual (no clickeable)
+      ];
+    
     const fetchData = async () => {
         const url = urljoin(basePath,'/api/assistants');
         const response = await fetch(url);

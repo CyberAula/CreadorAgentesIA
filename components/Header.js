@@ -13,11 +13,7 @@ export default function Header() {
   return (
     <div
       id="header"
-      className="flex items-center justify-between flex-wrap gap-2 px-2 md:px-8 py-4"
-      style={{
-        backgroundColor: "var(--header-color)",
-        color: "var(--text-color)",
-      }}
+      className="flex items-center justify-between flex-wrap gap-2 px-2 md:px-8 py-4 bg-header text-text shadow-md"
     >
       <div className="flex items-center gap-2">
         <Image
