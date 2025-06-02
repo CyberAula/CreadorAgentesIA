@@ -9,6 +9,8 @@
     --header-color: theme(.colors.primary.DEFAULT);
     --text-color: theme(.colors.black);
     --primary-color: #2BC5AE;
+    --chat-bot: theme(.colors.primary.100);
+    --text-inverse-color: theme(.colors.white);
   
 }
 .darkmode {
@@ -17,7 +19,8 @@
     --header-color: theme(.colors.black);
     --text-color: theme(.colors.white);
     --primary-color: #3CD4BE;
-  
+    --chat-bot: theme(.colors.primary.0);
+    --text-inverse-color: theme(.colors.black);
 }
 
 

@@ -44,8 +44,11 @@ module.exports = {
 
         header: 'var(--header-color)',
         'myBg':'var(--bg-color)',
-        text: 'var(--text-color)',
-
+        text: {
+          DEFAULT:'var(--text-color)',
+          inverse: 'var(--text-inverse-color)',
+        },
+        chatbot: 'var(--chat-bot)',
         
       },
     },

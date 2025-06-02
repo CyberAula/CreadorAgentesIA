@@ -66,3 +66,14 @@
     p-2.5
 
 }
+
+.loading{
+    @apply
+    bg-chatbot
+    text-text 
+    self-start 
+    rounded-lg  
+    px-3 
+    py-2 
+    max-w-sm
+}
