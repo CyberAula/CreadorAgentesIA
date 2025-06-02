@@ -4,13 +4,11 @@ import { useState, useEffect, useRef } from "react";
 import { useSearchParams, useParams } from 'next/navigation';
 import nextConfig from '../../../next.config';
 import urljoin from 'url-join';
-import ThemeToggle from "@/components/ThemeToggle";
+
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import "highlight.js/styles/github.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 
 const basePath = nextConfig.basePath || '';
 
@@ -154,7 +152,7 @@ function Embed() {
     }
 
     return (
-        <div className="h-screen w-screen md:p-4 flex flex-col bg-myBg gap-4">
+        <div className="h-screen w-screen md:p-8 flex flex-col bg-myBg gap-4">
             <div className={`flex justify-between bg-primary-400 rounded-xl p-4`}>
                 <div className="flex items-center gap-2">
                     <Image height={25} width={25} src={urljoin(basePath, '/assistant.svg')} alt="logo" />
@@ -163,7 +161,7 @@ function Embed() {
                 <div className="d-flex align-items-center gap-2 cursor-pointer">
                     {/*<Image height={20} width={20} onClick={refreshChat} src={urljoin(basePath, '/refresh.svg')}  alt="refresh"/>*/}
                     {/* <Image height={20} width={20} onClick={closeFrame} src={urljoin(basePath, '/cancel.svg')} alt="cancel"/> */}
-             <ThemeToggle/>
+
                 </div>
 
             </div>
@@ -171,7 +169,7 @@ function Embed() {
 
                 {chat.map((msg, index) =>
                 //IA BUBBLE
-                    <div key={index} className={`${msg.isBot ? 'bg-chatbot text-text self-start' : 'text-text-inverse bg-primary-400 self-end'} rounded-lg  px-3 py-2 max-w-5xl`}>
+                    <div key={index} className={`${msg.isBot ? 'bg-chatbot text-text self-start' : 'text-text-inverse bg-primary-400 self-end border-2'} rounded-lg  px-3 py-2 max-w-5xl`}>
                         <ReactMarkdown
                             remarkPlugins={[remarkGfm]}
                             rehypePlugins={[rehypeHighlight]}
@@ -204,10 +202,10 @@ function Embed() {
 
             </div>
             {/* input message */}
-            <div className="flex items-center gap-2 mt-auto place-self-center w-5/6">
+            <div className="flex gap-2 mt-auto">
                 <input id="question" className="input" placeholder="Ask a question" required value={question} onKeyDown={(e) => { e.code == "Enter" && !e.shiftKey && askAssistant(); }} onChange={(e) => setQuestion(e.target.value)} />
                 <button onClick={askAssistant} className=" buttonprimary">
-                <FontAwesomeIcon icon={faPaperPlane} />                    {/* <Image height={20} width={20} src={urljoin(basePath, '/send.svg')} alt="send" /> */}
+                    <Image height={20} width={20} src={urljoin(basePath, '/send.svg')} alt="send" />
                 </button>
             </div>
         </div>
