@@ -55,12 +55,15 @@
     @apply
     bg-primary-0
     border
-    border-primary
+    border-primary-400
     text-sm
     text-text
     rounded-lg 
-    focus:ring-primary-100 
-    focus:border-primary-500 
+    outline-none
+    focus:border-primary
+    focus:ring-1
+    focus:ring-offset-0
+    focus:ring-primary
     block 
     w-full 
     p-2.5
