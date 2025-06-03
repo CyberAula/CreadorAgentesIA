@@ -50,6 +50,7 @@ module.exports = {
           inverse: 'var(--text-inverse-color)',
         },
         chatbot: 'var(--chat-bot)',
+        modal: 'var(--modal-color)',
       },
     },
   },
