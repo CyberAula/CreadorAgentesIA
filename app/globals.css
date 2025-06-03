@@ -11,6 +11,8 @@
     --primary-color: #2BC5AE;
     --chat-bot: theme(.colors.primary.100);
     --text-inverse-color: theme(.colors.white);
+    --modal-color: theme(.colors.primary.100);
+
 }
 .darkmode {
     --bg-color: theme(.colors.backgrounddark);
@@ -19,7 +21,7 @@
     --primary-color: #3CD4BE;
     --chat-bot: theme(.colors.primary.0);
     --text-inverse-color: theme(.colors.black);
-
+    --modal-color: theme(.colors.black);
 }
 
 
