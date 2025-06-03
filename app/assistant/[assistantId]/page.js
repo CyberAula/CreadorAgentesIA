@@ -224,13 +224,13 @@ export default function Create() {
               <label className="label relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" value="" className="sr-only peer"  onClick={()=>addType('code_interpreter')}/>
                 <div className={`w-9 h-5  rounded-full peer     after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white  after:rounded-full after:w-4 after:h-4 after:transition-all 
-                  ${types.includes('code_interpreter')?'after:translate-x-full rtl:after:-translate-x-full after:bg-primary bg-primary-0':'bg-neutral-700'}`}></div>
+                  ${types.includes('code_interpreter')?'after:translate-x-full rtl:after:-translate-x-full after:bg-primary-400 bg-primary-0':'bg-neutral-700'}`}></div>
                 <span className="ms-3 font-medium ">Code Interpreter</span>
               </label>
               <label className="label relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" value="" className="sr-only peer"  onClick={()=>addType('file_search')}/>
                 <div className={`w-9 h-5  rounded-full peer     after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white  after:rounded-full after:w-4 after:h-4 after:transition-all 
-                  ${types.includes('file_search')?'after:translate-x-full rtl:after:-translate-x-full after:bg-primary bg-primary-0':'bg-neutral-700'}`}></div>
+                  ${types.includes('file_search')?'after:translate-x-full rtl:after:-translate-x-full after:bg-primary-400 bg-primary-0':'bg-neutral-700'}`}></div>
                 <span className="ms-3 font-medium ">file_search</span>
               </label>
               <div className="label flex items-center gap-5 cursor-pointer">
