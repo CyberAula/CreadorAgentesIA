@@ -41,7 +41,15 @@ function Home() {
 
                 <div className=" flex flex-wrap gap-4 max-w-w">
                    {assistants.map((assistant) => (
-  <AssistantCard key={assistant.id} assistant={assistant} />
+                    <AssistantCard
+  key={assistant.id}
+  assistant={assistant}
+  onDelete={() => {
+    // 💡 Remueve al asistente del estado
+    setAssistants(prev => prev.filter(a => a.id !== assistant.id));
+  }}
+/>
+
 ))}
                     
                     <Link href="/assistant/new">    
