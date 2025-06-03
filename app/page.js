@@ -13,11 +13,6 @@ const basePath = nextConfig.basePath || '';
 function Home() {
     const [assistants,setAssistants] = useState([])
     const [loading,setLoading] = useState(true);    
-    const breadcrumbItems = [
-        { label: "Home", href: "/" },
-        { label: "Proyectos", href: "/projects" },
-        { label: "Mi Proyecto", href: null }, // Página actual (no clickeable)
-      ];
     
     const fetchData = async () => {
         const url = urljoin(basePath,'/api/assistants');
@@ -45,16 +40,9 @@ function Home() {
                 <h2 className="text-2xl text-text font-semibold">Your active assistants</h2>
 
                 <div className=" flex flex-wrap gap-4 max-w-w">
-                    {assistants.map((assistant)=>
-                    <Link key={assistant.id} href={"/assistant/"+assistant.id}>
-                        <div className=" border-2 hover:bg-primary-0 border-primary-400 px-4 py-2 flex gap-4 items-center rounded-xl h-16 min-w-[20rem] max-w-xl cursor-pointer">
-                            <div className=" rounded-full bg-primary-500 h-2 w-2"/>
-                            <div className=" flex flex-col">
-                                <div className=" text-text font-medium">{assistant.name}</div>
-                            </div>
-                        </div>
-                    </Link>
-                    )}
+                   {assistants.map((assistant) => (
+  <AssistantCard key={assistant.id} assistant={assistant} />
+))}
                     
                     <Link href="/assistant/new">    
                         <div className=" border-2 hover:bg-primary-0 border-primary-400 px-4 py-2 flex gap-4 items-center rounded-xl h-16 min-w-[20rem] max-w-xl cursor-pointer" >
