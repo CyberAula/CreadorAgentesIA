@@ -12,6 +12,7 @@ import "highlight.js/styles/github.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import CopyButton from "@/components/CopyButton";
+import ThemeToggle from "../../../components/ThemeToggle";
 
 const basePath = nextConfig.basePath || '';
 
@@ -164,7 +165,7 @@ function Embed() {
                 <div className="d-flex align-items-center gap-2 cursor-pointer">
                     {/*<Image height={20} width={20} onClick={refreshChat} src={urljoin(basePath, '/refresh.svg')}  alt="refresh"/>*/}
                     {/* <Image height={20} width={20} onClick={closeFrame} src={urljoin(basePath, '/cancel.svg')} alt="cancel"/> */}
-
+                    <ThemeToggle />
                 </div>
 
             </div>
@@ -215,10 +216,10 @@ function Embed() {
 
             </div>
             {/* input message */}
-            <div className="flex gap-2 mt-auto">
+            <div className="flex gap-2 mt-auto w-3/5 place-self-center">
                 <input id="question" className="input" placeholder="Ask a question" required value={question} onKeyDown={(e) => { e.code == "Enter" && !e.shiftKey && askAssistant(); }} onChange={(e) => setQuestion(e.target.value)} />
                 <button onClick={askAssistant} className=" buttonprimary">
-                    <Image height={20} width={20} src={urljoin(basePath, '/send.svg')} alt="send" />
+<FontAwesomeIcon icon={faPaperPlane} className="text-white"/>
                 </button>
             </div>
         </div>
