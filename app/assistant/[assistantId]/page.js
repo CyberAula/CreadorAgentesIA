@@ -1,16 +1,15 @@
 'use client'
 import Image from 'next/image'
-import { useState,useEffect } from "react"
+import { useState,useEffect, useRef } from "react"
 import Link from "next/link";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLink, faTrashCan, faCode, faPen, faArrowLeft} from '@fortawesome/free-solid-svg-icons';
+import { faLink, faTrashCan, faCode, faPen, faFloppyDisk, faFileUpload  } from '@fortawesome/free-solid-svg-icons';
 import {useRouter} from "next/navigation";
 import { useParams } from 'next/navigation';
 import nextConfig from '../../../next.config';
 import urljoin from 'url-join';
 import Header from "/components/Header";
 import BackButton from '@/Components/BackButton';
-
 
 const basePath = nextConfig.basePath || '';
 
@@ -27,6 +26,9 @@ export default function Create() {
   const [files,setFiles] = useState([])
   const [assistant,setAssistant] = useState(null)
   const [showShare,setShowShare] = useState(false)
+
+  // Creamos una referencia para el input de tipo archivo
+  const fileInputRef = useRef(null);
 
 
   const createAssistant = async() => {    
@@ -104,17 +106,17 @@ export default function Create() {
   }
 
   const addFunction = (index,input) => {
-    functions[index] = input
-    setUpdate((prev)=>!prev)
+    // Necesitas una copia de las funciones para que React detecte el cambio
+    const newFunctions = [...functions];
+    newFunctions[index] = input;
+    setFunctions(newFunctions);
+    setUpdate((prev)=>!prev); // Esto puede no ser necesario si 'functions' es parte del estado
   }
 
   const removeFunction = (index) => {
-    if(index==0){
-      setFunctions([])
-    }else{
-      let newFns = functions.splice(index,1)
-      setFunctions(newFns)
-    }
+    // Si quieres eliminar una función, crea un nuevo array sin ella
+    const newFunctions = functions.filter((_, i) => i !== index);
+    setFunctions(newFunctions);
   }
 
   const removeFile = async(file) => {
@@ -169,14 +171,19 @@ export default function Create() {
         setShowShare((prev)=>true)
         setName(data.name)
         setInstructions(data.instructions)
+        // Necesitas asegurarte de que functions se inicialice correctamente desde data.tools
+        const initialFunctions = [];
+        const initialTypes = [];
         data.tools.forEach(tool => {
           if(tool.type=="function"){
-            setFunctions([...functions,tool.function])
-          }else{
-            setTypes([...types,tool.type])
+            initialFunctions.push(JSON.stringify(tool.function)); // Asegúrate de convertir a string
+          } else {
+            initialTypes.push(tool.type);
           }
         });
-        setFiles(data.files)
+        setFunctions(initialFunctions);
+        setTypes(initialTypes);
+        setFiles(data.files); // Esto puede necesitar manejo si `data.files` no tiene la forma esperada
       }
       /*
       let getOpenai = new OpenAI({apiKey:data.openAIKey, dangerouslyAllowBrowser: true})
@@ -203,6 +210,11 @@ export default function Create() {
     }
   }
 
+  // Función para manejar el clic en el botón personalizado
+  const handleButtonClick = () => {
+    fileInputRef.current.click(); 
+  };
+
   useEffect(()=>{
       fetchAssistant()
   },[])
@@ -210,10 +222,12 @@ export default function Create() {
   return (
     <main className="flex align min-h-screen flex-col  bg-myBg ">
         <Header/>
-        {showShare==false?<div className="max-w-3xl px-8 py-6 md:p-8 flex flex-col gap-5 text-gray-800">
-          <div className="flex gap-4">
+        
+        {showShare==false?(
+        <div className=" w-3/5 px-2 md:px-8 py-6 flex flex-col gap-5 text-text place-self-center">
+          <div className='flex gap-4 content-center'>
             <BackButton/>
-            <h2 className="text-2xl text-text font-semibold">Create your assistant</h2>
+            <h1 className="text-2xl font-bold">Create Assistant</h1>
           </div>
           <div>
             <label htmlFor="name" className="label">Enter assistant name</label>
@@ -227,16 +241,16 @@ export default function Create() {
             <label htmlFor="type" className="label">Select type of assistant</label>
             <div className="flex flex-col gap-3 text-sm">
               <label className="label relative inline-flex items-center cursor-pointer">
-                <input type="checkbox" value="" className="sr-only peer"  onClick={()=>addType('code_interpreter')}/>
+                <input type="checkbox" value="" className="sr-only peer" checked={types.includes('code_interpreter')}  onChange={()=>addType('code_interpreter')}/>
                 <div className={`w-9 h-5  rounded-full peer     after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white  after:rounded-full after:w-4 after:h-4 after:transition-all 
-                  ${types.includes('code_interpreter')?'after:translate-x-full rtl:after:-translate-x-full after:bg-primary-400 bg-primary-0':'bg-neutral-700'}`}></div>
+                  ${types.includes('code_interpreter')?'after:translate-x-full rtl:after:-translate-x-full after:bg-primary bg-primary-0':'bg-neutral-700'}`}></div>
                 <span className="ms-3 font-medium ">Code Interpreter</span>
               </label>
               <label className="label relative inline-flex items-center cursor-pointer">
-                <input type="checkbox" value="" className="sr-only peer"  onClick={()=>addType('file_search')}/>
+                <input type="checkbox" value="" className="sr-only peer" checked={types.includes('file_search')} onChange={()=>addType('file_search')}/>
                 <div className={`w-9 h-5  rounded-full peer     after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white  after:rounded-full after:w-4 after:h-4 after:transition-all 
-                  ${types.includes('file_search')?'after:translate-x-full rtl:after:-translate-x-full after:bg-primary-400 bg-primary-0':'bg-neutral-700'}`}></div>
-                <span className="ms-3 font-medium ">file_search</span>
+                  ${types.includes('file_search')?'after:translate-x-full rtl:after:-translate-x-full after:bg-primary bg-primary-0':'bg-neutral-700'}`}></div>
+                <span className="ms-3 font-medium ">File Search</span>
               </label>
               <div className="label flex items-center gap-5 cursor-pointer">
                 <div className=" rounded-full bg-myBg text-text text-xl font-bold px-2 w-min" onClick={()=>{setFunctions([...functions,''])}}>+</div>
@@ -245,7 +259,7 @@ export default function Create() {
               </div>
             </div>
             {functions.map((fn,index)=><div key={index} className="relative">
-              <textarea id="functions" className="input h-60" required placeholder='{"name": "get_weather", "description": "Determine weather in my location"}'  value={fn} onChange={(e)=>addFunction(index,e.target.value)}/>
+              <textarea id={`function-${index}`} className="input h-60" required placeholder='{"name": "get_weather", "description": "Determine weather in my location"}'  value={fn} onChange={(e)=>addFunction(index,e.target.value)}/>
               <div className="text-text absolute z-10 top-1 right-4 font-bold cursor-pointer" onClick={()=>removeFunction(index)}>x</div>
               </div>)}
 
@@ -253,15 +267,37 @@ export default function Create() {
           </div>
           <div className="flex flex-col gap-2">
             <label className=" label" htmlFor="user_avatar">Upload files</label>
-            <input className=" input cursor-pointer " aria-describedby="user_avatar_help" id="user_avatar" type="file" onChange={(e)=>setFiles([...files,e.target.files[0]])}/>
+              {/* input oculto */}
+            <input
+              className="hidden" 
+              aria-describedby="user_avatar_help"
+              id="user_avatar"
+              type="file"
+              onChange={(e)=>setFiles([...files,e.target.files[0]])}
+              ref={fileInputRef} 
+            />
+            <button
+              className='buttonsecondary flex gap-2 items-center w-min' 
+              onClick={handleButtonClick} 
+            >
+              <FontAwesomeIcon icon={faFileUpload} className="h-4 w-4" />
+              Upload file
+            </button>
+            
             <div className="label flex gap-2">
-              {files.map((file,index)=><div key={file.name} className="text-xs w-min whitespace-nowrap border border-gray-400 py-1 px-2 rounded-xl flex gap-1">{file.name}  <b className=" cursor-pointer" onClick={()=>removeFile(file)}>x</b></div>)}
+              {files.map((file,index)=><div key={file.name} className="text-xs w-min whitespace-nowrap bg-primary-0 border border-primary-400 py-1 px-2 rounded-xl flex gap-1">{file.name}  <b className=" cursor-pointer" onClick={()=>removeFile(file)}>x</b></div>)}
             </div>
           </div>
+                  <div className='flex flex-column'> 
 
-          <button onClick={createAssistant} className=" buttonprimary ">Submit</button>
-          {assistant!=null&&<button onClick={()=>setShowShare(true)} className=" buttonprimary">Cancel</button>}
-        </div>:<div className="h-full grow px-2 md:px-8 py-6 flex flex-col gap-5 text-text">
+          <button onClick={createAssistant} className=" buttonprimary mr-4">
+          <FontAwesomeIcon className='pr-2' icon={faFloppyDisk} />
+          Submit</button>
+          {assistant!=null&&<button onClick={()=>setShowShare(true)} className=" buttonsecondary">Cancel</button>}
+                  </div>
+        </div>
+        ) : (
+        <div className="h-full grow px-2 md:px-8 py-6 flex flex-col gap-5 text-text">
           <div className="flex flex-wrap gap-2 justify-between w-full">            
             <div className="flex gap-2">
               <button onClick={()=>setShowShare(false)} className="buttonprimary">                
@@ -283,8 +319,9 @@ export default function Create() {
                 Delete
               </button>
           </div>  
-          <iframe src={urljoin(basePath, "/embed/"+assistant + "?assistant_name=" + name)} className="h-full grow rounded-xl border"/>
-        </div>}
+          <iframe src={urljoin(basePath, "/embed/"+assistant + "?assistant_name=" + name)} className="h-full grow rounded-xl border-2 border-primary-0"/>
+        </div>
+        )}
     </main>
   )
 }
