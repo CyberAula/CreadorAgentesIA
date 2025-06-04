@@ -226,10 +226,10 @@ export default function Create() {
     <main className="flex align min-h-screen flex-col  bg-myBg ">
       <Header />
       {showShare == false ? (
-        <div className=" h-full flex flex-col mx-4 md:mx-10 mt-4 gap-4">
+        <div className=" flex flex-col mx-4 my-4 md:mx-10 md:my-5  gap-4">
           <div className='flex gap-4 content-center'>
             <BackButton />
-            <h1 className="text-2xl text-text font-semibold">Create Assistant</h1>
+            <h1 className="text-2xl font-bold text-text">Create Assistant</h1>
           </div>
           <div className='h-full flex flex-col sm:mx-0 md:mx-10 mt-4 gap-4'>
             <div>
@@ -243,18 +243,46 @@ export default function Create() {
             <div>
               <label htmlFor="type" className="label">Select type of assistant</label>
               <div className="flex flex-col gap-3 text-sm">
-                <label className="label relative inline-flex items-center cursor-pointer">
-                  <input type="checkbox" value="" className="sr-only peer" checked={types.includes('code_interpreter')} onChange={() => addType('code_interpreter')} />
-                  <div className={`w-9 h-5  rounded-full peer     after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white  after:rounded-full after:w-4 after:h-4 after:transition-all 
-                  ${types.includes('code_interpreter') ? 'after:translate-x-full rtl:after:-translate-x-full after:bg-primary bg-primary-0' : 'bg-neutral-700'}`}></div>
-                  <span className="ms-3 font-medium ">Code Interpreter</span>
+                 {/* Toggle para Code Interpreter */}
+                 <label className="label relative inline-flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    className="sr-only peer"
+                    checked={types.includes('code_interpreter')}
+                    onChange={() => addType('code_interpreter')}
+                  />
+                  <div
+                    className={`
+                      w-9 h-5 rounded-full peer relative
+                      after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:rounded-full after:w-4 after:h-4 after:transition-all
+                      ${types.includes('code_interpreter')
+                        ? 'after:translate-x-full rtl:after:-translate-x-full after:bg-primary-600 bg-primary-10'
+                        : 'after:bg-white bg-neutral-700'}
+                    `}
+                  ></div>
+                  <span className="ms-3 font-medium">Code Interpreter</span>
                 </label>
+
+                {/* Toggle para File Search */}
                 <label className="label relative inline-flex items-center cursor-pointer">
-                  <input type="checkbox" value="" className="sr-only peer" checked={types.includes('file_search')} onChange={() => addType('file_search')} />
-                  <div className={`w-9 h-5  rounded-full peer     after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white  after:rounded-full after:w-4 after:h-4 after:transition-all 
-                  ${types.includes('file_search') ? 'after:translate-x-full rtl:after:-translate-x-full after:bg-primary bg-primary-0' : 'bg-neutral-700'}`}></div>
-                  <span className="ms-3 font-medium ">File Search</span>
+                  <input
+                    type="checkbox"
+                    className="sr-only peer"
+                    checked={types.includes('file_search')}
+                    onChange={() => addType('file_search')}
+                  />
+                  <div
+                    className={`
+                      w-9 h-5 rounded-full peer relative
+                      after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:rounded-full after:w-4 after:h-4 after:transition-all
+                      ${types.includes('file_search')
+                        ? 'after:translate-x-full rtl:after:-translate-x-full after:bg-primary-600 bg-primary-10'
+                        : 'after:bg-white bg-neutral-700'}
+                    `}
+                  ></div>
+                  <span className="ms-3 font-medium">File Search</span>
                 </label>
+
                 <div className="label flex items-center gap-5 cursor-pointer">
                   <div className=" rounded-full bg-myBg text-text text-xl font-bold px-2 w-min" onClick={() => { setFunctions([...functions, '']) }}>+</div>
                   <span className="font-medium ">Functions</span>
@@ -302,14 +330,14 @@ export default function Create() {
         </div>
 
       ) : (
-        <div className='h-full flex flex-col mx-4 md:mx-10 mt-4 gap-4'>
-          <div className='flex gap-4 content-center'>
+        <div className='md:h-[85dvh] h-dvh flex flex-col mx-4 my-4 md:mx-10 md:my-5 gap-4'>
+          <div className='flex gap-4 content-center '>
             <BackButton />
             <h1 className="text-2xl text-text font-semibold">My Assistant</h1>
           </div>
-          <div className="h-[85dvh] mb-8 flex flex-col justify-between sm:mx-0 md:mx-10 mt-4 gap-4">
-            <div className="flex flex-wrap gap-2 justify-between w-full">
-              <div className="flex gap-2">
+          <div className="h-full flex flex-col justify-between mx-4 my-1 md:mx-10 md:my-4 gap-4 ">
+            <div className="flex flex-wrap gap-2 justify-between md:w-full sm:w-full w-[70%] self-center md:self-auto">
+              <div className="flex flex-wrap gap-2">
                 <button onClick={() => setShowShare(false)} className="buttonprimary">
                   <FontAwesomeIcon icon={faPen} className=" h-4 w-4 pr-2" />
                   Edit

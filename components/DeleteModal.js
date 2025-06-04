@@ -7,7 +7,7 @@ export default function DeleteModal({ title, description, onCancel, onConfirm })
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
       <div className="bg-modal p-6 rounded-lg max-w-md w-full">
         <div className="flex flex-col items-center text-center">
-        <FontAwesomeIcon icon={faTriangleExclamation} className='text-red-500 p-4 text-4xl'/>
+        <FontAwesomeIcon icon={faTriangleExclamation} className='text-error-200 p-4 text-4xl'/>
                   <h2 className="text-lg font-bold mb-2 text-text">{title}</h2>
           <p className="text-sm text-text mb-4">{description}</p>
           <div className="flex gap-4">
@@ -19,7 +19,7 @@ export default function DeleteModal({ title, description, onCancel, onConfirm })
             </button>
             <button
               onClick={onConfirm}
-              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+              className="bg-error-200 text-white px-4 py-2 rounded hover:bg-error-300"
             >
                         <FontAwesomeIcon icon={faTrashCan} className="text-white h-4 w-4 pr-2" />
 
