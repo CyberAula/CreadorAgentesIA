@@ -171,41 +171,41 @@ function Embed() {
             </div>
             <div className="flex flex-col gap-2 w-full h-full overflow-y-auto myscroll">
 
-            {chat.map((msg, index) => (
-  <div
-    key={index}
-    className={`${msg.isBot ? 'bg-chatbot text-text self-start' : 'text-text-inverse bg-primary-400 self-end'} rounded-lg px-5 py-4 md:max-w-5xl max-w-[16rem] relative`}
-  >
-    {/* Solo añade el botón cuando es mensaje del asistente (IA) */}
-    {msg.isBot && (
-      <div className="copybutton">
-        <CopyButton textToCopy={msg.msg} />
-      </div>
-    )}
+                {chat.map((msg, index) => (
+                    <div
+                        key={index}
+                        className={`${msg.isBot ? 'bg-chatbot text-text self-start' : 'text-white bg-primary-400 self-end'} rounded-lg px-5 py-4 max-w-5xl relative`}
+                    >
+                        {/* Solo añade el botón cuando es mensaje del asistente (IA) */}
+                        {msg.isBot && (
+                            <div className="copybutton">
+                                <CopyButton textToCopy={msg.msg} />
+                            </div>
+                        )}
 
-    <ReactMarkdown
-      remarkPlugins={[remarkGfm]}
-      rehypePlugins={[rehypeHighlight]}
-      components={{
-        code({ node, inline, className, children, ...props }) {
-          return inline ? (
-            <code className="code" {...props}>
-              {children}
-            </code>
-          ) : (
-            <pre className="pre">
-              <code className="code">{children}</code>
-            </pre>
-          );
-        },
-      }}
-    >
-      {msg.msg}
-    </ReactMarkdown>
-  </div>
-))}
+                        <ReactMarkdown
+                            remarkPlugins={[remarkGfm]}
+                            rehypePlugins={[rehypeHighlight]}
+                            components={{
+                                code({ node, inline, className, children, ...props }) {
+                                    return inline ? (
+                                        <code className="code" {...props}>
+                                            {children}
+                                        </code>
+                                    ) : (
+                                        <pre className="pre">
+                                            <code className="code">{children}</code>
+                                        </pre>
+                                    );
+                                },
+                            }}
+                        >
+                            {msg.msg}
+                        </ReactMarkdown>
+                    </div>
+                ))}
 
-                    {/* Puntos loading */}
+                {/* Puntos loading */}
                 {loading && <div className="loading">
                     <div className="flex h-4 items-center gap-2">
                         <div className="bounce bounce1 rounded-full bg-text h-2 w-2" />
@@ -218,8 +218,8 @@ function Embed() {
             {/* input message */}
             <div className="flex gap-2 mt-auto w-full md:w-3/5 place-self-center">
                 <input id="question" className="input" placeholder="Ask a question" required value={question} onKeyDown={(e) => { e.code == "Enter" && !e.shiftKey && askAssistant(); }} onChange={(e) => setQuestion(e.target.value)} />
-                <button onClick={askAssistant} className=" buttonprimary w-[4rem] md:w-fill">
-<FontAwesomeIcon icon={faPaperPlane} className="text-white"/>
+                <button onClick={askAssistant} className=" buttonprimary">
+                    <FontAwesomeIcon icon={faPaperPlane} className="text-white" />
                 </button>
             </div>
         </div>
