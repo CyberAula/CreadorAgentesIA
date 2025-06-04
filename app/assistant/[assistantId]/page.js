@@ -1,8 +1,8 @@
 'use client'
 import Image from 'next/image'
+import { useState, useEffect, useRef } from "react"
 import Link from "next/link";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLink, faTrashCan, faCode, faPen, faFloppyDisk, faFileUpload  } from '@fortawesome/free-solid-svg-icons';
 import { faLink, faTrashCan, faCode, faPen, faFloppyDisk, faFileUpload } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from "next/navigation";
 import { useParams } from 'next/navigation';
@@ -18,14 +18,11 @@ export default function Create() {
   const assistantId = useParams().assistantId;
 
   const router = useRouter()
-  const [name,setName] = useState("")
-  const [instructions,setInstructions] = useState("")
-  const [types,setTypes] = useState([])
-  const [functions,setFunctions] = useState([])
-  const [update,setUpdate] = useState(false)
-  const [files,setFiles] = useState([])
-  const [assistant,setAssistant] = useState(null)
-  const [showShare,setShowShare] = useState(false)
+  const [name, setName] = useState("")
+  const [instructions, setInstructions] = useState("")
+  const [types, setTypes] = useState([])
+  const [functions, setFunctions] = useState([])
+  const [update, setUpdate] = useState(false)
   const [files, setFiles] = useState([])
   const [assistant, setAssistant] = useState(null)
   const [showShare, setShowShare] = useState(false)
