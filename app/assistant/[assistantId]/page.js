@@ -10,6 +10,7 @@ import nextConfig from '../../../next.config';
 import urljoin from 'url-join';
 import Header from "/components/Header";
 import BackButton from '@/Components/BackButton';
+import DeleteModal from '../../../components/DeleteModal';
 
 const basePath = nextConfig.basePath || '';
 
@@ -18,14 +19,15 @@ export default function Create() {
   const assistantId = useParams().assistantId;
 
   const router = useRouter()
-  const [name, setName] = useState("")
-  const [instructions, setInstructions] = useState("")
-  const [types, setTypes] = useState([])
-  const [functions, setFunctions] = useState([])
-  const [update, setUpdate] = useState(false)
-  const [files, setFiles] = useState([])
-  const [assistant, setAssistant] = useState(null)
-  const [showShare, setShowShare] = useState(false)
+  const [name,setName] = useState("")
+  const [instructions,setInstructions] = useState("")
+  const [types,setTypes] = useState([])
+  const [functions,setFunctions] = useState([])
+  const [update,setUpdate] = useState(false)
+  const [files,setFiles] = useState([])
+  const [assistant,setAssistant] = useState(null)
+  const [showShare,setShowShare] = useState(false)
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   // Creamos una referencia para el input de tipo archivo
   const fileInputRef = useRef(null);
@@ -229,33 +231,60 @@ export default function Create() {
             <BackButton />
             <h1 className="text-2xl font-bold">Create Assistant</h1>
           </div>
-          <div className='w-full sm:w-full md:w-3/5 lg:w-3/5  flex flex-col gap-5 text-text self-center'>
-            <div>
-              <label htmlFor="name" className="label">Enter assistant name</label>
-              <input id="name" className="input " placeholder="UX Designer" required value={name} onChange={(e) => setName(e.target.value)} />
-            </div>
-            <div>
-              <label htmlFor="instructions" className="label">Enter instructions</label>
-              <textarea id="instructions" className="input" required placeholder="Act as a UX Designer to help with my project." value={instructions} onChange={(e) => setInstructions(e.target.value)} />
-            </div>
-            <div>
-              <label htmlFor="type" className="label">Select type of assistant</label>
-              <div className="flex flex-col gap-3 text-sm">
+          <div>
+            <label htmlFor="name" className="label">Enter assistant name</label>
+            <input  id="name" className="input " placeholder="UX Designer" required value={name} onChange={(e)=>setName(e.target.value)}/>
+          </div>
+          <div>
+            <label htmlFor="instructions" className="label">Enter instructions</label>
+            <textarea id="instructions" className="input" required placeholder="Act as a UX Designer to help with my project." value={instructions} onChange={(e)=>setInstructions(e.target.value)}/>
+          </div>
+          <div>
+            <label htmlFor="type" className="label">Select type of assistant</label>
+            <div className="flex flex-col gap-3 text-sm">
+              {/* Toggle para Code Interpreter */}
                 <label className="label relative inline-flex items-center cursor-pointer">
-                  <input type="checkbox" value="" className="sr-only peer" checked={types.includes('code_interpreter')} onChange={() => addType('code_interpreter')} />
-                  <div className={`w-9 h-5  rounded-full peer     after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white  after:rounded-full after:w-4 after:h-4 after:transition-all 
-                  ${types.includes('code_interpreter') ? 'after:translate-x-full rtl:after:-translate-x-full after:bg-primary bg-primary-0' : 'bg-neutral-700'}`}></div>
-                  <span className="ms-3 font-medium ">Code Interpreter</span>
+                  <input
+                    type="checkbox"
+                    className="sr-only peer"
+                    checked={types.includes('code_interpreter')}
+                    onChange={() => addType('code_interpreter')}
+                  />
+                  <div
+                    className={`
+                      w-9 h-5 rounded-full peer relative
+                      after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:rounded-full after:w-4 after:h-4 after:transition-all
+                      ${types.includes('code_interpreter')
+                        ? 'after:translate-x-full rtl:after:-translate-x-full after:bg-primary-500 bg-primary-10'
+                        : 'after:bg-white bg-neutral-700'}
+                    `}
+                  ></div>
+                  <span className="ms-3 font-medium">Code Interpreter</span>
                 </label>
+
+                {/* Toggle para File Search */}
                 <label className="label relative inline-flex items-center cursor-pointer">
-                  <input type="checkbox" value="" className="sr-only peer" checked={types.includes('file_search')} onChange={() => addType('file_search')} />
-                  <div className={`w-9 h-5  rounded-full peer     after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white  after:rounded-full after:w-4 after:h-4 after:transition-all 
-                  ${types.includes('file_search') ? 'after:translate-x-full rtl:after:-translate-x-full after:bg-primary bg-primary-0' : 'bg-neutral-700'}`}></div>
-                  <span className="ms-3 font-medium ">File Search</span>
+                  <input
+                    type="checkbox"
+                    className="sr-only peer"
+                    checked={types.includes('file_search')}
+                    onChange={() => addType('file_search')}
+                  />
+                  <div
+                    className={`
+                      w-9 h-5 rounded-full peer relative
+                      after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:rounded-full after:w-4 after:h-4 after:transition-all
+                      ${types.includes('file_search')
+                        ? 'after:translate-x-full rtl:after:-translate-x-full after:bg-primary-500 bg-primary-10'
+                        : 'after:bg-white bg-neutral-700'}
+                    `}
+                  ></div>
+                  <span className="ms-3 font-medium">File Search</span>
                 </label>
-                <div className="label flex items-center gap-5 cursor-pointer">
-                  <div className=" rounded-full bg-myBg text-text text-xl font-bold px-2 w-min" onClick={() => { setFunctions([...functions, '']) }}>+</div>
-                  <span className="font-medium ">Functions</span>
+
+              <div className="label flex items-center gap-5 cursor-pointer">
+                <div className=" rounded-full bg-myBg text-text text-xl font-bold px-2 w-min" onClick={()=>{setFunctions([...functions,''])}}>+</div>
+                <span className="font-medium ">Functions</span>
 
                 </div>
               </div>
@@ -319,18 +348,33 @@ export default function Create() {
                   <FontAwesomeIcon icon={faLink} className=" h-4 w-4 pr-2" />
 
                   Copy Link
-                </button>
-              </div>
-              <button onClick={() => deleteAssistant()} className="buttonsecondary">
-                <FontAwesomeIcon icon={faTrashCan} className="text-text h-4 w-4 pr-2" />
-                Delete
               </button>
             </div>
-            <iframe src={urljoin(basePath, "/embed/" + assistant + "?assistant_name=" + name)} className="h-full grow rounded-xl border-2 border-primary-0" />
-          </div>
+            <button 
+              onClick={() => setShowDeleteModal(true)} 
+              className="buttonsecondary"
+            >   
+              <FontAwesomeIcon icon={faTrashCan} className="text-text h-4 w-4 pr-2" />
+              Delete
+            </button>
 
+          </div>  
+          <iframe src={urljoin(basePath, "/embed/"+assistant + "?assistant_name=" + name)} className="h-full grow rounded-xl border-2 border-primary-0"/>
         </div>
-      )}
+        )}
+         {/* 🟥 Modal de confirmación */}
+    {showDeleteModal && (
+      <DeleteModal
+        title="Are you sure?"
+        description="This action cannot be undone. This will permanently delete the assistant."
+        onCancel={() => setShowDeleteModal(false)}
+        onConfirm={() => {
+          setShowDeleteModal(false);
+          deleteAssistant();
+        }}
+      />
+    )}
     </main>
+
   )
 }

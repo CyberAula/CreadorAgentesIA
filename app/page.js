@@ -44,7 +44,7 @@ function Home() {
       {loading ? (
         <div className="flex items-center justify-center h-screen w-screen bg-myBg">
 
-          <img src="/spinner.gif" height={250} width={250} alt="loading" />
+          <img src={`${basePath}/loading_.gif`} height={250} width={250} alt="loading" />
         </div>
       ) : (
         <main className="flex min-h-screen flex-col bg-myBg">
