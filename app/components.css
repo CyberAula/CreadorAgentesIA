@@ -14,7 +14,7 @@
     focus:ring-primary
    font-medium
    rounded-md
-   text-white
+   text-black
    w-full
    sm:w-auto
    px-4
@@ -35,6 +35,26 @@
     font-medium
     rounded-md
     text-text
+    w-full
+    sm:w-auto
+    px-4
+    py-2.5
+    text-center
+    whitespace-nowrap
+}
+.buttontertiary{
+    @apply
+    bg-none
+    border-2
+    border-tertiary
+    hover:bg-primary-0
+    focus:border-primary
+    focus:ring-1
+    focus:ring-offset-0
+    focus:ring-primary
+    font-medium
+    rounded-md
+    text-tertiary
     w-full
     sm:w-auto
     px-4

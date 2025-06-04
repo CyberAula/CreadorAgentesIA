@@ -52,7 +52,7 @@ function Home() {
           <div className="flex justify-between items-center mx-10 mt-4">
               <h2 className="text-2xl text-text font-semibold">Your active assistants</h2>
               <Link href="/assistant/new">
-                <button className="buttonprimary flex gap-2 items-center">
+                <button className="buttontertiary flex gap-2 items-center">
                   <FontAwesomeIcon icon={faPlus} />
                   Create new assistant
                 </button>
