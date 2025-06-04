@@ -9,7 +9,7 @@ import { useParams } from 'next/navigation';
 import nextConfig from '../../../next.config';
 import urljoin from 'url-join';
 import Header from "/components/Header";
-import BackButton from '@/Components/BackButton';
+import BackButton from '../../../components/BackButton';
 import DeleteModal from '../../../components/DeleteModal';
 
 const basePath = nextConfig.basePath || '';
@@ -19,14 +19,14 @@ export default function Create() {
   const assistantId = useParams().assistantId;
 
   const router = useRouter()
-  const [name, setName] = useState("")
-  const [instructions, setInstructions] = useState("")
-  const [types, setTypes] = useState([])
-  const [functions, setFunctions] = useState([])
-  const [update, setUpdate] = useState(false)
-  const [files, setFiles] = useState([])
-  const [assistant, setAssistant] = useState(null)
-  const [showShare, setShowShare] = useState(false)
+  const [name,setName] = useState("")
+  const [instructions,setInstructions] = useState("")
+  const [types,setTypes] = useState([])
+  const [functions,setFunctions] = useState([])
+  const [update,setUpdate] = useState(false)
+  const [files,setFiles] = useState([])
+  const [assistant,setAssistant] = useState(null)
+  const [showShare,setShowShare] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   // Creamos una referencia para el input de tipo archivo
@@ -322,17 +322,34 @@ export default function Create() {
                   <FontAwesomeIcon icon={faLink} className=" h-4 w-4 pr-2" />
 
                   Copy Link
-                </button>
-              </div>
-              <button onClick={() => deleteAssistant()} className="buttonsecondary">
-                <FontAwesomeIcon icon={faTrashCan} className="text-text h-4 w-4 pr-2" />
-                Delete
               </button>
             </div>
-            <iframe src={urljoin(basePath, "/embed/" + assistant + "?assistant_name=" + name)} className="h-full grow rounded-xl border-2 border-primary-0" />
-          </div>
+            <button 
+              onClick={() => setShowDeleteModal(true)} 
+              className="buttonsecondary"
+            >   
+              <FontAwesomeIcon icon={faTrashCan} className="text-text h-4 w-4 pr-2" />
+              Delete
+            </button>
+
+          </div>  
+          <iframe src={urljoin(basePath, "/embed/"+assistant + "?assistant_name=" + name)} className="h-full grow rounded-xl border-2 border-primary-0"/>
         </div>
-      )}
+      </div>
+        )}
+         {/* 🟥 Modal de confirmación */}
+    {showDeleteModal && (
+      <DeleteModal
+        title="Are you sure?"
+        description="This action cannot be undone. This will permanently delete the assistant."
+        onCancel={() => setShowDeleteModal(false)}
+        onConfirm={() => {
+          setShowDeleteModal(false);
+          deleteAssistant();
+        }}
+      />
+    )}
+
     </main>
 
   )

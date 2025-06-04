@@ -12,6 +12,7 @@
     --chat-bot: theme(.colors.primary.100);
     --text-inverse-color: theme(.colors.white);
     --modal-color: theme(.colors.primary.100);
+    --tertiary-color: theme(.colors.primary.600);
 
 }
 .darkmode {
@@ -22,6 +23,8 @@
     --chat-bot: theme(.colors.primary.0);
     --text-inverse-color: theme(.colors.black);
     --modal-color: theme(.colors.black);
+    --tertiary-color: theme(.colors.primary.DEFAULT);
+
 }
 
 

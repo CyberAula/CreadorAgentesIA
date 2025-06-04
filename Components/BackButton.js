@@ -13,7 +13,7 @@ const BackButton = () => {
 
   return (
     <button
-      className='backButton' 
+      className='backButton flex' 
       onClick={handleGoBack}
     >
       <FontAwesomeIcon icon={faArrowLeft} className="text-text h-6 w-6"/>
