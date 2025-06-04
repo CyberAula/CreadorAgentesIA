@@ -19,14 +19,14 @@ export default function Create() {
   const assistantId = useParams().assistantId;
 
   const router = useRouter()
-  const [name,setName] = useState("")
-  const [instructions,setInstructions] = useState("")
-  const [types,setTypes] = useState([])
-  const [functions,setFunctions] = useState([])
-  const [update,setUpdate] = useState(false)
-  const [files,setFiles] = useState([])
-  const [assistant,setAssistant] = useState(null)
-  const [showShare,setShowShare] = useState(false)
+  const [name, setName] = useState("")
+  const [instructions, setInstructions] = useState("")
+  const [types, setTypes] = useState([])
+  const [functions, setFunctions] = useState([])
+  const [update, setUpdate] = useState(false)
+  const [files, setFiles] = useState([])
+  const [assistant, setAssistant] = useState(null)
+  const [showShare, setShowShare] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   // Creamos una referencia para el input de tipo archivo
@@ -226,65 +226,38 @@ export default function Create() {
     <main className="flex align min-h-screen flex-col  bg-myBg ">
       <Header />
       {showShare == false ? (
-        <div className=" flex flex-col mx-10 mt-4 gap-4">
+        <div className=" h-full flex flex-col mx-4 md:mx-10 mt-4 gap-4">
           <div className='flex gap-4 content-center'>
             <BackButton />
-            <h1 className="text-2xl font-bold">Create Assistant</h1>
+            <h1 className="text-2xl text-text font-semibold">Create Assistant</h1>
           </div>
-          <div>
-            <label htmlFor="name" className="label">Enter assistant name</label>
-            <input  id="name" className="input " placeholder="UX Designer" required value={name} onChange={(e)=>setName(e.target.value)}/>
-          </div>
-          <div>
-            <label htmlFor="instructions" className="label">Enter instructions</label>
-            <textarea id="instructions" className="input" required placeholder="Act as a UX Designer to help with my project." value={instructions} onChange={(e)=>setInstructions(e.target.value)}/>
-          </div>
-          <div>
-            <label htmlFor="type" className="label">Select type of assistant</label>
-            <div className="flex flex-col gap-3 text-sm">
-              {/* Toggle para Code Interpreter */}
+          <div className='h-full flex flex-col sm:mx-0 md:mx-10 mt-4 gap-4'>
+            <div>
+              <label htmlFor="name" className="label">Enter assistant name</label>
+              <input id="name" className="input " placeholder="UX Designer" required value={name} onChange={(e) => setName(e.target.value)} />
+            </div>
+            <div>
+              <label htmlFor="instructions" className="label">Enter instructions</label>
+              <textarea id="instructions" className="input" required placeholder="Act as a UX Designer to help with my project." value={instructions} onChange={(e) => setInstructions(e.target.value)} />
+            </div>
+            <div>
+              <label htmlFor="type" className="label">Select type of assistant</label>
+              <div className="flex flex-col gap-3 text-sm">
                 <label className="label relative inline-flex items-center cursor-pointer">
-                  <input
-                    type="checkbox"
-                    className="sr-only peer"
-                    checked={types.includes('code_interpreter')}
-                    onChange={() => addType('code_interpreter')}
-                  />
-                  <div
-                    className={`
-                      w-9 h-5 rounded-full peer relative
-                      after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:rounded-full after:w-4 after:h-4 after:transition-all
-                      ${types.includes('code_interpreter')
-                        ? 'after:translate-x-full rtl:after:-translate-x-full after:bg-primary-500 bg-primary-10'
-                        : 'after:bg-white bg-neutral-700'}
-                    `}
-                  ></div>
-                  <span className="ms-3 font-medium">Code Interpreter</span>
+                  <input type="checkbox" value="" className="sr-only peer" checked={types.includes('code_interpreter')} onChange={() => addType('code_interpreter')} />
+                  <div className={`w-9 h-5  rounded-full peer     after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white  after:rounded-full after:w-4 after:h-4 after:transition-all 
+                  ${types.includes('code_interpreter') ? 'after:translate-x-full rtl:after:-translate-x-full after:bg-primary bg-primary-0' : 'bg-neutral-700'}`}></div>
+                  <span className="ms-3 font-medium ">Code Interpreter</span>
                 </label>
-
-                {/* Toggle para File Search */}
                 <label className="label relative inline-flex items-center cursor-pointer">
-                  <input
-                    type="checkbox"
-                    className="sr-only peer"
-                    checked={types.includes('file_search')}
-                    onChange={() => addType('file_search')}
-                  />
-                  <div
-                    className={`
-                      w-9 h-5 rounded-full peer relative
-                      after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:rounded-full after:w-4 after:h-4 after:transition-all
-                      ${types.includes('file_search')
-                        ? 'after:translate-x-full rtl:after:-translate-x-full after:bg-primary-500 bg-primary-10'
-                        : 'after:bg-white bg-neutral-700'}
-                    `}
-                  ></div>
-                  <span className="ms-3 font-medium">File Search</span>
+                  <input type="checkbox" value="" className="sr-only peer" checked={types.includes('file_search')} onChange={() => addType('file_search')} />
+                  <div className={`w-9 h-5  rounded-full peer     after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white  after:rounded-full after:w-4 after:h-4 after:transition-all 
+                  ${types.includes('file_search') ? 'after:translate-x-full rtl:after:-translate-x-full after:bg-primary bg-primary-0' : 'bg-neutral-700'}`}></div>
+                  <span className="ms-3 font-medium ">File Search</span>
                 </label>
-
-              <div className="label flex items-center gap-5 cursor-pointer">
-                <div className=" rounded-full bg-myBg text-text text-xl font-bold px-2 w-min" onClick={()=>{setFunctions([...functions,''])}}>+</div>
-                <span className="font-medium ">Functions</span>
+                <div className="label flex items-center gap-5 cursor-pointer">
+                  <div className=" rounded-full bg-myBg text-text text-xl font-bold px-2 w-min" onClick={() => { setFunctions([...functions, '']) }}>+</div>
+                  <span className="font-medium ">Functions</span>
 
                 </div>
               </div>
@@ -327,13 +300,14 @@ export default function Create() {
             </div>
           </div>
         </div>
+
       ) : (
-        <div className='h-full flex flex-col mx-10 mt-4 gap-4'>
+        <div className='h-full flex flex-col mx-4 md:mx-10 mt-4 gap-4'>
           <div className='flex gap-4 content-center'>
             <BackButton />
-            <h1 className="text-2xl font-bold">My Assistant</h1>
+            <h1 className="text-2xl text-text font-semibold">My Assistant</h1>
           </div>
-          <div className="h-full flex flex-col justify-between mx-10 mt-4 gap-4">
+          <div className="h-full flex flex-col justify-between sm:mx-0 md:mx-10 mt-4 gap-4">
             <div className="flex flex-wrap gap-2 justify-between w-full">
               <div className="flex gap-2">
                 <button onClick={() => setShowShare(false)} className="buttonprimary">
@@ -348,32 +322,17 @@ export default function Create() {
                   <FontAwesomeIcon icon={faLink} className=" h-4 w-4 pr-2" />
 
                   Copy Link
+                </button>
+              </div>
+              <button onClick={() => deleteAssistant()} className="buttonsecondary">
+                <FontAwesomeIcon icon={faTrashCan} className="text-text h-4 w-4 pr-2" />
+                Delete
               </button>
             </div>
-            <button 
-              onClick={() => setShowDeleteModal(true)} 
-              className="buttonsecondary"
-            >   
-              <FontAwesomeIcon icon={faTrashCan} className="text-text h-4 w-4 pr-2" />
-              Delete
-            </button>
-
-          </div>  
-          <iframe src={urljoin(basePath, "/embed/"+assistant + "?assistant_name=" + name)} className="h-full grow rounded-xl border-2 border-primary-0"/>
+            <iframe src={urljoin(basePath, "/embed/" + assistant + "?assistant_name=" + name)} className="h-full grow rounded-xl border-2 border-primary-0" />
+          </div>
         </div>
-        )}
-         {/* 🟥 Modal de confirmación */}
-    {showDeleteModal && (
-      <DeleteModal
-        title="Are you sure?"
-        description="This action cannot be undone. This will permanently delete the assistant."
-        onCancel={() => setShowDeleteModal(false)}
-        onConfirm={() => {
-          setShowDeleteModal(false);
-          deleteAssistant();
-        }}
-      />
-    )}
+      )}
     </main>
 
   )

@@ -49,7 +49,7 @@ function Home() {
       ) : (
         <main className="flex min-h-screen flex-col bg-myBg">
           <Header />
-          <div className="flex justify-between items-center mx-10 mt-4">
+          <div className="flex justify-between items-center mx-4 md:mx-10 mt-4">
               <h2 className="text-2xl text-text font-semibold">Your active assistants</h2>
               <Link href="/assistant/new">
                 <button className="buttonprimary flex gap-2 items-center">
