@@ -9,7 +9,7 @@ import { useParams } from 'next/navigation';
 import nextConfig from '../../../next.config';
 import urljoin from 'url-join';
 import Header from "/components/Header";
-import BackButton from '@/Components/BackButton';
+import BackButton from '../../../components/BackButton';
 import DeleteModal from '../../../components/DeleteModal';
 
 const basePath = nextConfig.basePath || '';
@@ -255,7 +255,7 @@ export default function Create() {
                       w-9 h-5 rounded-full peer relative
                       after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:rounded-full after:w-4 after:h-4 after:transition-all
                       ${types.includes('code_interpreter')
-                        ? 'after:translate-x-full rtl:after:-translate-x-full after:bg-primary-500 bg-primary-10'
+                        ? 'after:translate-x-full rtl:after:-translate-x-full after:bg-primary-400 bg-primary-10'
                         : 'after:bg-white bg-neutral-700'}
                     `}
                   ></div>
@@ -275,7 +275,7 @@ export default function Create() {
                       w-9 h-5 rounded-full peer relative
                       after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:rounded-full after:w-4 after:h-4 after:transition-all
                       ${types.includes('file_search')
-                        ? 'after:translate-x-full rtl:after:-translate-x-full after:bg-primary-500 bg-primary-10'
+                        ? 'after:translate-x-full rtl:after:-translate-x-full after:bg-primary-400 bg-primary-10'
                         : 'after:bg-white bg-neutral-700'}
                     `}
                   ></div>
@@ -326,14 +326,13 @@ export default function Create() {
               {assistant != null && <button onClick={() => setShowShare(true)} className=" buttonsecondary">Cancel</button>}
             </div>
           </div>
-        </div>
       ) : (
-        <div className='h-full flex flex-col mx-10 mt-4 gap-4'>
+        <div className='h-[85dvh] flex flex-col mx-10 mt-4 gap-4'>
           <div className='flex gap-4 content-center'>
             <BackButton />
             <h1 className="text-2xl font-bold">My Assistant</h1>
           </div>
-          <div className="h-full flex flex-col justify-between mx-10 mt-4 gap-4">
+          <div className="h-full flex flex-col justify-between mx-10 my-4 gap-4">
             <div className="flex flex-wrap gap-2 justify-between w-full">
               <div className="flex gap-2">
                 <button onClick={() => setShowShare(false)} className="buttonprimary">
@@ -361,6 +360,7 @@ export default function Create() {
           </div>  
           <iframe src={urljoin(basePath, "/embed/"+assistant + "?assistant_name=" + name)} className="h-full grow rounded-xl border-2 border-primary-0"/>
         </div>
+      </div>
         )}
          {/* 🟥 Modal de confirmación */}
     {showDeleteModal && (
@@ -374,6 +374,7 @@ export default function Create() {
         }}
       />
     )}
+
     </main>
 
   )
