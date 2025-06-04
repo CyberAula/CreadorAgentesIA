@@ -46,14 +46,14 @@ export default function ThemeToggle() {
           !isDark ? "bg-primary " : ""
         }`}
       >
-        <FontAwesomeIcon icon={faSun} className="text-text h-5 w-5" />
+        <FontAwesomeIcon icon={faSun} className="text-white h-5 w-5" />
       </div>
       <div
         className={`flex items-center justify-center rounded-xl p-2 transition-colors ${
           isDark ? "bg-primary " : ""
         }`}
       >
-        <FontAwesomeIcon icon={faMoon} className="text-text h-5 w-5" />
+        <FontAwesomeIcon icon={faMoon} className="text-luna h-5 w-5" />
       </div>
     </div>
   );

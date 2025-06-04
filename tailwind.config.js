@@ -27,6 +27,7 @@ module.exports = {
 
           primary:{
           0: '#1C7D6F20',
+          10: '#2bc5ae80',
           50: '#CDF4EE',
           100: '#9FEADE',
           200: '#3BD3BC',
@@ -70,6 +71,7 @@ module.exports = {
         chatbot: 'var(--chat-bot)',
         modal: 'var(--modal-color)',
         tertiary: 'var(--tertiary-color)',
+        luna: 'var(--luna-color)',
       },
     },
   },
