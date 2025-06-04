@@ -23,7 +23,7 @@
     --chat-bot: theme(.colors.primary.0);
     --text-inverse-color: theme(.colors.black);
     --modal-color: theme(.colors.black);
-    --tertiary-color: theme(.colors.primary.DEFAULT);
+    --tertiary-color: theme(.colors.primary.200);
 
 }
 

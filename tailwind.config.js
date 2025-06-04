@@ -69,6 +69,7 @@ module.exports = {
         },
         chatbot: 'var(--chat-bot)',
         modal: 'var(--modal-color)',
+        tertiary: 'var(--tertiary-color)',
       },
     },
   },

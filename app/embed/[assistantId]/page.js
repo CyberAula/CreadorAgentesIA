@@ -174,7 +174,7 @@ function Embed() {
                 {chat.map((msg, index) => (
                     <div
                         key={index}
-                        className={`${msg.isBot ? 'bg-chatbot text-text self-start' : 'text-white bg-primary-400 self-end'} rounded-lg px-5 py-4 max-w-5xl relative`}
+                        className={`${msg.isBot ? 'bg-chatbot text-text self-start' : 'text-white bg-primary-400 self-end'} rounded-lg px-5 py-4 md:max-w-5xl max-w-[16rem] relative`}
                     >
                         {/* Solo añade el botón cuando es mensaje del asistente (IA) */}
                         {msg.isBot && (
@@ -218,7 +218,7 @@ function Embed() {
             {/* input message */}
             <div className="flex gap-2 mt-auto w-full md:w-3/5 place-self-center">
                 <input id="question" className="input" placeholder="Ask a question" required value={question} onKeyDown={(e) => { e.code == "Enter" && !e.shiftKey && askAssistant(); }} onChange={(e) => setQuestion(e.target.value)} />
-                <button onClick={askAssistant} className=" buttonprimary">
+                <button onClick={askAssistant} className=" buttonprimary w-[4rem] md:w-fill">
                     <FontAwesomeIcon icon={faPaperPlane} className="text-white" />
                 </button>
             </div>
