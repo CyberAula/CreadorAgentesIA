@@ -226,10 +226,10 @@ export default function Create() {
     <main className="flex align min-h-screen flex-col  bg-myBg ">
       <Header />
       {showShare == false ? (
-        <div className=" flex flex-col mx-10 mt-4 gap-4">
+        <div className=" flex flex-col mx-4 my-4 md:mx-10 md:my-5  gap-4">
           <div className='flex gap-4 content-center'>
             <BackButton />
-            <h1 className="text-2xl font-bold">Create Assistant</h1>
+            <h1 className="text-2xl font-bold text-text">Create Assistant</h1>
           </div>
           <div>
             <label htmlFor="name" className="label">Enter assistant name</label>
@@ -327,14 +327,14 @@ export default function Create() {
             </div>
           </div>
       ) : (
-        <div className='h-[85dvh] flex flex-col mx-10 mt-4 gap-4'>
+        <div className='md:h-[85dvh] h-dvh flex flex-col mx-4 my-4 md:mx-10 md:my-5 gap-4'>
           <div className='flex gap-4 content-center '>
             <BackButton />
             <h1 className="text-2xl font-bold text-text">My Assistant</h1>
           </div>
-          <div className="h-full flex flex-col justify-between mx-10 my-4 gap-4">
-            <div className="flex flex-wrap gap-2 justify-between w-full">
-              <div className="flex gap-2">
+          <div className="h-full flex flex-col justify-between mx-4 my-1 md:mx-10 md:my-4 gap-4 ">
+            <div className="flex flex-wrap gap-2 justify-between md:w-full sm:w-full w-[70%] self-center md:self-auto">
+              <div className="flex flex-wrap gap-2">
                 <button onClick={() => setShowShare(false)} className="buttonprimary">
                   <FontAwesomeIcon icon={faPen} className=" h-4 w-4 pr-2" />
                   Edit

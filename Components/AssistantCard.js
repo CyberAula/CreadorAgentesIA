@@ -39,7 +39,7 @@ const AssistantCard = ({ assistant, onDelete, onShowToast }) => {
   };
 
   return (
-    <div className="p-6 bg-primary-0 flex flex-col gap-4 items-center rounded-lg min-w-[20rem] max-w-xl">
+    <div className="p-6 bg-primary-0 flex flex-col gap-4 items-center rounded-lg  md:min-w-[20rem] max-w-xl">
       <div className="flex flex-col gap-2 items-center max-w-xs">
         <img
           className="w-16 h-16 rounded-full"

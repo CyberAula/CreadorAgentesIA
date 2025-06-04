@@ -49,19 +49,19 @@ function Home() {
       ) : (
         <main className="flex min-h-screen flex-col bg-myBg">
           <Header />
-          <div className="flex justify-between items-center mx-10 mt-4">
+          <div className="flex flex-col justify-between md:items-center mx-4 my-4 md:mx-10 md:my-5 md:flex-row">
               <h2 className="text-2xl text-text font-semibold">Your active assistants</h2>
-              <Link href="/assistant/new">
+              <Link href="/assistant/new" className="flex mt-[3rem] md:mt-0 justify-center">
                 <button className="buttontertiary flex gap-2 items-center">
                   <FontAwesomeIcon icon={faPlus} />
                   Create new assistant
                 </button>
               </Link>
           </div>
-          <div className="w-4/5 px-2 md:px-8 py-6 flex flex-col gap-5 text-text self-center justify-space-around">
+          <div className="w-4/5 px-2 md:px-8 py-6 flex flex-col gap-5 text-text self-center justify-space-around items-center md:items-start">
             
 
-            <div className="flex flex-wrap gap-4 max-w-w">
+            <div className="flex flex-wrap gap-4 max-w-max items-center">
               {assistants.map((assistant) => (
                 <AssistantCard
                   key={assistant.id}
