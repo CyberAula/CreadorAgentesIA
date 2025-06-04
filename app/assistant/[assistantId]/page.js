@@ -328,7 +328,7 @@ export default function Create() {
           </div>
       ) : (
         <div className='h-[85dvh] flex flex-col mx-10 mt-4 gap-4'>
-          <div className='flex gap-4 content-center'>
+          <div className='flex gap-4 content-center '>
             <BackButton />
             <h1 className="text-2xl font-bold text-text">My Assistant</h1>
           </div>

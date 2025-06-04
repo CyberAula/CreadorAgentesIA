@@ -44,7 +44,7 @@ function Home() {
       {loading ? (
         <div className="flex items-center justify-center h-screen w-screen bg-myBg">
 
-          <img src={`${basePath}/loading_.gif`} height={250} width={250} alt="loading" />
+          <img src={`${basePath}/loading_.gif`} height={200} width={200} alt="loading" />
         </div>
       ) : (
         <main className="flex min-h-screen flex-col bg-myBg">
@@ -82,9 +82,11 @@ function Home() {
       {/* Toast Global */}
       {showToast && (
         <Toast
-          message="Assistant deleted successfully!"
-          onClose={() => setShowToast(false)}
-        />
+        message="Assistant deleted successfully!"
+        show={showToast}
+        onClose={() => setShowToast(false)}
+      />
+      
       )}
     </div>
   );

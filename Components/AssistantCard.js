@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { faTrashCan, faComment } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import DeleteModal from './DeleteModal';
 
@@ -51,7 +51,7 @@ const AssistantCard = ({ assistant, onDelete, onShowToast }) => {
       </div>
       <div className="flex gap-2">
         <button onClick={goToAssistant} className="buttonprimary">
-          <FontAwesomeIcon icon={faArrowRight} className="h-4 w-4 pr-2" />
+          <FontAwesomeIcon icon={faComment} className="h-4 w-4 pr-2" />
           Go to chat
         </button>
         <button onClick={() => setShowModal(true)} className="buttonsecondary">
