@@ -11,17 +11,33 @@ module.exports = {
   theme: {
     extend: {
       colors:{
-        primary:{
-          0: '#2bc5ae2c',
-          10: '#2bc5ae80',
-          50: '#F0FFFD',
-          100: '#DFF8F4',
-          200: '#7DE2D4',
+        //primary original:
+      // primary:{
+      //     0: ‘#2bc5ae2c’,
+      //     10: ‘#2bc5ae80’,
+      //     50: ‘#F0FFFD’,
+      //     100: ‘#DFF8F4’,
+      //     200: ‘#7DE2D4’,
+      //     DEFAULT: ‘var(--primary-color)‘,
+      //     400: ‘#26AC99’,
+      //     500: ‘#1B7A6C’,
+      //     600: ‘#0C5046’ ,
+      //   },
+
+
+          primary:{
+          0: '#1C7D6F20',
+          50: '#CDF4EE',
+          100: '#9FEADE',
+          200: '#3BD3BC',
           DEFAULT: 'var(--primary-color)',
-          400: '#26AC99',
-          500: '#1B7A6C',
-          600: '#0c5046' ,
+          400: '#156055',
+          500: '#0F433B',
+          600: '#0B322C' ,
         },
+        
+
+      
         white: '#F5F5F5',
         black: '#2C2C2C',
         background: '#DFE2E1',
@@ -53,7 +69,6 @@ module.exports = {
         },
         chatbot: 'var(--chat-bot)',
         modal: 'var(--modal-color)',
-        tertiary: 'var(--tertiary-color)',
       },
     },
   },

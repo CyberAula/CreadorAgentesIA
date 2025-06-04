@@ -6,21 +6,22 @@
 /* Clase bottón */
 .buttonprimary {
    @apply
-   bg-primary-400 
-   hover:bg-primary-500
-    focus:border-primary
+   bg-primary 
+   hover:bg-primary-400
+    focus:border-primary-200
     focus:ring-1
     focus:ring-offset-0
-    focus:ring-primary
+    focus:ring-primary-200
    font-medium
    rounded-md
-   text-black
+   text-white
    w-full
    sm:w-auto
    px-4
    py-2.5
    text-center
    whitespace-nowrap
+
 }
 .buttonsecondary{
     @apply
@@ -28,33 +29,13 @@
     border
     border-text
     hover:bg-primary-0
-    focus:border-primary
+    focus:border-primary-200
     focus:ring-1
     focus:ring-offset-0
-    focus:ring-primary
+    focus:ring-primary-200
     font-medium
     rounded-md
     text-text
-    w-full
-    sm:w-auto
-    px-4
-    py-2.5
-    text-center
-    whitespace-nowrap
-}
-.buttontertiary{
-    @apply
-    bg-none
-    border-2
-    border-tertiary
-    hover:bg-primary-0
-    focus:border-primary
-    focus:ring-1
-    focus:ring-offset-0
-    focus:ring-primary
-    font-medium
-    rounded-md
-    text-tertiary
     w-full
     sm:w-auto
     px-4
@@ -77,15 +58,15 @@
     @apply
     bg-primary-0
     border
-    border-primary-400
+    border-primary
     text-sm
     text-text
     rounded-lg 
     outline-none
-    focus:border-primary
+    focus:border-primary-200
     focus:ring-1
     focus:ring-offset-0
-    focus:ring-primary
+    focus:ring-primary-200
     block 
     w-full 
     p-2.5

@@ -19,14 +19,14 @@ export default function Create() {
   const assistantId = useParams().assistantId;
 
   const router = useRouter()
-  const [name,setName] = useState("")
-  const [instructions,setInstructions] = useState("")
-  const [types,setTypes] = useState([])
-  const [functions,setFunctions] = useState([])
-  const [update,setUpdate] = useState(false)
-  const [files,setFiles] = useState([])
-  const [assistant,setAssistant] = useState(null)
-  const [showShare,setShowShare] = useState(false)
+  const [name, setName] = useState("")
+  const [instructions, setInstructions] = useState("")
+  const [types, setTypes] = useState([])
+  const [functions, setFunctions] = useState([])
+  const [update, setUpdate] = useState(false)
+  const [files, setFiles] = useState([])
+  const [assistant, setAssistant] = useState(null)
+  const [showShare, setShowShare] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   // Creamos una referencia para el input de tipo archivo
@@ -307,7 +307,7 @@ export default function Create() {
             <BackButton />
             <h1 className="text-2xl text-text font-semibold">My Assistant</h1>
           </div>
-          <div className="h-full flex flex-col justify-between sm:mx-0 md:mx-10 mt-4 gap-4">
+          <div className="h-[85dvh] mb-8 flex flex-col justify-between sm:mx-0 md:mx-10 mt-4 gap-4">
             <div className="flex flex-wrap gap-2 justify-between w-full">
               <div className="flex gap-2">
                 <button onClick={() => setShowShare(false)} className="buttonprimary">
@@ -322,33 +322,33 @@ export default function Create() {
                   <FontAwesomeIcon icon={faLink} className=" h-4 w-4 pr-2" />
 
                   Copy Link
+                </button>
+              </div>
+              <button
+                onClick={() => setShowDeleteModal(true)}
+                className="buttonsecondary"
+              >
+                <FontAwesomeIcon icon={faTrashCan} className="text-text h-4 w-4 pr-2" />
+                Delete
               </button>
-            </div>
-            <button 
-              onClick={() => setShowDeleteModal(true)} 
-              className="buttonsecondary"
-            >   
-              <FontAwesomeIcon icon={faTrashCan} className="text-text h-4 w-4 pr-2" />
-              Delete
-            </button>
 
-          </div>  
-          <iframe src={urljoin(basePath, "/embed/"+assistant + "?assistant_name=" + name)} className="h-full grow rounded-xl border-2 border-primary-0"/>
+            </div>
+            <iframe src={urljoin(basePath, "/embed/" + assistant + "?assistant_name=" + name)} className="h-full grow rounded-xl border-2 border-primary-0" />
+          </div>
         </div>
-      </div>
-        )}
-         {/* 🟥 Modal de confirmación */}
-    {showDeleteModal && (
-      <DeleteModal
-        title="Are you sure?"
-        description="This action cannot be undone. This will permanently delete the assistant."
-        onCancel={() => setShowDeleteModal(false)}
-        onConfirm={() => {
-          setShowDeleteModal(false);
-          deleteAssistant();
-        }}
-      />
-    )}
+      )}
+      {/* 🟥 Modal de confirmación */}
+      {showDeleteModal && (
+        <DeleteModal
+          title="Are you sure?"
+          description="This action cannot be undone. This will permanently delete the assistant."
+          onCancel={() => setShowDeleteModal(false)}
+          onConfirm={() => {
+            setShowDeleteModal(false);
+            deleteAssistant();
+          }}
+        />
+      )}
 
     </main>
 

@@ -23,7 +23,7 @@ export default function Header() {
           alt="logo"
         />
         <Link href={"/"}>
-          <h6 className="text-3xl font-semibold">Open GPT</h6>
+          <h6 className="text-3xl font-semibold text-white">Open GPT</h6>
         </Link>
       </div>
       <ThemeToggle />

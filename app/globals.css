@@ -8,7 +8,7 @@
     --bg-color: theme(.colors.background);
     --header-color: theme(.colors.primary.DEFAULT);
     --text-color: theme(.colors.black);
-    --primary-color: #2BC5AE;
+    --primary-color: #1C7D6F;
     --chat-bot: theme(.colors.primary.100);
     --text-inverse-color: theme(.colors.white);
     --modal-color: theme(.colors.primary.100);
@@ -19,7 +19,7 @@
     --bg-color: theme(.colors.backgrounddark);
     --header-color: theme(.colors.black);
     --text-color: theme(.colors.white);
-    --primary-color: #3CD4BE;
+    --primary-color: #1C7D6F;
     --chat-bot: theme(.colors.primary.0);
     --text-inverse-color: theme(.colors.black);
     --modal-color: theme(.colors.black);
@@ -52,7 +52,7 @@
 .bounce3 { animation-delay: .6s; }
 
 .myscroll {
-    scrollbar-color: rgb(120 153 197) rgb(236, 239, 243);
+    scrollbar-color: theme(.colors.primary.200) transparent;
     scrollbar-width: thin;
 }
 
