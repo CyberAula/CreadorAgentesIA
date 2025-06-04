@@ -7,28 +7,30 @@ import urljoin from 'url-join';
 import Header from "/components/Header";
 import AssistantCard from '/components/AssistantCard';
 import Toast from "/components/Toast"; // 👈 Toast global aquí!
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const basePath = nextConfig.basePath || '';
 
 function Home() {
   const [assistants, setAssistants] = useState([]);
-  const [loading, setLoading] = useState(true);    
+  const [loading, setLoading] = useState(true);
   const [showToast, setShowToast] = useState(false);
 
   const fetchData = async () => {
     const url = urljoin(basePath, '/api/assistants');
     const response = await fetch(url);
-    const data = await response.json();        
-    if (data != undefined) {            
+    const data = await response.json();
+    if (data != undefined) {
       setAssistants(data);
       setLoading(false);
     }
   };
-      
+
   useEffect(() => {
     fetchData();
   }, []);
-  
+
   useEffect(() => {
     if (showToast) {
       const timer = setTimeout(() => {
@@ -47,8 +49,17 @@ function Home() {
       ) : (
         <main className="flex min-h-screen flex-col bg-myBg">
           <Header />
-          <div className="max-w-3xl px-8 py-6 flex flex-col gap-5 text-text">     
-            <h2 className="text-2xl text-text font-semibold">Your active assistants</h2>
+          <div className="flex justify-between items-center mx-10 mt-4">
+              <h2 className="text-2xl text-text font-semibold">Your active assistants</h2>
+              <Link href="/assistant/new">
+                <button className="buttonprimary flex gap-2 items-center">
+                  <FontAwesomeIcon icon={faPlus} />
+                  Create new assistant
+                </button>
+              </Link>
+          </div>
+          <div className="w-4/5 px-2 md:px-8 py-6 flex flex-col gap-5 text-text self-center justify-space-around">
+            
 
             <div className="flex flex-wrap gap-4 max-w-w">
               {assistants.map((assistant) => (
@@ -62,14 +73,7 @@ function Home() {
                 />
               ))}
 
-              <Link href="/assistant/new">    
-                <div className="border-2 hover:bg-primary-0 border-primary-400 px-4 py-2 flex gap-4 items-center rounded-xl h-16 min-w-[20rem] max-w-xl cursor-pointer">
-                  <div className="text-lg">+</div>
-                  <div className="flex flex-col">
-                    <div className="text-text font-medium">Create a new assistant</div>
-                  </div>
-                </div>
-              </Link>
+
             </div>
           </div>
         </main>
