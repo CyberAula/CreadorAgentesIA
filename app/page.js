@@ -49,8 +49,8 @@ function Home() {
       ) : (
         <main className="flex min-h-screen flex-col bg-myBg">
           <Header />
-          <div className="flex flex-col justify-between md:items-center mx-4 my-4 md:mx-10 md:my-5 md:flex-row">
-              <h2 className="text-2xl text-text font-semibold">Your active assistants</h2>
+          <div className="flex flex-col justify-between md:items-center mx-4 my-4 md:mx-10 md:my-5 md:flex-row mt-[7rem]">
+              <h2 className="text-xl md:text-2xl text-text font-semibold">Your active assistants</h2>
               <Link href="/assistant/new" className="flex mt-[3rem] md:mt-0 justify-center">
                 <button className="buttontertiary flex gap-2 items-center">
                   <FontAwesomeIcon icon={faPlus} />
