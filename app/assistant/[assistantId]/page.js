@@ -253,8 +253,8 @@ export default function Create() {
                   />
                   <div
                     className={`
-                      w-9 h-5 rounded-full peer relative
-                      after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:rounded-full after:w-4 after:h-4 after:transition-all
+                      w-11 h-6 rounded-full peer relative
+                      after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:rounded-full after:w-5 after:h-5 after:transition-all
                       ${types.includes('code_interpreter')
                         ? 'after:translate-x-full rtl:after:-translate-x-full after:bg-primary-600 bg-primary-10'
                         : 'after:bg-white bg-neutral-700'}
@@ -273,8 +273,8 @@ export default function Create() {
                   />
                   <div
                     className={`
-                      w-9 h-5 rounded-full peer relative
-                      after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:rounded-full after:w-4 after:h-4 after:transition-all
+                      w-11 h-6 rounded-full peer relative
+                      after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:rounded-full after:w-5 after:h-5 after:transition-all
                       ${types.includes('file_search')
                         ? 'after:translate-x-full rtl:after:-translate-x-full after:bg-primary-600 bg-primary-10'
                         : 'after:bg-white bg-neutral-700'}
