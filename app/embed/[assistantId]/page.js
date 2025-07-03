@@ -12,8 +12,6 @@ import "highlight.js/styles/github.css";
 
 const basePath = nextConfig.basePath || '';
 
-
-
 function Embed() {
     const assistantId = useParams().assistantId;
     const [question, setQuestion] = useState("");
@@ -30,6 +28,18 @@ function Embed() {
     const searchParams = useSearchParams();
     const assistantName = searchParams.get('assistant_name');
     console.log("assistantName: ", assistantName);
+
+    // Function to send postMessage to parent window
+    const sendMessageToParent = (type, data) => {
+        if (window.parent && window.parent !== window) {
+            window.parent.postMessage({
+                type: type,
+                data: data,
+                source: 'chatbot-iframe',
+                assistantId: assistantId
+            }, '*');
+        }
+    };
 
     //sets email from params or localstorage
     //returns email found or randomly set
@@ -84,6 +94,15 @@ function Embed() {
             console.log("MESSAGES RETURN: ", messagesData);
             setLoading((prev) => false)
             setChat([...chatRef.current, { isBot: true, msg: messagesData.messages }])
+            
+            // Send postMessage when response is received
+            sendMessageToParent('response_received', {
+                response: messagesData.messages,
+                userEmail: myUserEmail,
+                threadId: threadId,
+                runId: runId
+            });
+            
             // clearInterval(intervalRef.current);
         } else {
             console.log("WAITING FOR ANSWER, RETRY IN SOME MS...");
@@ -102,6 +121,13 @@ function Embed() {
             let chatList = [...chatRef.current, { isBot: false, msg: getQuestion }]
             setLoading((prev) => true)
             setChat(chatList)
+
+            // Send postMessage when user sends a message
+            sendMessageToParent('message_sent', {
+                message: getQuestion,
+                userEmail: myUserEmail,
+                threadId: mythreadId
+            });
 
             //post to /api/chat/threadId with body message
             const url = urljoin(basePath, `/api/chats/${mythreadId}`);
@@ -127,6 +153,13 @@ function Embed() {
         console.log("CALLING USEEFFECT");
         let myLocalEmail = setEmailFromParamsOrLocalStorage();
 
+        // Send postMessage when iframe is loaded
+        sendMessageToParent('iframe_loaded', {
+            assistantId: assistantId,
+            assistantName: assistantName,
+            userEmail: myLocalEmail
+        });
+
         createChat(myLocalEmail);
     }, [])
 
@@ -136,6 +169,12 @@ function Embed() {
         if (myLocalEmail == null) {
             console.log("THERE IS NO EMAIL. ERROR, no podemos continuar....................");
             alert("No se ha rellenado el email. Intente recargar la página o usar otro navegador. Si el problema persiste, contacte con el profesor.");
+            
+            // Send postMessage when there's an error
+            sendMessageToParent('error', {
+                error: 'No email provided',
+                assistantId: assistantId
+            });
         } else {
             const url = urljoin(basePath, `/api/chats`);
             let mychat = await fetch(url, {
@@ -148,12 +187,19 @@ function Embed() {
             let chatData = await mychat.json();
             console.log("CHAT DATA POST RETURN: ", chatData);
             setMythreadId(chatData.thread);
+            
+            // Send postMessage when chat is created
+            sendMessageToParent('chat_created', {
+                threadId: chatData.thread,
+                userEmail: myLocalEmail,
+                assistantId: assistantId
+            });
         }
     }
 
     return (
-        <div className="h-screen w-screen md:p-4 flex flex-col bg-myBg gap-4">
-            <div className={`flex justify-between bg-myPrimary rounded-xl p-4`}>
+        <div className="h-screen w-screen md:p-4 flex flex-col bg-myBg gap-4 px-2">
+            <div id="chatbot-title" className={`flex justify-between bg-myPrimary rounded-xl p-4`}>
                 <div className="flex items-center gap-2">
                     <Image height={25} width={25} src={urljoin(basePath, '/assistant.svg')} alt="logo" />
                     <span className="font-semibold">{assistantName == null ? "Ayudante Top" : assistantName}</span>
@@ -168,7 +214,7 @@ function Embed() {
             <div className="flex flex-col gap-2 w-full h-full overflow-y-auto myscroll">
 
                 {chat.map((msg, index) =>
-                    <div key={index} className={`${msg.isBot ? 'bg-gray-900 text-gray-100 self-start' : 'text-gray-900 bg-gray-100 self-end border-2'} rounded-lg  px-3 py-2 max-w-5xl`}>
+                    <div key={index} className={`${msg.isBot ? 'bg-gray-900 text-gray-100 self-start bot_chat_342344050' : 'text-gray-900 bg-gray-100 self-end border-2 user_chat_342344050'} rounded-lg  px-3 py-2 max-w-5xl`}>
                         <ReactMarkdown
                             remarkPlugins={[remarkGfm]}
                             rehypePlugins={[rehypeHighlight]}
@@ -198,9 +244,9 @@ function Embed() {
                 </div>}
 
             </div>
-            <div className="flex gap-2 mt-auto">
-                <input id="question" className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Ask a question" required value={question} onKeyDown={(e) => { e.code == "Enter" && !e.shiftKey && askAssistant(); }} onChange={(e) => setQuestion(e.target.value)} />
-                <button onClick={askAssistant} className=" bg-mySecondary hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-2.5 text-center ">
+            <div className="flex gap-2 mt-auto px-2 pb-2">
+                <input id="question" className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block flex-1 p-2.5 " placeholder="Ask a question" required value={question} onKeyDown={(e) => { e.code == "Enter" && !e.shiftKey && askAssistant(); }} onChange={(e) => setQuestion(e.target.value)} />
+                <button onClick={askAssistant} className=" bg-mySecondary hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center ">
                     <Image height={20} width={20} src={urljoin(basePath, '/send.svg')} alt="send" />
                 </button>
             </div>
