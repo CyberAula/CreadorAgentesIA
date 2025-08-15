@@ -197,8 +197,30 @@ function Embed() {
         }
     }
 
+    // useEffect to receive messages from the web that charged the iframe
+    useEffect(() => {
+        const handleMessage = (event) => {
+            console.log("RECEIVING EVENT")
+            switch (event.data.type) {
+                case "changeCSS":
+                    console.log("CHANGING CSS");
+                    let styleEl = document.getElementById("custom-style");
+                    if (!styleEl) {
+                        styleEl = document.createElement("style");
+                        styleEl.id = "custom-style";
+                        document.head.appendChild(styleEl);
+                    }
+                    styleEl.textContent = event.data.message;
+                    break;
+            }
+        };
+
+        window.addEventListener("message", handleMessage);
+        return () => window.removeEventListener("message", handleMessage);
+    }, []);
+
     return (
-        <div className="h-screen w-screen md:p-4 flex flex-col bg-myBg gap-4 px-2">
+        <div id ="chatbot-container-2323fC04" className="h-screen w-screen md:p-4 flex flex-col bg-myBg gap-4 px-2">
             <div id="chatbot-title" className={`flex justify-between bg-myPrimary rounded-xl p-4`}>
                 <div className="flex items-center gap-2">
                     <Image height={25} width={25} src={urljoin(basePath, '/assistant.svg')} alt="logo" />
@@ -235,7 +257,7 @@ function Embed() {
                             {msg.msg}
                         </ReactMarkdown>
                     </div>)}
-                {loading && <div className={`bg-gray-900 text-gray-100 self-start rounded-lg  px-3 py-2 max-w-sm`}>
+                {loading && <div id="loading-chatbot-232323jk" className={`bg-gray-900 text-gray-100 self-start rounded-lg  px-3 py-2 max-w-sm`}>
                     <div className="flex h-4 items-center gap-2">
                         <div className="bounce bounce1 rounded-full bg-slate-500 h-2 w-2" />
                         <div className="bounce bounce2 rounded-full bg-slate-500 h-2 w-2" />
@@ -246,7 +268,7 @@ function Embed() {
             </div>
             <div className="flex gap-2 mt-auto px-2 pb-2">
                 <input id="question" className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block flex-1 p-2.5 " placeholder="Ask a question" required value={question} onKeyDown={(e) => { e.code == "Enter" && !e.shiftKey && askAssistant(); }} onChange={(e) => setQuestion(e.target.value)} />
-                <button onClick={askAssistant} className=" bg-mySecondary hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center ">
+                <button id="send-button-34324dfh"onClick={askAssistant} className=" bg-mySecondary hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center ">
                     <Image height={20} width={20} src={urljoin(basePath, '/send.svg')} alt="send" />
                 </button>
             </div>
