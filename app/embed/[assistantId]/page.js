@@ -252,6 +252,13 @@ function Embed() {
                                         </pre>
                                     );
                                 },
+                                 a({ node, ...props }) {
+                                    return (
+                                        <a className="a-link-3oirdkalj" style={{ color: "#1d4ed8", textDecoration: "underline" }} {...props} target="_blank" rel="noopener noreferrer">
+                                            {props.children}
+                                        </a>
+                                    );
+                                },
                             }}
                         >
                             {msg.msg}
