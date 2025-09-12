@@ -24,6 +24,8 @@ function Embed() {
     intervalRef.current = runInterval;
     const chatRef = useRef(null);
     chatRef.current = chat;
+    const maxRetries = 15;
+    let retries = maxRetries;
 
     const searchParams = useSearchParams();
     const assistantName = searchParams.get('assistant_name');
@@ -106,13 +108,29 @@ function Embed() {
             // clearInterval(intervalRef.current);
         } else {
             console.log("WAITING FOR ANSWER, RETRY IN SOME MS...");
-            setTimeout(() => getAnswer(threadId, runId), 5000)
+            retries -= 1;
+            if (retries <= 0) {
+                console.log("MAXIMUM RETRIES EXCEEDED");
+                setLoading((prev) => false)
+                const msgError = "❌ Error en el chatbot. ❌ Por favor, inténtalo de nuevo.";
+                setChat([...chatRef.current, { isBot: true, msg: msgError }])
+                // Send postMessage when response is received
+                sendMessageToParent('error', {
+                    response: msgError,
+                    userEmail: myUserEmail,
+                    threadId: threadId,
+                    runId: runId
+                });
+                return;
+            }
+            setTimeout(() => getAnswer(threadId, runId), 1000)
         }
     }
 
     const askAssistant = async () => {
         console.log("ASKING ASSISTANT", question);
         console.log("userEmail: ", myUserEmail);
+        retries = maxRetries;
         if (mythreadId == null) {
             console.log("WAIT FOR THREAD");
         } else {
