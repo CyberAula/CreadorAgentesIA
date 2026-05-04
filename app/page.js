@@ -30,7 +30,7 @@ function Home() {
     return (
         <div>
         {loading ? 
-            <div className="flex items-center justify-center h-screen w-screen bg-myBg"><Image src="/spinner.gif" height={250} width={250} alt="loading"/></div>:
+            <div className="flex items-center justify-center h-screen w-screen bg-myBg"><Image src={urljoin(basePath, "/spinner.gif")} height={250} width={250} alt="loading"/></div>:
             <main className="flex min-h-screen flex-col  bg-myBg ">
             <div id="header" className="flex items-center justify-between flex-wrap gap-2 bg-slate-900 text-white px-2 md:px-8 py-4  ">
                 <div className="flex items-center gap-2">
