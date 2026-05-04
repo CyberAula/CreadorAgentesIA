@@ -53,7 +53,7 @@ export default function Create() {
         functions.forEach((fn)=>
           tools.push({"type":"function","function":JSON.parse(fn)})
         )
-        let model = "gpt-4o"
+        let model = "gpt-4.1"
         /*
         if(types.includes('retrieval')){
           model = "gpt-4o-mini-1106"
