@@ -28,12 +28,18 @@ export async function POST(request) {
             return NextResponse.json({ "msg": "chat created", "thread": conversation[0]._id.toString() });
         } else {
             console.log("Creating new chat for assistant: ", assistantId, " and user: ", userEmail);
+            const now = Date.now();
             const newConv = await Conversation.create({
                 assistantId,
                 userEmail,
                 lastthreadrun: {},
-                created_at: Date.now(),
-                updated_at: Date.now(),
+                created_at: now,
+                updated_at: now,
+                last_active_at: now,
+                total_messages: 0,
+                total_sessions: 0,
+                total_tokens: 0,
+                sessions: [],
                 messages: []
             });
             console.log("conversation created: ", newConv);
