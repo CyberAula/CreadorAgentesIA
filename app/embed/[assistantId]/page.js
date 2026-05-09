@@ -13,6 +13,10 @@ import "highlight.js/styles/github.css";
 const basePath = nextConfig.basePath || '';
 
 function Embed() {
+
+const [email, setEmail] = useState(null)
+const [inputEmail, setInputEmail] = useState('')
+
     const assistantId = useParams().assistantId;
     const [question, setQuestion] = useState("");
     const [chat, setChat] = useState([]);
@@ -37,27 +41,33 @@ function Embed() {
         }
     };
 
-    const setEmailFromParamsOrLocalStorage = () => {
-        let searchParamsEmail = searchParams.get('escapp_email');
-        if (searchParamsEmail != null && searchParamsEmail != "") {
-            console.log("EMAIL IN PARAMS", searchParamsEmail);
-            setMyUserEmail(searchParamsEmail);
-            return searchParamsEmail;
-        } else {
-            let localStorageEmail = window.localStorage.getItem('escapp_email');
-            if (localStorageEmail != null && localStorageEmail != "" && localStorageEmail != "undefined" && localStorageEmail != "null") {
-                console.log("GETTING EMAIL FROM LOCALSTORAGE", localStorageEmail);
-                setMyUserEmail(localStorageEmail);
-                return localStorageEmail;
-            } else {
-                let newEmail = "user" + Math.floor(Math.random() * 1000000);
-                console.log("NO EMAIL IN LOCALSTORAGE, SETTING RANDOM VALUE", newEmail);
-                setMyUserEmail(newEmail);
-                window.localStorage.setItem('escapp_email', newEmail);
-                return newEmail;
-            }
-        }
-    }
+   const handleSaveEmail = async () => {
+	const regex =
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+if (!regex.test(inputEmail)) {
+
+  alert('Ingrese un correo válido')
+
+  return
+}
+
+  // guardar en localStorage
+	const cleanEmail = inputEmail.toLowerCase().trim()
+ 	localStorage.setItem('escapp_email', cleanEmail)
+	 await fetch('/api/users', {
+  	method: 'POST',
+  	headers: {
+   	'Content-Type': 'application/json'
+ 	},
+ 	body: JSON.stringify({ email: cleanEmail })
+	})
+
+  setEmail(inputEmail)
+  setMyUserEmail(inputEmail)   
+  createChat(inputEmail)       
+}
+
 
     const askAssistant = async () => {
         console.log("ASKING ASSISTANT", question);
@@ -112,17 +122,19 @@ function Embed() {
     }
 
     useEffect(() => {
-        console.log("CALLING USEEFFECT");
-        let myLocalEmail = setEmailFromParamsOrLocalStorage();
+  const storedEmailRaw = localStorage.getItem('escapp_email')
 
-        sendMessageToParent('iframe_loaded', {
-            assistantId,
-            assistantName,
-            userEmail: myLocalEmail
-        });
+const storedEmail = storedEmailRaw
+  ? storedEmailRaw.toLowerCase().trim()
+  : null
 
-        createChat(myLocalEmail);
-    }, [])
+  if (storedEmail) {
+    setEmail(storedEmail)
+    setMyUserEmail(storedEmail)
+    createChat(storedEmail)
+  }
+}, [])
+
 
     const createChat = async (myLocalEmail) => {
         console.log("CREATING CHAT", assistantId, myLocalEmail);
@@ -168,6 +180,33 @@ function Embed() {
         window.addEventListener("message", handleMessage);
         return () => window.removeEventListener("message", handleMessage);
     }, []);
+
+
+if (!email) {
+  return (
+    <div style={{
+      display: 'flex',
+      height: '100vh',
+      justifyContent: 'center',
+      alignItems: 'center'
+    }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <h2>Ingrese su correo</h2>
+
+        <input
+          type="email"
+          placeholder="correo@ejemplo.com"
+          value={inputEmail}
+          onChange={(e) => setInputEmail(e.target.value)}
+        />
+
+        <button onClick={handleSaveEmail}>
+          Continuar
+        </button>
+      </div>
+    </div>
+  )
+}
 
     return (
         <div id="chatbot-container-2323fC04" className="h-screen w-screen md:p-4 flex flex-col bg-myBg gap-4 px-2">
