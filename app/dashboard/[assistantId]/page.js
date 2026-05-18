@@ -24,7 +24,7 @@ export default function Dashboard({ params }) {
   const [data, setData] = useState(null)
 
   useEffect(() => {
-    fetch(`/agentes/api/stats?assistantId=${assistantId}`)
+    fetch(`/agentes2/api/stats?assistantId=${assistantId}`)
       .then(res => res.json())
       .then(setData)
   }, [])
