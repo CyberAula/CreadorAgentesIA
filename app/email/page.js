@@ -33,7 +33,7 @@ if (!regex.test(email)) {
 
         <input
           type="email"
-          placeholder="correo@ejemplo.com"
+          placeholder="correo@upm.es"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           style={{ padding: 8 }}

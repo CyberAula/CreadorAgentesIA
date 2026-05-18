@@ -184,25 +184,54 @@ const storedEmail = storedEmailRaw
 
 if (!email) {
   return (
-    <div style={{
-      display: 'flex',
-      height: '100vh',
-      justifyContent: 'center',
-      alignItems: 'center'
-    }}>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-        <h2>Ingrese su correo</h2>
+    <div className="min-h-screen bg-gradient-to-b from-gray-100 to-gray-200 flex items-center justify-center px-4">
 
-        <input
-          type="email"
-          placeholder="correo@ejemplo.com"
-          value={inputEmail}
-          onChange={(e) => setInputEmail(e.target.value)}
-        />
+      <div className="bg-white w-full max-w-md rounded-3xl shadow-2xl p-10">
 
-        <button onClick={handleSaveEmail}>
-          Continuar
-        </button>
+        {/* Logo */}
+        <div className="flex justify-center mb-6">
+          <h1 className="text-4xl font-extrabold text-indigo-700 tracking-wide">
+            AIQUIZ
+          </h1>
+        </div>
+
+        {/* Título */}
+        <h2 className="text-3xl font-bold text-center text-gray-800 mb-3">
+          Crea tu Agente IA
+        </h2>
+
+        {/* Descripción */}
+        <p className="text-center text-gray-600 mb-8 leading-relaxed">
+          Ingresa tu correo institucional para comenzar a utilizar
+          asistentes inteligentes educativos.
+        </p>
+
+        <div className="space-y-5">
+
+          {/* Input */}
+          <input
+            type="email"
+            placeholder=""
+            value={inputEmail}
+            onChange={(e) => setInputEmail(e.target.value)}
+            className="w-full rounded-2xl border border-gray-300 px-5 py-4 text-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+          />
+
+          {/* Botón */}
+          <button
+            onClick={handleSaveEmail}
+            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-lg font-semibold py-4 rounded-2xl shadow-lg transition duration-200"
+          >
+            Continuar
+          </button>
+
+        </div>
+
+        {/* Footer */}
+        <p className="text-center text-gray-400 text-sm mt-8">
+          Plataforma inteligente para agentes IA educativos.
+        </p>
+
       </div>
     </div>
   )
