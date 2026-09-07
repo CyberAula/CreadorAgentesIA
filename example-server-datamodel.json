@@ -1,60 +1,176 @@
 /*
-    Tendré que hacer un modelo de datos para la base de datos de MongoDB 
-    que almacene las conversaciones de los usuarios con el asistente de OpenAI.
-    Hay 3 asistentes distintos (uno por reto) y cada asistente tiene un id único. 
-    Cada thread tiene un id único y debería tener una conversación. 
-    Hay una posibilidad de reset, pero no va a estar habilitado.
+    Modelo de datos MongoDB para almacenar las conversaciones de los usuarios
+    con los agentes de IA.
+
+    Hay N asistentes (uno por actividad/reto). Cada asistente tiene un id único
+    generado localmente (prefijo ast_). La configuración del asistente
+    (instructions, model, tools) se guarda en la colección Assistant y se pasa
+    directamente a la Responses API en cada llamada — ya no se crea un objeto
+    Assistant en OpenAI.
+
+    Cada documento Conversation pertenece a un par (assistantId, userEmail).
+    Al inicio de cada sesión (carga de página) se resetea lastthreadrun para
+    comenzar una conversación nueva, conservando el historial en messages[].
+
+    Los campos de analytics permiten detección temprana de abandono y
+    predicción de nota sin necesidad de procesar todos los mensajes.
+    Ver Readme-analytics.md para más detalle.
 */
 
+// ─── Colección: assistants ────────────────────────────────────────────────────
+
 {
-    "_id": ObjectId("5f3f8e3e3e3e3e3e3e3e3e3e"),
-    "userEmail": "XXX",
-    "assistantId": "asst_P4gKh4UBgiBuck9bVhgJbltK",
+    "_id": ObjectId("6630e3a7f9c2e1b4d8f6a0e5"),
+    "id": "ast_3a7f9c2e1b4d8f6a0e5c7b9d2a",
+    "name": "Ayudante MongoDB",
+    "instructions": "Eres un ayudante para escribir queries de MongoDB. Los alumnos primero deben importar la base de datos con el comando mongoimport y posteriormente hacer queries find y findOne.",
+    "model": "gpt-5.4",
+    "tools": [
+        { "type": "code_interpreter" }
+    ],
+    "file_ids": [],
+    "files": [],
+    "created_at": 1746000000000,
+    "updated_at": 1746000000000
+}
+
+// ─── Colección: conversations ─────────────────────────────────────────────────
+
+{
+    "_id": ObjectId("6630e3b2c4d5e6f7a8b9c0d1"),
+
+    "userEmail": "alumno01@universidad.es",
+    "assistantId": "ast_3a7f9c2e1b4d8f6a0e5c7b9d2a",
+
+    // Estado interno de la Responses API: encadena respuestas para contexto multi-turno
     "lastthreadrun": {
-        "id": "run_evhFCmqmrgLSgn3XHDuOIb57",
-        "object": "thread.run",
-        "created_at": 1706887567,
-        "assistant_id": "asst_P4gKh4UBgiBuck9bVhgJbltK",
-        "thread_id": "thread_LiGYRq2FTH319y4GBuNp8dm4",
-        "status": "queued",
-        "started_at": null,
-        "expires_at": 1706888167,
-        "cancelled_at": null,
-        "failed_at": null,
-        "completed_at": null,
-        "last_error": null,
-        "model": "gpt-4o-mini",
-        "instructions": "Eres un ayudante a escribir queries de MongoDB. Los alumnos primero deben importar la base de datos con el comando mongoimport y posteriormente hacer queries find y findOne.",
-        "tools": [
-            {
-                "type": "code_interpreter"
-            }
-        ],
-        "file_ids": [],
-        "metadata": {},
-        "usage": null
+        "lastResponseId": "resp_4f8a2c7e1b3d9f0a5c6e2b4d8f",
+        "currentSessionId": "sess_3a7f9c2e1b4d8f"
     },
-    "usage": [{ "prompt_tokens": 127, "completion_tokens": 240, "total_tokens": 367 }, { "prompt_tokens": 27, "completion_tokens": 40, "total_tokens": 67 }],
-    "created_at": 1706887567,
-    "updated_at": 1706887567,
-    "conversation": [
-        { 
-            "question": "¿Cómo importo la base de datos?", 
-            "answer": "bla bla bla mongoimport --db=escuela --collection=alumnos --file=alumnos.json",
-            "question_created_at": 1706887567,
-            "answer_created_at": 1706887999            
+
+    "created_at": 1746880000000,
+    "updated_at": 1746887999000,
+
+    // ── Campos de analytics (nivel conversación) ──────────────────────────────
+    // Actualizados en cada mensaje. Permiten queries rápidas sin iterar messages[].
+
+    "last_active_at": 1746887999000,   // timestamp del último mensaje — clave para abandono
+    "total_messages": 5,               // mensajes totales enviados por el alumno
+    "total_sessions": 2,               // número de sesiones distintas (pausas > 30 min)
+    "total_tokens": 1840,              // tokens consumidos en total (coste y profundidad)
+
+    // ── Sesiones ──────────────────────────────────────────────────────────────
+    // Una sesión = grupo de mensajes separados por menos de 30 minutos entre sí.
+    // Orden: más reciente primero.
+
+    "sessions": [
+        {
+            "session_id": "sess_3a7f9c2e1b4d8f",
+            "started_at": 1746886800000,
+            "ended_at":   1746887999000,
+            "duration_ms": 1199000,         // ~20 minutos
+            "message_count": 3,
+            "total_tokens": 1130
         },
-        { 
-            "question": "¿Cómo hago un query find?", 
-            "answer": "db.alumnos.find({})",
-            "question_created_at": 1706889567,
-            "answer_created_at": 1706889999
+        {
+            "session_id": "sess_1c2d3e4f5a6b7c",
+            "started_at": 1746800000000,
+            "ended_at":   1746801200000,
+            "duration_ms": 1200000,         // ~20 minutos
+            "message_count": 2,
+            "total_tokens": 710
+        }
+    ],
+
+    // ── Mensajes ──────────────────────────────────────────────────────────────
+    // Orden: más reciente primero ($position: 0).
+    // Cada item es un par pregunta/respuesta con métricas de engagement.
+
+    "messages": [
+        {
+            "session_id": "sess_3a7f9c2e1b4d8f",
+            "question": "¿Cómo hago un query findOne?",
+            "answer": "Para buscar un único documento usa:\n```js\ndb.alumnos.findOne({ nombre: 'Ana' })\n```",
+            "question_created_at": 1746887800000,
+            "answer_created_at":   1746887803200,
+            "question_length": 30,           // chars — proxy de profundidad de reflexión
+            "answer_length": 98,
+            "think_time_ms": 95000,          // 95 s entre la respuesta anterior y esta pregunta
+            "response_time_ms": 3200,        // latencia de la llamada a la API
+            "usage": {
+                "input_tokens": 230,
+                "output_tokens": 150,
+                "total_tokens": 380
+            },
+            "model": "gpt-5.4"
         },
-        { 
-            "question": "¿Cómo hago un query findOne?", 
-            "answer": "db.alumnos.findOne({})",
-            "question_created_at": 1706987567,
-            "answer_created_at": 1706897999
+        {
+            "session_id": "sess_3a7f9c2e1b4d8f",
+            "question": "¿Y si quiero filtrar por edad mayor de 18?",
+            "answer": "Usa el operador `$gt`:\n```js\ndb.alumnos.find({ edad: { $gt: 18 } })\n```",
+            "question_created_at": 1746887705000,
+            "answer_created_at":   1746887708100,
+            "question_length": 43,
+            "answer_length": 85,
+            "think_time_ms": 62000,
+            "response_time_ms": 3100,
+            "usage": {
+                "input_tokens": 195,
+                "output_tokens": 155,
+                "total_tokens": 350
+            },
+            "model": "gpt-5.4"
+        },
+        {
+            "session_id": "sess_3a7f9c2e1b4d8f",
+            "question": "¿Cómo importo la base de datos?",
+            "answer": "Usa mongoimport:\n```bash\nmongoimport --db=escuela --collection=alumnos --file=alumnos.json\n```",
+            "question_created_at": 1746886800000,
+            "answer_created_at":   1746886804500,
+            "question_length": 32,
+            "answer_length": 110,
+            "think_time_ms": null,           // null = primer mensaje de la sesión
+            "response_time_ms": 4500,
+            "usage": {
+                "input_tokens": 180,
+                "output_tokens": 220,
+                "total_tokens": 400
+            },
+            "model": "gpt-5.4"
+        },
+        {
+            "session_id": "sess_1c2d3e4f5a6b7c",
+            "question": "¿Qué es una colección en MongoDB?",
+            "answer": "Una colección es el equivalente a una tabla en bases de datos relacionales...",
+            "question_created_at": 1746800600000,
+            "answer_created_at":   1746800603800,
+            "question_length": 34,
+            "answer_length": 210,
+            "think_time_ms": 48000,
+            "response_time_ms": 3800,
+            "usage": {
+                "input_tokens": 170,
+                "output_tokens": 190,
+                "total_tokens": 360
+            },
+            "model": "gpt-5.4"
+        },
+        {
+            "session_id": "sess_1c2d3e4f5a6b7c",
+            "question": "¿Qué diferencia hay entre SQL y MongoDB?",
+            "answer": "Las principales diferencias son: SQL usa tablas con esquema fijo...",
+            "question_created_at": 1746800000000,
+            "answer_created_at":   1746800003500,
+            "question_length": 41,
+            "answer_length": 320,
+            "think_time_ms": null,
+            "response_time_ms": 3500,
+            "usage": {
+                "input_tokens": 165,
+                "output_tokens": 185,
+                "total_tokens": 350
+            },
+            "model": "gpt-5.4"
         }
     ]
 }

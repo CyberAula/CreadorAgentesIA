@@ -1,29 +1,30 @@
 {
-    "assistants":{
-        "asst_P4gKh4UBgiBuck9bVhgJbltK":{
-            "id":"asst_P4gKh4UBgiBuck9bVhgJbltK",
-            "name":"ER helper",
-            "instructions":"Eres un ayudante a escribir queries de MongoDB. Los alumnos primero deben importar la base de datos con el comando mongoimport y posteriormente hacer queries find y findOne.",
-            "model":"gpt-4o-mini",
+    "assistants": {
+        "ast_3a7f9c2e1b4d8f6a0e5c7b9d2a": {
+            "id": "ast_3a7f9c2e1b4d8f6a0e5c7b9d2a",
+            "name": "Ayudante MongoDB",
+            "instructions": "Eres un ayudante para escribir queries de MongoDB. Los alumnos primero deben importar la base de datos con el comando mongoimport y posteriormente hacer queries find y findOne.",
+            "model": "gpt-5.4",
             "tools": [
                 {
-                    "type": "file_search"
+                    "type": "code_interpreter"
                 }
             ],
-            "files": [
-                {
-                    "id": "file-QVZuc8KoLX7BWWVSZyp2IqkH",
-                    "name": "Chapter 1 - Reliable, Scalable and Maintainable Applications - A blog by Timi Adeniran.pdf"
-                }
-            ]
+            "file_ids": [],
+            "files": [],
+            "created_at": 1746000000000,
+            "updated_at": 1746000000000
         },
-        "asst_jaX9sNJl07x1kLu1wxbxZJV7":{
-            "id":"asst_jaX9sNJl07x1kLu1wxbxZJV7",
-            "name":"Cristobal colón",
-            "instructions":"Eres Cristobal colón, enseña a los alumnos como era el mundo en tu época.",
-            "model":"gpt-4o-mini",
-            "tools":[{"type":"code_interpreter"}],
-            "files":[]
-            }
+        "ast_7b2d4e8f1a3c6b9e0d5f2a7c4e": {
+            "id": "ast_7b2d4e8f1a3c6b9e0d5f2a7c4e",
+            "name": "Cristóbal Colón",
+            "instructions": "Eres Cristóbal Colón. Enseña a los alumnos cómo era el mundo en tu época.",
+            "model": "gpt-5.4",
+            "tools": [],
+            "file_ids": [],
+            "files": [],
+            "created_at": 1746003600000,
+            "updated_at": 1746003600000
+        }
     }
 }

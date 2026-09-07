@@ -1,24 +1,35 @@
 {
-    "id": "run_evhFCmqmrgLSgn3XHDuOIb57",
-    "object": "thread.run",
-    "created_at": 1706887567,
-    "assistant_id": "asst_P4gKh4UBgiBuck9bVhgJbltK",
-    "thread_id": "thread_LiGYRq2FTH319y4GBuNp8dm4",
-    "status": "queued",
-    "started_at": null,
-    "expires_at": 1706888167,
-    "cancelled_at": null,
-    "failed_at": null,
-    "completed_at": null,
-    "last_error": null,
-    "model": "gpt-4o-mini",
-    "instructions": "Eres un ayudante a escribir queries de MongoDB. Los alumnos primero deben importar la base de datos con el comando mongoimport y posteriormente hacer queries find y findOne.",
-    "tools": [
+    "_comment": "Ejemplo del objeto que devuelve la Responses API de OpenAI (responses.create). Reemplaza al antiguo thread.run de la Assistants API.",
+
+    "id": "resp_4f8a2c7e1b3d9f0a5c6e2b4d8f",
+    "object": "response",
+    "created_at": 1746887567,
+    "model": "gpt-5.4",
+    "status": "completed",
+
+    "output": [
         {
-            "type": "code_interpreter"
+            "type": "message",
+            "role": "assistant",
+            "content": [
+                {
+                    "type": "output_text",
+                    "text": "Para importar la base de datos usa el siguiente comando:\n\n```bash\nmongoimport --db=escuela --collection=alumnos --file=alumnos.json\n```\n\nUna vez importada, puedes hacer queries con `db.alumnos.find({})`."
+                }
+            ]
         }
     ],
-    "file_ids": [],
-    "metadata": {},
-    "usage": null
+
+    "output_text": "Para importar la base de datos usa el siguiente comando:\n\n```bash\nmongoimport --db=escuela --collection=alumnos --file=alumnos.json\n```\n\nUna vez importada, puedes hacer queries con `db.alumnos.find({})`.",
+
+    "usage": {
+        "input_tokens": 210,
+        "output_tokens": 180,
+        "total_tokens": 390
+    },
+
+    "_comment_previous_response_id": "En llamadas multi-turno se pasa previous_response_id para encadenar el contexto sin necesidad de threads",
+    "previous_response_id": null,
+
+    "_comment_old_format": "El formato antiguo (Assistants API, deprecada en agosto 2026) era thread.run: { id, thread_id, assistant_id, status: queued|in_progress|completed, ... } y requería polling hasta que status == completed"
 }
