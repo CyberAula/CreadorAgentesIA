@@ -41,6 +41,10 @@ const [inputEmail, setInputEmail] = useState('')
         }
     };
 
+    useEffect(() => {
+        sendMessageToParent('iframe_loaded', { assistantId });
+    }, []);
+
    const handleSaveEmail = async () => {
 	const regex =
   /^[^\s@]+@[^\s@]+\.[^\s@]+$/
